@@ -14,13 +14,13 @@
         "build": "microbundle",
         "dev": "microbundle watch"
     },
-    "peerDependencies": {
-        "react": "^16.8.6"
-    },
     "dependencies": {
         "auth0-js": "^9.11.2"
     },
     "devDependencies": {
         "microbundle": "^0.11.0"
+    },
+    "peerDependencies": {
+        "react": "^16.8.6"
     }
 }
