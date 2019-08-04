@@ -12,7 +12,7 @@ const CALLBACK_DOMAIN =
 
 export const AuthContext = React.createContext(null);
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children, navigate }) => {
     const auth0 = new Auth0.WebAuth({
         domain: AUTH0_DOMAIN,
         clientID: AUTH0_CLIENT_ID,
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     return (
-        <AuthContext.Provider value={[state, dispatch, auth0]}>
+        <AuthContext.Provider value={{ state, dispatch, auth0, navigate }}>
             {children}
         </AuthContext.Provider>
     );

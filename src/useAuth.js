@@ -1,8 +1,7 @@
 import { useContext } from "react";
-import { navigate } from "gatsby";
 
 export const useAuth = () => {
-    const [state, dispatch, auth0] = useContext(AuthContext);
+    const { state, dispatch, auth0, navigate } = useContext(AuthContext);
 
     const login = () => {
         auth0.authorize();

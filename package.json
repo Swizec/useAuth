@@ -1,19 +1,26 @@
 {
-  "name": "react-use-auth",
-  "version": "0.1.0",
-  "description": "The simplest way to add authentication to your React app. Handles everything for you. Users, login forms, redirects, sharing state between components. Everything",
-  "main": "index.js",
-  "repository": "git@github.com:Swizec/useAuth.git",
-  "author": "Swizec Teller <swizec@swizec.com>",
-  "license": "MIT",
-  "private": false,
-  "peerDependencies": {
-    "react": "^16.8.6"
-  },
-  "dependencies": {
-    "auth0-js": "^9.11.2"
-  },
-  "devDependencies": {
-    "microbundle": "^0.11.0"
-  }
+    "name": "react-use-auth",
+    "version": "0.1.0",
+    "description": "The simplest way to add authentication to your React app. Handles everything for you. Users, login forms, redirects, sharing state between components. Everything",
+    "source": "src/index.js",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "unpkg": "dist/index.umd.js",
+    "repository": "git@github.com:Swizec/useAuth.git",
+    "author": "Swizec Teller <swizec@swizec.com>",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "build": "microbundle",
+        "dev": "microbundle watch"
+    },
+    "peerDependencies": {
+        "react": "^16.8.6"
+    },
+    "dependencies": {
+        "auth0-js": "^9.11.2"
+    },
+    "devDependencies": {
+        "microbundle": "^0.11.0"
+    }
 }
