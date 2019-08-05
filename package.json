@@ -26,6 +26,6 @@
         "react": "^16.8.6"
     },
     "peerDependencies": {
-        "react": "^16.7.0"
+        "react": "^16.8.0"
     }
 }
