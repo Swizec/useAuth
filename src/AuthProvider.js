@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useReducer } from "react";
 import Auth0 from "auth0-js";
 
 import { authReducer } from "./authReducer";
@@ -10,7 +10,7 @@ const CALLBACK_DOMAIN =
         ? `${window.location.protocol}//${window.location.host}`
         : "https://spark-joy.netlify.com/";
 
-export const AuthContext = React.createContext(null);
+export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children, navigate }) => {
     const auth0 = new Auth0.WebAuth({
@@ -23,22 +23,22 @@ export const AuthProvider = ({ children, navigate }) => {
     });
 
     // Uncomment this code brings back the 2 Reacts error
-    // const [state, dispatch] = React.useReducer(authReducer, {
-    //     user:
-    //         typeof localStorage !== "undefined"
-    //             ? JSON.parse(localStorage.getItem("user"))
-    //             : {},
-    //     expiresAt:
-    //         typeof localStorage !== "undefined"
-    //             ? JSON.parse(localStorage.getItem("expires_at"))
-    //             : null
-    // });
+    const [state, dispatch] = useReducer(authReducer, {
+        user:
+            typeof localStorage !== "undefined"
+                ? JSON.parse(localStorage.getItem("user"))
+                : {},
+        expiresAt:
+            typeof localStorage !== "undefined"
+                ? JSON.parse(localStorage.getItem("expires_at"))
+                : null
+    });
 
     return (
         <AuthContext.Provider
             value={{
-                // state,
-                // dispatch,
+                state,
+                dispatch,
                 auth0,
                 navigate
             }}

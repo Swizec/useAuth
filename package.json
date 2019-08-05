@@ -14,11 +14,18 @@
         "build": "microbundle --jsx React.createElement",
         "dev": "microbundle watch --jsx React.createElement"
     },
+    "files": [
+        "src",
+        "dist"
+    ],
     "dependencies": {
-        "auth0-js": "^9.11.2",
-        "react": "^16.8.6"
+        "auth0-js": "^9.11.2"
     },
     "devDependencies": {
-        "microbundle": "^0.11.0"
+        "microbundle": "^0.11.0",
+        "react": "^16.8.6"
+    },
+    "peerDependencies": {
+        "react": "^16.7.0"
     }
 }
