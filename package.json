@@ -15,12 +15,10 @@
         "dev": "microbundle watch"
     },
     "dependencies": {
-        "auth0-js": "^9.11.2"
+        "auth0-js": "^9.11.2",
+        "react": "^16.8.6"
     },
     "devDependencies": {
         "microbundle": "^0.11.0"
-    },
-    "peerDependencies": {
-        "react": "^16.8.6"
     }
 }
