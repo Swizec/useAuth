@@ -20,6 +20,11 @@ npm install react-use-auth
 
 * Github: [@swizec](https://github.com/swizec)
 
+👤 **Mateus Gabi Moreira <mateusgabimoreira@gmail.com>**
+
+* Github: [@mateusgabi](https://github.com/mateusgabi)
+* Twitter: [@uptogabi](https://twitter.com/uptogabi)
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/Swizec/useAuth/issues).
