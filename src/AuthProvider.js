@@ -22,7 +22,6 @@ export const AuthProvider = ({ children, navigate }) => {
         scope: "openidw profile email"
     });
 
-    // Uncomment this code brings back the 2 Reacts error
     const [state, dispatch] = useReducer(authReducer, {
         user:
             typeof localStorage !== "undefined"
