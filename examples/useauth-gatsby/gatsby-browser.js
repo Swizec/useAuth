@@ -12,8 +12,6 @@ import theme from "@rebass/preset"
 
 import { AuthProvider } from "react-use-auth"
 
-// console.log(AuthProvider)
-
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider theme={theme}>
     <AuthProvider
