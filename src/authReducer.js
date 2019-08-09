@@ -1,10 +1,7 @@
 export const authReducer = (state, action) => {
-    console.log('got me some local', localStorage)
     switch (action.type) {
         case "login":
-            const {
-                authResult, user
-            } = action;
+            const { authResult, user } = action;
             const expiresAt =
                 authResult.expiresIn * 1000 + new Date().getTime();
 
@@ -29,7 +26,15 @@ export const authReducer = (state, action) => {
 
             return {
                 user: {},
-                    expiresAt: null
+                expiresAt: null
+            };
+        case "error":
+            const { errorType, error } = action;
+            return {
+                user: {},
+                expiresAt: null,
+                errorType,
+                error
             };
         default:
             return state;

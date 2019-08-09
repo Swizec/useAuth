@@ -39,8 +39,6 @@ export const AuthProvider = ({
                 : null
     });
 
-    console.log("auth provider", { state });
-
     return (
         <AuthContext.Provider
             value={{
