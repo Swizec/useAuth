@@ -5,6 +5,8 @@ import { AuthContext } from "./AuthProvider";
 export const useAuth = () => {
     const { state, dispatch, auth0, navigate } = useContext(AuthContext);
 
+    console.log(3, { state });
+
     const login = () => {
         auth0.authorize();
     };
@@ -21,6 +23,7 @@ export const useAuth = () => {
     const handleAuthentication = () => {
         if (typeof window !== "undefined") {
             auth0.parseHash((err, authResult) => {
+                console.log(2, { err, authResult });
                 if (
                     authResult &&
                     authResult.accessToken &&
@@ -36,6 +39,7 @@ export const useAuth = () => {
 
     const setSession = authResult => {
         auth0.client.userInfo(authResult.accessToken, (err, user) => {
+            console.log(1, { err, user });
             if (err) {
                 console.log(err);
             } else {
@@ -46,7 +50,7 @@ export const useAuth = () => {
                 });
             }
 
-            navigate("/");
+            // navigate("/");
         });
     };
 

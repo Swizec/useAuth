@@ -1,4 +1,5 @@
 export const authReducer = (state, action) => {
+    console.log('got me some local', localStorage)
     switch (action.type) {
         case "login":
             const {
