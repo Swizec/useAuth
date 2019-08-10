@@ -8,7 +8,7 @@
 
 > The simplest way to add authentication to your React app. Handles everything for you. Users, login forms, redirects, sharing state between components. Everything
 
-## Install
+![](https://s3.amazonaws.com/techletter.app/screenshot-1565368397655.png)
 
 ## How to use useAuth
 
