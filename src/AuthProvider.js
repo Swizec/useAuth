@@ -1,7 +1,8 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import Auth0 from "auth0-js";
 
 import { authReducer } from "./authReducer";
+import { handleAuthResult } from "./useAuth";
 
 export const AuthContext = createContext(null);
 
@@ -29,15 +30,23 @@ export const AuthProvider = ({
     const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
 
     const [state, dispatch] = useReducer(authReducer, {
-        user:
-            typeof localStorage !== "undefined"
-                ? JSON.parse(localStorage.getItem("user"))
-                : {},
-        expiresAt:
-            typeof localStorage !== "undefined"
-                ? JSON.parse(localStorage.getItem("expires_at"))
-                : null
+        user: {},
+        expiresAt: null
     });
+
+    useEffect(() => {
+        auth0.checkSession({}, (err, authResult) => {
+            if (err) {
+                dispatch({
+                    type: "error",
+                    erroType: "checkSession",
+                    error: err
+                });
+            } else {
+                handleAuthResult({ dispatch, auth0, authResult });
+            }
+        });
+    }, []);
 
     return (
         <AuthContext.Provider

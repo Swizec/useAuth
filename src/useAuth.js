@@ -2,6 +2,45 @@ import { useContext } from "react";
 
 import { AuthContext } from "./AuthProvider";
 
+async function setSession({ dispatch, auth0, authResult }) {
+    return new Promise((resolve, reject) => {
+        auth0.client.userInfo(authResult.accessToken, (err, user) => {
+            if (err) {
+                dispatch({
+                    type: "error",
+                    errorType: "userInfo",
+                    error: err
+                });
+                reject(err);
+            } else {
+                dispatch({
+                    type: "login",
+                    authResult,
+                    user
+                });
+                resolve(user);
+            }
+        });
+    });
+}
+
+export const handleAuthResult = async ({ dispatch, auth0, authResult }) => {
+    if (authResult && authResult.accessToken && authResult.idToken) {
+        await setSession({ dispatch, auth0, authResult });
+
+        return true;
+    } else if (err) {
+        console.error(err);
+        dispatch({
+            type: "error",
+            error: err,
+            errorType: "authResult"
+        });
+
+        return false;
+    }
+};
+
 export const useAuth = () => {
     const { state, dispatch, auth0, navigate } = useContext(AuthContext);
 
@@ -20,44 +59,12 @@ export const useAuth = () => {
 
     const handleAuthentication = () => {
         if (typeof window !== "undefined") {
-            auth0.parseHash((err, authResult) => {
-                if (
-                    authResult &&
-                    authResult.accessToken &&
-                    authResult.idToken
-                ) {
-                    setSession(authResult);
-                } else if (err) {
-                    console.error(err);
-                    dispatch({
-                        type: "error",
-                        error: err,
-                        errorType: "authResult"
-                    });
-                }
+            auth0.parseHash(async (err, authResult) => {
+                await handleAuthResult({ err, authResult, dispatch, auth0 });
+
+                navigate("/");
             });
         }
-    };
-
-    const setSession = authResult => {
-        auth0.client.userInfo(authResult.accessToken, (err, user) => {
-            if (err) {
-                console.error(err);
-                dispatch({
-                    type: "error",
-                    errorType: "userInfo",
-                    error: err
-                });
-            } else {
-                dispatch({
-                    type: "login",
-                    authResult,
-                    user
-                });
-            }
-
-            navigate("/");
-        });
     };
 
     const isAuthenticated = () => {

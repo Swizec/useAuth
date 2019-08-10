@@ -6,8 +6,6 @@ export const authReducer = (state, action) => {
                 authResult.expiresIn * 1000 + new Date().getTime();
 
             if (typeof localStorage !== "undefined") {
-                localStorage.setItem("access_token", authResult.accessToken);
-                localStorage.setItem("id_token", authResult.idToken);
                 localStorage.setItem("expires_at", JSON.stringify(expiresAt));
                 localStorage.setItem("user", JSON.stringify(user));
             }
@@ -18,8 +16,6 @@ export const authReducer = (state, action) => {
             };
         case "logout":
             if (typeof localStorage !== "undefined") {
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("id_token");
                 localStorage.removeItem("expires_at");
                 localStorage.removeItem("user");
             }
