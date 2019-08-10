@@ -54,6 +54,7 @@ export const AuthProvider = ({
                 state,
                 dispatch,
                 auth0,
+                callback_domain,
                 navigate
             }}
         >

@@ -42,13 +42,18 @@ export const handleAuthResult = async ({ dispatch, auth0, authResult }) => {
 };
 
 export const useAuth = () => {
-    const { state, dispatch, auth0, navigate } = useContext(AuthContext);
+    const { state, dispatch, auth0, callback_domain, navigate } = useContext(
+        AuthContext
+    );
 
     const login = () => {
         auth0.authorize();
     };
 
     const logout = () => {
+        auth0.logout({
+            returnTo: callback_domain
+        });
         dispatch({
             type: "logout"
         });
