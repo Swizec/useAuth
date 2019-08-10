@@ -163,6 +163,28 @@ const IndexPage = () => {
 
 Check `isAuthenticated` then use the user object. Simple as that.
 
+## Checklist for configuring Auth0
+
+There's a couple of required configurations you need to make in Auth0 to make useAuth run smoothly.
+
+**Callback URLs**
+
+You need to allow both local development and your production app in callback URLs. It's a whitelist that tells Auth0 that your login request is coming from the right source.
+
+![](https://i.imgur.com/xz8UK8Z.png)
+
+**Allowed Web Origins**
+
+useAuth avoids using local storage for secure tokens. For Auth0 to know that our `checkSession` request is coming from the right source, you need to add your URLs to allowed web origins.
+
+![](https://i.imgur.com/w2mmHH1.png)
+
+**Allowed logout urls**
+
+After logging out, Auth0 redirects back to your app. Again, it needs to know you aren't up to anything shady.
+
+![](https://i.imgur.com/S160EiI.png)
+
 ----
 
 You can try it out here 👉 https://gatsby-useauth-example.now.sh/
@@ -172,6 +194,8 @@ You can try it out here 👉 https://gatsby-useauth-example.now.sh/
 👤 **Swizec Teller <swizec@swizec.com>**
 
 * Github: [@swizec](https://github.com/swizec)
+* Twitter: [@swizec](https://twitter.com/swizec)
+* Blog: [swizec.com/blog](https://swizec.com/blog)
 
 👤 **Mateus Gabi Moreira <mateusgabimoreira@gmail.com>**
 
@@ -181,6 +205,8 @@ You can try it out here 👉 https://gatsby-useauth-example.now.sh/
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/Swizec/useAuth/issues).
+
+I am looking to support other authentication providers. Please help :)
 
 ## Show your support
 
