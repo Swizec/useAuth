@@ -24,7 +24,7 @@ async function setSession({ dispatch, auth0, authResult }) {
     });
 }
 
-export const handleAuthResult = async ({ dispatch, auth0, authResult }) => {
+export const handleAuthResult = async ({ err, dispatch, auth0, authResult }) => {
     if (authResult && authResult.accessToken && authResult.idToken) {
         await setSession({ dispatch, auth0, authResult });
 
