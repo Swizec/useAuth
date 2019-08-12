@@ -14,6 +14,7 @@
         "build": "microbundle --jsx React.createElement",
         "dev": "microbundle watch --jsx React.createElement"
     },
+    "types": "dist/index.d.ts",
     "files": [
         "src",
         "dist"
