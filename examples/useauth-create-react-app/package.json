@@ -2,6 +2,7 @@
   "name": "useauth-create-react-app",
   "version": "0.1.0",
   "private": true,
+  "author": "Dejan Strancar <dejan@strancar.info>",
   "dependencies": {
     "@rebass/preset": "^4.0.2",
     "emotion-theming": "^10.0.14",
