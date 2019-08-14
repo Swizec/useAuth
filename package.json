@@ -22,10 +22,33 @@
         "auth0-js": "^9.11.2"
     },
     "devDependencies": {
+        "eslint": "^6.1.0",
+        "eslint-config-prettier": "^6.0.0",
+        "eslint-plugin-prettier": "^3.1.0",
+        "eslint-plugin-react": "^7.14.3",
         "microbundle": "^0.11.0",
+        "prettier": "^1.18.2",
         "react": "^16.8.6"
     },
     "peerDependencies": {
         "react": "^16.8.0"
+    },
+    "eslintConfig": {
+        "extends": [
+            "plugin:prettier/recommended",
+            "plugin:react/recommended"
+        ],
+        "env": {
+            "browser": true,
+            "es6": true
+        },
+        "globals": {
+            "Atomics": "readonly",
+            "SharedArrayBuffer": "readonly"
+        },
+        "parserOptions": {
+            "ecmaVersion": 2018,
+            "sourceType": "module"
+        }
     }
 }
