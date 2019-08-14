@@ -122,7 +122,8 @@ The goal is to load a page, briefly show some text, and run the `handleAuthentic
 
 That method will create a cookie in local storage with your user's information and redirect back to homepage by default.
 To redirect to another route after user login, supply the `handleAuthentication` function an Object Literal with the `postLoginRoute` key and an associated route value.
-For example, to route to `/page-2`, call `handleAuthentication` like this:
+
+For example, to route to `/page-2`, call `handleAuthentication` as follows:
 
 `handleAuthentication({ postLoginRoute: "/page-2" })`.
 
