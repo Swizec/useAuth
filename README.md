@@ -125,7 +125,8 @@ To redirect to another route after user login, supply the `handleAuthentication`
 
 For example, to route to `/page-2`, call `handleAuthentication` as follows:
 
-`handleAuthentication({ postLoginRoute: "/page-2" })`.
+```handleAuthentication({ postLoginRoute: "/page-2" })```
+
 
 **_PS: Make sure you add `<domain>/auth0_callback` as a valid callback URL in your Auth0 config_**
 
