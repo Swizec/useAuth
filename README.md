@@ -33,20 +33,20 @@ But of course server-side "you" will always be logged out.
 ```javascript
 // gatsby-browser.js
 
-import React from "react"
-import { navigate } from "gatsby"
+import React from "react";
+import { navigate } from "gatsby";
 
-import { AuthProvider } from "react-use-auth"
+import { AuthProvider } from "react-use-auth";
 
 export const wrapRootElement = ({ element }) => (
-	<AuthProvider
-	  navigate={navigate}
-	  auth0_domain="useauth.auth0.com"
-	  auth0_client_id="GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
-	>
-	  {element}
-	</AuthProvider>
-)
+    <AuthProvider
+        navigate={navigate}
+        auth0_domain="useauth.auth0.com"
+        auth0_client_id="GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
+    >
+        {element}
+    </AuthProvider>
+);
 ```
 
 `<AuthProvider>` creates a context, sets up a state reducer, initializes an Auth0 client and so on. Everything you need for authentication to work in your whole app :)
@@ -58,7 +58,7 @@ The API takes a couple config options:
 3. `auth0_client_id` – from your Auth0 app
 4. `auth0_params` – an object that lets you overwrite any of the default Auth0 client parameters
 
-*PS: even though Auth doesn't do anything server-side, useAuth will throw errors during build, if its context doesn't exist*
+_PS: even though Auth doesn't do anything server-side, useAuth will throw errors during build, if its context doesn't exist_
 
 #### Default Auth0 params
 
@@ -75,7 +75,7 @@ const params = {
 };
 ```
 
-`domain` and `clientID` come from your props. 
+`domain` and `clientID` come from your props.
 
 `redirectUri` is set to use the `auth0_callback` page on the current domain. Auth0 redirects here after users login so you can set cookies and stuff. `useAuth` will handle this for you ✌️
 
@@ -87,41 +87,46 @@ const params = {
 
 ### 3. Create the callback page
 
-Auth0 and most other authentication providers use OAuth. That requires redirecting your user to *their* login form. After login, the provider redirects the user back to *your* app.
+Auth0 and most other authentication providers use OAuth. That requires redirecting your user to _their_ login form. After login, the provider redirects the user back to _your_ app.
 
 Any way of creating React pages should work, here's what I use for Gatsby.
 
 ```javascript
 // src/pages/auth0_callback
 
-import React, { useEffect } from "react"
+import React, { useEffect } from "react";
 
-import { useAuth } from "react-use-auth"
-import Layout from "../components/layout"
+import { useAuth } from "react-use-auth";
+import Layout from "../components/layout";
 
 const Auth0CallbackPage = () => {
-  const { handleAuthentication } = useAuth()
-  useEffect(() => {
-    handleAuthentication()
-  }, [])
+    const { handleAuthentication } = useAuth();
+    useEffect(() => {
+        handleAuthentication();
+    }, []);
 
-  return (
-    <Layout>
-      <h1>
-        This is the auth callback page, you should be redirected immediately.
-      </h1>
-    </Layout>
-  )
-}
+    return (
+        <Layout>
+            <h1>
+                This is the auth callback page, you should be redirected
+                immediately.
+            </h1>
+        </Layout>
+    );
+};
 
-export default Auth0CallbackPage
+export default Auth0CallbackPage;
 ```
 
 The goal is to load a page, briefly show some text, and run the `handleAuthentication` method from `useAuth` on page load.
 
-That method will create a cookie in local storage with your user's information and redirect back to homepage. Redirecting to other post-login pages currently isn't supported but is a good idea now that I thought of it 🤔
+That method will create a cookie in local storage with your user's information and redirect back to homepage by default.
+To redirect to another route after user login, supply the `handleAuthentication` function an Object Literal with the `postLoginRoute` key and an associated route value.
+For example, to route to `/page-2`, call `handleAuthentication` like this:
 
-***PS: Make sure you add `<domain>/auth0_callback` as a valid callback URL in your Auth0 config***
+`handleAuthentication({ postLoginRoute: "/page-2" })`.
+
+**_PS: Make sure you add `<domain>/auth0_callback` as a valid callback URL in your Auth0 config_**
 
 ### 4. Enjoy useAuth
 
@@ -135,14 +140,14 @@ Here's a login button for example:
 // src/pages/index.js
 
 const Login = () => {
-  const { isAuthenticated, login, logout } = useAuth()
+    const { isAuthenticated, login, logout } = useAuth();
 
-  if (isAuthenticated()) {
-    return <Button onClick={logout}>Logout</Button>
-  } else {
-    return <Button onClick={login}>Login</Button>
-  }
-}
+    if (isAuthenticated()) {
+        return <Button onClick={logout}>Logout</Button>;
+    } else {
+        return <Button onClick={login}>Login</Button>;
+    }
+};
 ```
 
 `isAuthenticated` is a method that checks if the user's cookie is still valid. `login` and `logout` trigger their respective actions.
@@ -185,7 +190,7 @@ After logging out, Auth0 redirects back to your app. Again, it needs to know you
 
 ![](https://i.imgur.com/S160EiI.png)
 
-----
+---
 
 You can try it out here 👉 https://gatsby-useauth-example.now.sh/
 
@@ -193,14 +198,14 @@ You can try it out here 👉 https://gatsby-useauth-example.now.sh/
 
 👤 **Swizec Teller <swizec@swizec.com>**
 
-* Github: [@swizec](https://github.com/swizec)
-* Twitter: [@swizec](https://twitter.com/swizec)
-* Blog: [swizec.com/blog](https://swizec.com/blog)
+-   Github: [@swizec](https://github.com/swizec)
+-   Twitter: [@swizec](https://twitter.com/swizec)
+-   Blog: [swizec.com/blog](https://swizec.com/blog)
 
 👤 **Mateus Gabi Moreira <mateusgabimoreira@gmail.com>**
 
-* Github: [@mateusgabi](https://github.com/mateusgabi)
-* Twitter: [@uptogabi](https://twitter.com/uptogabi)
+-   Github: [@mateusgabi](https://github.com/mateusgabi)
+-   Twitter: [@uptogabi](https://twitter.com/uptogabi)
 
 ## 🤝 Contributing
 
@@ -217,5 +222,6 @@ Give a ⭐️ if this project helped you!
 Copyright © 2019 [Swizec Teller <swizec@swizec.com>](https://github.com/swizec).<br />
 This project is [MIT](https://github.com/Swizec/useAuth/blob/master/LICENSE) licensed.
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
