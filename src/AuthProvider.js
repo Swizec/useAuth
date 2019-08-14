@@ -1,4 +1,5 @@
 import React, { createContext, useReducer, useEffect } from "react";
+import PropTypes from "prop-types";
 import Auth0 from "auth0-js";
 
 import { authReducer } from "./authReducer";
@@ -61,4 +62,12 @@ export const AuthProvider = ({
             {children}
         </AuthContext.Provider>
     );
+};
+
+AuthProvider.propTypes = {
+    children: PropTypes.element,
+    navigate: PropTypes.func,
+    auth0_domain: PropTypes.string,
+    auth0_client_id: PropTypes.string,
+    auth0_params: PropTypes.object
 };
