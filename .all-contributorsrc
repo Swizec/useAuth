@@ -51,12 +51,24 @@
       ]
     },
     {
+      "login": "Swizec",
+      "name": "Swizec Teller",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/56883?v=4",
+      "profile": "http://swizec.com",
+      "contributions": [
+        "code",
+        "doc",
+        "blog",
+        "example",
+        "maintenance"
+       ]}, 
+       {
       "login": "NWRichmond",
       "name": "Nick Richmond",
       "avatar_url": "https://avatars0.githubusercontent.com/u/5732000?v=4",
       "profile": "https://github.com/NWRichmond",
       "contributions": [
-        "code"
+        "code",
       ]
     }
   ],
