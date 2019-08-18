@@ -1,0 +1,23 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "puregarlic",
+      "name": "Graham Barber",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/4955937?v=4",
+      "profile": "https://graham.now.sh",
+      "contributions": [
+        "question"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "useAuth",
+  "projectOwner": "Swizec",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
