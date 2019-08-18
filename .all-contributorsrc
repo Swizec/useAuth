@@ -5,18 +5,6 @@
     "imageSize": 100,
     "commit": false,
     "contributors": [{
-            "login": "swizec",
-            "name": "Swizec",
-            "avatar_url": "https://avatars1.githubusercontent.com/u/56883?v=4",
-            "profile": "https://github.com/swizec",
-            "contributions": [
-                "code",
-                "documentation",
-                "example",
-                "blog",
-                "maintenance"
-            ]
-        }, {
             "login": "dejanstrancar",
             "name": "Dejan",
             "avatar_url": "https://avatars1.githubusercontent.com/u/3260215?v=4",
