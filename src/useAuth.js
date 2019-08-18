@@ -24,7 +24,12 @@ async function setSession({ dispatch, auth0, authResult }) {
     });
 }
 
-export const handleAuthResult = async ({ err, dispatch, auth0, authResult }) => {
+export const handleAuthResult = async ({
+    err,
+    dispatch,
+    auth0,
+    authResult
+}) => {
     if (authResult && authResult.accessToken && authResult.idToken) {
         await setSession({ dispatch, auth0, authResult });
 
@@ -62,12 +67,12 @@ export const useAuth = () => {
         navigate("/");
     };
 
-    const handleAuthentication = () => {
+    const handleAuthentication = ({ postLoginRoute = "/" } = {}) => {
         if (typeof window !== "undefined") {
             auth0.parseHash(async (err, authResult) => {
                 await handleAuthResult({ err, authResult, dispatch, auth0 });
 
-                navigate("/");
+                navigate(postLoginRoute);
             });
         }
     };
