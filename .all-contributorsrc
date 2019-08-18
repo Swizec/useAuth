@@ -1,0 +1,23 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "MateusGabi",
+      "name": "Mateus Gabi",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14940643?v=4",
+      "profile": "https://github.com/MateusGabi",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "useAuth",
+  "projectOwner": "Swizec",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
