@@ -1,5 +1,5 @@
 <h1 align="center">useAuth – the simplest way to add authentication to your React app</h1>
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Swizec/useAuth/blob/master/LICENSE">
@@ -241,6 +241,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://graham.now.sh"><img src="https://avatars1.githubusercontent.com/u/4955937?v=4" width="100px;" alt="Graham Barber"/><br /><sub><b>Graham Barber</b></sub></a><br /><a href="#question-puregarlic" title="Answering Questions">💬</a></td>
     <td align="center"><a href="https://github.com/MateusGabi"><img src="https://avatars3.githubusercontent.com/u/14940643?v=4" width="100px;" alt="Mateus Gabi"/><br /><sub><b>Mateus Gabi</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=MateusGabi" title="Documentation">📖</a></td>
     <td align="center"><a href="https://jgalat.dev/"><img src="https://avatars3.githubusercontent.com/u/9066191?v=4" width="100px;" alt="Jorge Galat"/><br /><sub><b>Jorge Galat</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=jgalat" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/NWRichmond"><img src="https://avatars0.githubusercontent.com/u/5732000?v=4" width="100px;" alt="Nick Richmond"/><br /><sub><b>Nick Richmond</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=NWRichmond" title="Code">💻</a></td>
   </tr>
 </table>
 
