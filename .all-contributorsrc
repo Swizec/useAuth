@@ -6,6 +6,12 @@
   "commit": false,
   "contributors": [
     {
+      "login": "dejanstrancar",
+      "name": "Dejan",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/3260215?v=4",
+      "profile": "https://github.com/dejanstrancar",
+      "contributions": [
+        "example"]},{
       "login": "developit",
       "name": "Jason Miller",
       "avatar_url": "https://avatars2.githubusercontent.com/u/105127?v=4",
