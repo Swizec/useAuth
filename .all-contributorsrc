@@ -11,7 +11,20 @@
       "avatar_url": "https://avatars1.githubusercontent.com/u/4955937?v=4",
       "profile": "https://graham.now.sh",
       "contributions": [
-        "question"
+        "question"]}, {
+      "login": "MateusGabi",
+      "name": "Mateus Gabi",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14940643?v=4",
+      "profile": "https://github.com/MateusGabi",
+      "contributions": [
+        "doc"
+      ]},{
+      "login": "jgalat",
+      "name": "Jorge Galat",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9066191?v=4",
+      "profile": "https://jgalat.dev/",
+      "contributions": [
+        "code"
       ]
     }
   ],
