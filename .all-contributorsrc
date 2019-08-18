@@ -1,0 +1,23 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "developit",
+      "name": "Jason Miller",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/105127?v=4",
+      "profile": "https://jasonformat.com",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "useAuth",
+  "projectOwner": "Swizec",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
