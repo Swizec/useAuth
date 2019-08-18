@@ -61,6 +61,14 @@
         "blog",
         "example",
         "maintenance"
+       ]}, 
+       {
+      "login": "NWRichmond",
+      "name": "Nick Richmond",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5732000?v=4",
+      "profile": "https://github.com/NWRichmond",
+      "contributions": [
+        "code",
       ]
     }
   ],
