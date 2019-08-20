@@ -85,6 +85,7 @@ export const useAuth = () => {
         isAuthenticated,
         user: state.user,
         userId: state.user ? state.user.sub : null,
+        authResult: state.authResult,
         login,
         logout,
         handleAuthentication
