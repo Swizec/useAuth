@@ -20,7 +20,7 @@
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-helmet": "^5.2.1",
-        "react-use-auth": "^0.2.0",
+        "react-use-auth": "^0.3.0",
         "rebass": "^4.0.1"
     },
     "resolve": {

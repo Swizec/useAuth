@@ -9702,10 +9702,10 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-react-use-auth@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-0.2.0.tgz#c060388527f0f7fd7c12dd53bfde0593ec68afaa"
-  integrity sha512-8LpMlzlfEGZW+8lwU/b2vl/CRb0GyVle3MtcDE8LjfiVZSALyqZzh6VwQUmc0ufk75eIU4Dav58UBjyS4xDagA==
+react-use-auth@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-0.3.0.tgz#847384d49ca31bc8624596476a29a5c86168656b"
+  integrity sha512-2x7q+vX+BpXCBh93pa3W/iCk/FllrIkjTCquOIvK/tbY8EWGXQ9ScYQwxEjaKWq08630Yx+LrDmRV2jit6flKA==
   dependencies:
     auth0-js "^9.11.2"
 
