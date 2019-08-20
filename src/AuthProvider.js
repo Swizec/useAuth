@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Auth0 from "auth0-js";
 
@@ -28,13 +28,32 @@ export const AuthProvider = ({
         scope: "openid profile email"
     };
 
+    // Instantiate Auth0 client
     const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
 
+    // Holds authentication state
     const [state, dispatch] = useReducer(authReducer, {
         user: {},
         expiresAt: null
     });
 
+    const [contextValue, setContextValue] = useState({
+        state,
+        dispatch,
+        auth0,
+        callback_domain,
+        navigate
+    });
+
+    // Update context value and trigger re-render
+    // This patterns avoids unnecessary deep renders
+    // https://reactjs.org/docs/context.html#caveats
+    useEffect(() => {
+        setContextValue({ ...contextValue, state });
+    }, [state]);
+
+    // Verify user is logged-in on AuthProvider mount
+    // Avoids storing sensitive data in local storage
     useEffect(() => {
         auth0.checkSession({}, (err, authResult) => {
             if (err) {
@@ -50,15 +69,7 @@ export const AuthProvider = ({
     }, []);
 
     return (
-        <AuthContext.Provider
-            value={{
-                state,
-                dispatch,
-                auth0,
-                callback_domain,
-                navigate
-            }}
-        >
+        <AuthContext.Provider value={contextValue}>
             {children}
         </AuthContext.Provider>
     );

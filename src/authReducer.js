@@ -11,6 +11,7 @@ export const authReducer = (state, action) => {
             }
 
             return {
+                ...state,
                 user,
                 expiresAt,
                 authResult
@@ -22,13 +23,15 @@ export const authReducer = (state, action) => {
             }
 
             return {
+                ...state,
                 user: {},
                 expiresAt: null,
                 authResult: null
             };
         case "error":
-            const { errorType, error } = action;
+            const { errorT, ype, error } = action;
             return {
+                ...state,
                 user: {},
                 expiresAt: null,
                 authResult: null,
