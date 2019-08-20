@@ -29,7 +29,7 @@ export const authReducer = (state, action) => {
                 authResult: null
             };
         case "error":
-            const { errorT, ype, error } = action;
+            const { errorType, error } = action;
             return {
                 ...state,
                 user: {},

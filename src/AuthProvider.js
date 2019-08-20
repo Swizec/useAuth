@@ -59,7 +59,7 @@ export const AuthProvider = ({
             if (err) {
                 dispatch({
                     type: "error",
-                    erroType: "checkSession",
+                    errorType: "checkSession",
                     error: err
                 });
             } else {
