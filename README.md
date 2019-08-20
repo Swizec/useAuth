@@ -1,5 +1,5 @@
 <h1 align="center">useAuth – the simplest way to add authentication to your React app</h1>
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors)
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Swizec/useAuth/blob/master/LICENSE">
@@ -252,6 +252,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://jgalat.dev/"><img src="https://avatars3.githubusercontent.com/u/9066191?v=4" width="100px;" alt="Jorge Galat"/><br /><sub><b>Jorge Galat</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=jgalat" title="Code">💻</a></td>
     <td align="center"><a href="http://swizec.com"><img src="https://avatars0.githubusercontent.com/u/56883?v=4" width="100px;" alt="Swizec Teller"/><br /><sub><b>Swizec Teller</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=Swizec" title="Code">💻</a> <a href="https://github.com/Swizec/useAuth/commits?author=Swizec" title="Documentation">📖</a> <a href="#blog-Swizec" title="Blogposts">📝</a> <a href="#example-Swizec" title="Examples">💡</a> <a href="#maintenance-Swizec" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/NWRichmond"><img src="https://avatars0.githubusercontent.com/u/5732000?v=4" width="100px;" alt="Nick Richmond"/><br /><sub><b>Nick Richmond</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=NWRichmond" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://olliemonk.com"><img src="https://avatars0.githubusercontent.com/u/7108120?v=4" width="100px;" alt="Ollie Monk"/><br /><sub><b>Ollie Monk</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=omonk" title="Documentation">📖</a></td>
   </tr>
 </table>
 
