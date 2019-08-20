@@ -1,5 +1,5 @@
 <h1 align="center">useAuth – the simplest way to add authentication to your React app</h1>
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors)
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Swizec/useAuth/blob/master/LICENSE">
@@ -272,6 +272,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="http://olliemonk.com"><img src="https://avatars0.githubusercontent.com/u/7108120?v=4" width="100px;" alt="Ollie Monk"/><br /><sub><b>Ollie Monk</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=omonk" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://henrikwenz.de/"><img src="https://avatars3.githubusercontent.com/u/1265681?v=4" width="100px;" alt="Henrik Wenz"/><br /><sub><b>Henrik Wenz</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/issues?q=author%3AHaNdTriX" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
