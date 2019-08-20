@@ -193,6 +193,8 @@ After logging out, Auth0 redirects back to your app. Again, it needs to know you
 
 ![](https://i.imgur.com/S160EiI.png)
 
+# Tips & tricks
+
 ## Persisting login after refresh
 
 After you've set everything up (and you're using social sign on methods) you'll notice that refreshing doesn't keep your user logged in... 👎
@@ -200,6 +202,26 @@ After you've set everything up (and you're using social sign on methods) you'll 
 If you're using an IdP such as Google or Github to provide identity, you will need to register an app on Auth0 to enable this behaviour. The steps to create this behaviour are a bit nested in docs but can be achieved relatively simply by following the guide [`Set Up Social Connections`](https://auth0.com/docs/dashboard/guides/connections/set-up-connections-social) on the Auth0 site. The guide follows steps for Google sign on, your mileage with other providers may vary...
 
 For a more detailed understanding of why this is happening you can have a read through [this section](https://auth0.com/blog/react-tutorial-building-and-securing-your-first-app/#Securing-your-React-App) of Auth0s guide to setting up a secure React application. (Pro tip: search for `Keeping Users Signed In after a Refresh` to jump straight to the section in question).
+
+## User's access tokens
+
+Since version 0.4.0 useAuth exposes the entire Auth0 authResult object so you can access your user's id or access token. This is useful when you have to log the user into your own backend as well as the frontend.
+
+For refence: 
+- https://github.com/Swizec/useAuth/issues/11
+- https://github.com/Swizec/useAuth/issues/22
+
+Like this:
+
+```javascript
+function SomeComponent() {
+    const { authResult } = useAuth();
+
+    console.log(authResult.idToken)
+    console.log(authResult.accessToken)
+    // etc, I recommend printing the authResult object to see everything that's available
+}
+```
 
 ---
 
@@ -212,11 +234,6 @@ You can try it out here 👉 https://gatsby-useauth-example.now.sh/
 -   Github: [@swizec](https://github.com/swizec)
 -   Twitter: [@swizec](https://twitter.com/swizec)
 -   Blog: [swizec.com/blog](https://swizec.com/blog)
-
-👤 **Mateus Gabi Moreira <mateusgabimoreira@gmail.com>**
-
--   Github: [@mateusgabi](https://github.com/mateusgabi)
--   Twitter: [@uptogabi](https://twitter.com/uptogabi)
 
 ## 🤝 Contributing
 
