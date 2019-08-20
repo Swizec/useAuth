@@ -125,8 +125,9 @@ That method will create a cookie in local storage with your user's information a
 
 To redirect to a route other than the homepage after the user is logged in, supply the `handleAuthentication` function an Object Literal with the `postLoginRoute` key and an associated route value. For example, to route to `/account`, call `handleAuthentication` as follows:
 
-```handleAuthentication({ postLoginRoute: "/account" })```
-
+```javascript
+handleAuthentication({ postLoginRoute: "/account" });
+```
 
 **_PS: Make sure you add `<domain>/auth0_callback` as a valid callback URL in your Auth0 config_**
 
@@ -191,6 +192,14 @@ useAuth avoids using local storage for secure tokens. For Auth0 to know that our
 After logging out, Auth0 redirects back to your app. Again, it needs to know you aren't up to anything shady.
 
 ![](https://i.imgur.com/S160EiI.png)
+
+## Persisting login after refresh
+
+After you've set everything up (and you're using social sign on methods) you'll notice that refreshing doesn't keep your user logged in... 👎
+
+If you're using an IdP such as Google or Github to provide identity, you will need to register an app on Auth0 to enable this behaviour. The steps to create this behaviour are a bit nested in docs but can be achieved relatively simply by following the guide [`Set Up Social Connections`](https://auth0.com/docs/dashboard/guides/connections/set-up-connections-social) on the Auth0 site. The guide follows steps for Google sign on, your mileage with other providers may vary...
+
+For a more detailed understanding of why this is happening you can have a read through [this section](https://auth0.com/blog/react-tutorial-building-and-securing-your-first-app/#Securing-your-React-App) of Auth0s guide to setting up a secure React application. (Pro tip: search for `Keeping Users Signed In after a Refresh` to jump straight to the section in question).
 
 ---
 
