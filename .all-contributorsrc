@@ -80,6 +80,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "HaNdTriX",
+      "name": "Henrik Wenz",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1265681?v=4",
+      "profile": "http://henrikwenz.de/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
