@@ -69,8 +69,15 @@ export const useAuth = () => {
 
     const handleAuthentication = ({ postLoginRoute = "/" } = {}) => {
         if (typeof window !== "undefined") {
+            dispatch({
+                type: "authenticating"
+            });
+
             auth0.parseHash(async (err, authResult) => {
                 await handleAuthResult({ err, authResult, dispatch, auth0 });
+                dispatch({
+                    type: "authenticating"
+                });
 
                 navigate(postLoginRoute);
             });
@@ -82,6 +89,7 @@ export const useAuth = () => {
     };
 
     return {
+        isAuthenticating: state.isAuthenticating,
         isAuthenticated,
         user: state.user,
         userId: state.user ? state.user.sub : null,

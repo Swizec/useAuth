@@ -171,6 +171,35 @@ const IndexPage = () => {
 
 Check `isAuthenticated` then use the user object. Simple as that.
 
+`isAuthenticating` is a method for checking whether or not `useAuth` is in the middle of validating login details. This allows you to then make requests to your user database and work out where to send users from the `auth0_callback` page, e.g. profile page or sign up.
+
+```javascript
+const Auth0CallbackPage = () => {
+    const { user, isAuthenticating, handleAuthentication } = useAuth();
+    const { loading, data, error } = useQuery(QUERY, {
+        variables: { id: user.sub }
+    });
+
+    if (error) {
+        return <h1>There was an error</h1>;
+    }
+
+    if (isAuthenticating || loading) {
+        return (
+            <h1>
+                This is the auth callback page, you should be redirected
+                immediately.
+            </h1>
+        );
+    }
+
+    const { user: dbUser } = data || {};
+    const redirectUrl = dbUser ? "/app/profile" : "/app/signup";
+
+    handleAuthentication({ postLoginRoute: redirectUrl });
+};
+```
+
 ## Checklist for configuring Auth0
 
 There's a couple of required configurations you need to make in Auth0 to make useAuth run smoothly.
@@ -197,6 +226,8 @@ After logging out, Auth0 redirects back to your app. Again, it needs to know you
 
 ## Persisting login after refresh
 
+**NB Make sure you're not blocking blocking cookies! Extensions like privacy badger will prevent Auth0 from setting cookies so refreshing between logins wont work**
+
 After you've set everything up (and you're using social sign on methods) you'll notice that refreshing doesn't keep your user logged in... 👎
 
 If you're using an IdP such as Google or Github to provide identity, you will need to register an app on Auth0 to enable this behaviour. The steps to create this behaviour are a bit nested in docs but can be achieved relatively simply by following the guide [`Set Up Social Connections`](https://auth0.com/docs/dashboard/guides/connections/set-up-connections-social) on the Auth0 site. The guide follows steps for Google sign on, your mileage with other providers may vary...
@@ -207,9 +238,10 @@ For a more detailed understanding of why this is happening you can have a read t
 
 Since version 0.4.0 useAuth exposes the entire Auth0 authResult object so you can access your user's id or access token. This is useful when you have to log the user into your own backend as well as the frontend.
 
-For refence: 
-- https://github.com/Swizec/useAuth/issues/11
-- https://github.com/Swizec/useAuth/issues/22
+For refence:
+
+-   https://github.com/Swizec/useAuth/issues/11
+-   https://github.com/Swizec/useAuth/issues/22
 
 Like this:
 
@@ -217,8 +249,8 @@ Like this:
 function SomeComponent() {
     const { authResult } = useAuth();
 
-    console.log(authResult.idToken)
-    console.log(authResult.accessToken)
+    console.log(authResult.idToken);
+    console.log(authResult.accessToken);
     // etc, I recommend printing the authResult object to see everything that's available
 }
 ```

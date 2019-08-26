@@ -34,7 +34,8 @@ export const AuthProvider = ({
     // Holds authentication state
     const [state, dispatch] = useReducer(authReducer, {
         user: {},
-        expiresAt: null
+        expiresAt: null,
+        isAuthenticating: false
     });
 
     const [contextValue, setContextValue] = useState({
@@ -55,7 +56,13 @@ export const AuthProvider = ({
     // Verify user is logged-in on AuthProvider mount
     // Avoids storing sensitive data in local storage
     useEffect(() => {
+        dispatch({
+            type: "authenticating"
+        });
         auth0.checkSession({}, (err, authResult) => {
+            dispatch({
+                type: "authenticating"
+            });
             if (err) {
                 dispatch({
                     type: "error",
