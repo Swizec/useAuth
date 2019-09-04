@@ -2,7 +2,7 @@
 
 <p> 
   <a href="#contributors-">
-    <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square"/>
+    <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-9-orange.svg?style=round-square"/>
   </a>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Swizec/useAuth/blob/master/LICENSE">
