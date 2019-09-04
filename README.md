@@ -1,7 +1,7 @@
 <h1 align="center">useAuth – the simplest way to add authentication to your React app</h1>
 
 <p> 
-  <a href="#contributors">
+  <a href="#contributors-">
     <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square"/>
   </a>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
