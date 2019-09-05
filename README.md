@@ -173,7 +173,7 @@ const IndexPage = () => {
 
 Check `isAuthenticated` then use the user object. Simple as that.
 
-`isAuthenticating` is a method for checking whether or not `useAuth` is in the middle of validating login details. This allows you to then make requests to your user database and work out where to send users from the `auth0_callback` page, e.g. profile page or sign up.
+`isAuthenticating` is a flag for checking whether or not `useAuth` is in the middle of validating login details. This allows you to then make requests to your user database and work out where to send users from the `auth0_callback` page, e.g. profile page or sign up.
 
 ```javascript
 const Auth0CallbackPage = () => {
@@ -228,7 +228,7 @@ After logging out, Auth0 redirects back to your app. Again, it needs to know you
 
 ## Persisting login after refresh
 
-**NB Make sure you're not blocking blocking cookies! Extensions like privacy badger will prevent Auth0 from setting cookies so refreshing between logins wont work**
+**NB Make sure you're not blocking cookies! Extensions like privacy badger will prevent Auth0 from setting cookies so refreshing between logins wont work**
 
 After you've set everything up (and you're using social sign on methods) you'll notice that refreshing doesn't keep your user logged in... 👎
 

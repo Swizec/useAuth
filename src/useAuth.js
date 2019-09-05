@@ -33,6 +33,10 @@ export const handleAuthResult = async ({
     if (authResult && authResult.accessToken && authResult.idToken) {
         await setSession({ dispatch, auth0, authResult });
 
+        dispatch({
+            type: "toggleAuthenticating"
+        });
+
         return true;
     } else if (err) {
         console.error(err);
@@ -40,6 +44,7 @@ export const handleAuthResult = async ({
             type: "error",
             error: err,
             errorType: "authResult"
+            isAuthenticating: false
         });
 
         return false;
@@ -75,9 +80,6 @@ export const useAuth = () => {
 
             auth0.parseHash(async (err, authResult) => {
                 await handleAuthResult({ err, authResult, dispatch, auth0 });
-                dispatch({
-                    type: "toggleAuthenticating"
-                });
 
                 navigate(postLoginRoute);
             });

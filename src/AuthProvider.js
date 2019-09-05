@@ -60,9 +60,6 @@ export const AuthProvider = ({
             type: "toggleAuthenticating"
         });
         auth0.checkSession({}, (err, authResult) => {
-            dispatch({
-                type: "toggleAuthenticating"
-            });
             if (err) {
                 dispatch({
                     type: "error",

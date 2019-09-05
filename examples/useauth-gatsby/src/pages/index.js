@@ -8,12 +8,22 @@ import Image from "../components/image"
 import SEO from "../components/seo"
 
 const Login = () => {
-  const { isAuthenticated, login, logout } = useAuth()
+  const { isAuthenticated, login, logout, isAuthenticating } = useAuth()
 
   if (isAuthenticated()) {
-    return <Button onClick={logout}>Logout</Button>
+    return (
+      <>
+        <Button onClick={logout}>Logout</Button>
+        <small>{isAuthenticating ? "Verifying ..." : null}</small>
+      </>
+    )
   } else {
-    return <Button onClick={login}>Login</Button>
+    return (
+      <>
+        <Button onClick={login}>Login</Button>
+        <small>{isAuthenticating ? "Verifying ..." : null}</small>
+      </>
+    )
   }
 }
 
