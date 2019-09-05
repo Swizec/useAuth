@@ -28,7 +28,7 @@ export const authReducer = (state, action) => {
                 expiresAt: null,
                 authResult: null
             };
-        case "authenticating":
+        case "toggleAuthenticating":
             return {
                 ...state,
                 isAuthenticating: !state.isAuthenticating

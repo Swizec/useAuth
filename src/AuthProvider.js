@@ -57,11 +57,11 @@ export const AuthProvider = ({
     // Avoids storing sensitive data in local storage
     useEffect(() => {
         dispatch({
-            type: "authenticating"
+            type: "toggleAuthenticating"
         });
         auth0.checkSession({}, (err, authResult) => {
             dispatch({
-                type: "authenticating"
+                type: "toggleAuthenticating"
             });
             if (err) {
                 dispatch({

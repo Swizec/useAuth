@@ -70,13 +70,13 @@ export const useAuth = () => {
     const handleAuthentication = ({ postLoginRoute = "/" } = {}) => {
         if (typeof window !== "undefined") {
             dispatch({
-                type: "authenticating"
+                type: "toggleAuthenticating"
             });
 
             auth0.parseHash(async (err, authResult) => {
                 await handleAuthResult({ err, authResult, dispatch, auth0 });
                 dispatch({
-                    type: "authenticating"
+                    type: "toggleAuthenticating"
                 });
 
                 navigate(postLoginRoute);
