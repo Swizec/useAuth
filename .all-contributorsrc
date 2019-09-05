@@ -89,6 +89,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "maxchehab",
+      "name": "Max Chehab",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13038919?v=4",
+      "profile": "https://twitter.com/maxchehab",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
