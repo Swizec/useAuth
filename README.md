@@ -1,7 +1,9 @@
 <h1 align="center">useAuth – the simplest way to add authentication to your React app</h1>
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors)
-<p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
+<p> 
+  <a href="#contributors-">
+    <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-10-orange.svg?style=round-square"/>
+  </a>
+  <img alt="Version" src="https://img.shields.io/badge/version-0.4.1-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Swizec/useAuth/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
