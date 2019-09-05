@@ -28,6 +28,11 @@ export const authReducer = (state, action) => {
                 expiresAt: null,
                 authResult: null
             };
+        case "authenticating":
+            return {
+                ...state,
+                isAuthenticating: !state.isAuthenticating
+            };
         case "error":
             const { errorType, error } = action;
             return {
