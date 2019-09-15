@@ -308,6 +308,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://olliemonk.com"><img src="https://avatars0.githubusercontent.com/u/7108120?v=4" width="100px;" alt="Ollie Monk"/><br /><sub><b>Ollie Monk</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=omonk" title="Documentation">📖</a> <a href="https://github.com/Swizec/useAuth/commits?author=omonk" title="Code">💻</a></td>
     <td align="center"><a href="http://henrikwenz.de/"><img src="https://avatars3.githubusercontent.com/u/1265681?v=4" width="100px;" alt="Henrik Wenz"/><br /><sub><b>Henrik Wenz</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/issues?q=author%3AHaNdTriX" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://twitter.com/maxchehab"><img src="https://avatars1.githubusercontent.com/u/13038919?v=4" width="100px;" alt="Max Chehab"/><br /><sub><b>Max Chehab</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=maxchehab" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://joelb.dev"><img src="https://avatars0.githubusercontent.com/u/6668097?v=4" width="100px;" alt="Joel Bartlett"/><br /><sub><b>Joel Bartlett</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=murbar" title="Code">💻</a></td>
   </tr>
 </table>
 
