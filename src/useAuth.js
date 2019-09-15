@@ -43,7 +43,7 @@ export const handleAuthResult = async ({
         dispatch({
             type: "error",
             error: err,
-            errorType: "authResult"
+            errorType: "authResult",
             isAuthenticating: false
         });
 
