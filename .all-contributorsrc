@@ -108,6 +108,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "smehdii",
+      "name": "SIDDIK MEHDI ",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/22805576?v=4",
+      "profile": "https://github.com/smehdii",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sophister",
+      "name": "Jess",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/219501?v=4",
+      "profile": "https://github.com/sophister",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
