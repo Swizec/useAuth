@@ -50,7 +50,7 @@ export const AuthProvider = ({
     // This patterns avoids unnecessary deep renders
     // https://reactjs.org/docs/context.html#caveats
     useEffect(() => {
-        setContextValue({ ...contextValue, state });
+        setContextValue(contextValue => ({ ...contextValue, state }));
     }, [state]);
 
     // Verify user is logged-in on AuthProvider mount
