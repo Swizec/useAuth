@@ -28,10 +28,15 @@ export const authReducer = (state, action) => {
                 expiresAt: null,
                 authResult: null
             };
-        case "toggleAuthenticating":
+        case "stopAuthenticating":
             return {
                 ...state,
-                isAuthenticating: !state.isAuthenticating
+                isAuthenticating: false
+            };
+        case "startAuthenticating":
+            return {
+                ...state,
+                isAuthenticating: true
             };
         case "error":
             const { errorType, error } = action;

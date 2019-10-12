@@ -30,12 +30,14 @@ export const handleAuthResult = async ({
     auth0,
     authResult
 }) => {
+    console.log("HAI");
+
+    dispatch({
+        type: "stopAuthenticating"
+    });
+
     if (authResult && authResult.accessToken && authResult.idToken) {
         await setSession({ dispatch, auth0, authResult });
-
-        dispatch({
-            type: "toggleAuthenticating"
-        });
 
         return true;
     } else if (err) {
@@ -43,8 +45,7 @@ export const handleAuthResult = async ({
         dispatch({
             type: "error",
             error: err,
-            errorType: "authResult",
-            isAuthenticating: false
+            errorType: "authResult"
         });
 
         return false;
@@ -75,7 +76,7 @@ export const useAuth = () => {
     const handleAuthentication = ({ postLoginRoute = "/" } = {}) => {
         if (typeof window !== "undefined") {
             dispatch({
-                type: "toggleAuthenticating"
+                type: "startAuthenticating"
             });
 
             auth0.parseHash(async (err, authResult) => {
