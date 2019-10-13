@@ -35,7 +35,7 @@ export const AuthProvider = ({
     const [state, dispatch] = useReducer(authReducer, {
         user: {},
         expiresAt: null,
-        isAuthenticating: false
+        isAuthenticating: true
     });
 
     const [contextValue, setContextValue] = useState({
