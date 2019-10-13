@@ -6,6 +6,7 @@
     "main": "dist/index.js",
     "module": "dist/index.module.js",
     "unpkg": "dist/index.umd.js",
+    "types": "dist/types.d.ts",
     "repository": "git@github.com:Swizec/useAuth.git",
     "author": "Swizec Teller <swizec@swizec.com>",
     "license": "MIT",
