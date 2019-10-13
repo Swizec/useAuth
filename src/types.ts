@@ -3,13 +3,14 @@ import {
     Auth0DecodedHash,
     WebAuth,
     Auth0Error,
-    AuthOptions
+    AuthOptions,
+    Auth0ParseHashError
 } from "auth0-js";
-import { ReactNode } from "react";
+import { ReactNode, Dispatch } from "react";
 
 export type AuthState = {
-    user: Auth0UserProfile | {};
-    authResult: Auth0DecodedHash;
+    user: Auth0UserProfile | { sub?: string };
+    authResult?: Auth0DecodedHash;
     expiresAt: number | null;
     isAuthenticating: boolean;
     errorType?: string;
@@ -33,9 +34,9 @@ export interface useAuthInterface {
     (): {
         isAuthenticating: boolean;
         isAuthenticated: () => boolean;
-        user: Auth0UserProfile | {};
-        userId: string | null;
-        authResult: Auth0DecodedHash;
+        user: Auth0UserProfile | { sub?: string };
+        userId: string | null | undefined;
+        authResult: Auth0DecodedHash | undefined;
         login: () => void;
         logout: () => void;
         handleAuthentication: ({
@@ -46,7 +47,7 @@ export interface useAuthInterface {
     };
 }
 
-export type AuthDispatch = ({ ...AuthAction }) => void;
+export type AuthDispatch = Dispatch<AuthAction>;
 
 export type handleAuthResultInterface = ({
     err,
@@ -54,10 +55,10 @@ export type handleAuthResultInterface = ({
     auth0,
     authResult
 }: {
-    err?: Error;
+    err?: Error | Auth0ParseHashError | null;
     dispatch: AuthDispatch;
     auth0: WebAuth;
-    authResult: Auth0DecodedHash;
+    authResult: Auth0DecodedHash | null;
 }) => Promise<boolean>;
 
 export type setSessionInterface = ({
@@ -87,7 +88,7 @@ export type AuthProviderInterface = ({
 export type AuthContextState = {
     state: AuthState;
     dispatch: AuthDispatch;
-    auth0: WebAuth;
+    auth0: WebAuth | null;
     callback_domain: string;
     navigate: (path: string) => void;
 };

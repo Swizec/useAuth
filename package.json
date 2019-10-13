@@ -12,8 +12,8 @@
     "license": "MIT",
     "private": false,
     "scripts": {
-        "build": "microbundle --jsx React.createElement",
-        "dev": "microbundle watch --jsx React.createElement"
+        "build": "microbundle --jsx react",
+        "dev": "microbundle watch --jsx react"
     },
     "files": [
         "src",
@@ -24,6 +24,7 @@
     },
     "devDependencies": {
         "@types/auth0-js": "^9.10.6",
+        "@types/react": "^16.9.5",
         "eslint": "^6.1.0",
         "eslint-config-prettier": "^6.0.0",
         "eslint-plugin-prettier": "^3.1.0",

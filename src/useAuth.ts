@@ -6,7 +6,12 @@ import {
     handleAuthResultInterface,
     setSessionInterface
 } from "./types";
-import { Auth0DecodedHash, Auth0UserProfile, Auth0Error } from "auth0-js";
+import {
+    Auth0DecodedHash,
+    Auth0UserProfile,
+    Auth0Error,
+    Auth0ParseHashError
+} from "auth0-js";
 
 const setSession: setSessionInterface = async ({
     dispatch,
@@ -15,8 +20,8 @@ const setSession: setSessionInterface = async ({
 }) => {
     return new Promise((resolve, reject) => {
         auth0.client.userInfo(
-            authResult.accessToken,
-            (err: Auth0Error, user: Auth0UserProfile) => {
+            authResult.accessToken || "",
+            (err: Auth0Error | null, user: Auth0UserProfile) => {
                 if (err) {
                     dispatch({
                         type: "error",
@@ -60,6 +65,8 @@ export const handleAuthResult: handleAuthResultInterface = async ({
         });
 
         return false;
+    } else {
+        return false;
     }
 };
 
@@ -69,13 +76,14 @@ export const useAuth: useAuthInterface = () => {
     );
 
     const login = () => {
-        auth0.authorize();
+        auth0 && auth0.authorize();
     };
 
     const logout = () => {
-        auth0.logout({
-            returnTo: callback_domain
-        });
+        auth0 &&
+            auth0.logout({
+                returnTo: callback_domain
+            });
         dispatch({
             type: "logout"
         });
@@ -90,23 +98,27 @@ export const useAuth: useAuthInterface = () => {
                 type: "startAuthenticating"
             });
 
-            auth0.parseHash(
-                async (err: Error, authResult: Auth0DecodedHash) => {
-                    await handleAuthResult({
-                        err,
-                        authResult,
-                        dispatch,
-                        auth0
-                    });
+            auth0 &&
+                auth0.parseHash(
+                    async (
+                        err: Auth0ParseHashError | null,
+                        authResult: Auth0DecodedHash | null
+                    ) => {
+                        await handleAuthResult({
+                            err,
+                            authResult,
+                            dispatch,
+                            auth0
+                        });
 
-                    navigate(postLoginRoute);
-                }
-            );
+                        navigate(postLoginRoute);
+                    }
+                );
         }
     };
 
     const isAuthenticated = () => {
-        return state.expiresAt && new Date().getTime() < state.expiresAt;
+        return !!(state.expiresAt && new Date().getTime() < state.expiresAt);
     };
 
     return {

@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import Auth0, { AuthOptions } from "auth0-js";
+import Auth0 from "auth0-js";
+import { AuthOptions } from "auth0-js";
 
 import { authReducer } from "./authReducer";
 import { handleAuthResult } from "./useAuth";
@@ -11,7 +11,19 @@ import {
     AuthContextState
 } from "./types";
 
-export const AuthContext = createContext<AuthContextState>(null);
+const DEFAULT_STATE = {
+    user: {},
+    expiresAt: null,
+    isAuthenticating: false
+};
+
+export const AuthContext = createContext<AuthContextState>({
+    state: DEFAULT_STATE,
+    dispatch: () => {},
+    auth0: null,
+    callback_domain: "http://localhost:8000",
+    navigate: (path: string) => {}
+});
 
 export const AuthProvider: AuthProviderInterface = ({
     children,
@@ -40,11 +52,7 @@ export const AuthProvider: AuthProviderInterface = ({
     // Holds authentication state
     const [state, dispatch] = useReducer<React.Reducer<AuthState, AuthAction>>(
         authReducer,
-        {
-            user: {},
-            expiresAt: null,
-            isAuthenticating: false
-        }
+        DEFAULT_STATE
     );
 
     const [contextValue, setContextValue] = useState<AuthContextState>({
@@ -71,6 +79,7 @@ export const AuthProvider: AuthProviderInterface = ({
         dispatch({
             type: "startAuthenticating"
         });
+
         auth0.checkSession({}, (err, authResult) => {
             dispatch({
                 type: "stopAuthenticating"
