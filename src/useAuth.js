@@ -30,14 +30,12 @@ export const handleAuthResult = async ({
     auth0,
     authResult
 }) => {
-    console.log("HAI");
-
-    dispatch({
-        type: "stopAuthenticating"
-    });
 
     if (authResult && authResult.accessToken && authResult.idToken) {
         await setSession({ dispatch, auth0, authResult });
+        dispatch({
+        type: "stopAuthenticating"
+    });
 
         return true;
     } else if (err) {
