@@ -1,3 +1,5 @@
+import { AuthState, AuthAction } from "./types";
+
 export const authReducer = (
     state: AuthState,
     action: AuthAction
