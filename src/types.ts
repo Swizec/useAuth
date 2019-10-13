@@ -2,8 +2,10 @@ import {
     Auth0UserProfile,
     Auth0DecodedHash,
     WebAuth,
-    Auth0Error
+    Auth0Error,
+    AuthOptions
 } from "auth0-js";
+import { ReactNode } from "react";
 
 export type AuthState = {
     user: Auth0UserProfile | {};
@@ -52,7 +54,7 @@ export type handleAuthResultInterface = ({
     auth0,
     authResult
 }: {
-    err: Error;
+    err?: Error;
     dispatch: AuthDispatch;
     auth0: WebAuth;
     authResult: Auth0DecodedHash;
@@ -67,3 +69,25 @@ export type setSessionInterface = ({
     auth0: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;
+
+export type AuthProviderInterface = ({
+    children,
+    navigate,
+    auth0_domain,
+    auth0_client_id,
+    auth0_params
+}: {
+    children: ReactNode;
+    navigate: (path: string) => void;
+    auth0_domain: string;
+    auth0_client_id: string;
+    auth0_params: AuthOptions;
+}) => ReactNode;
+
+export type AuthContextState = {
+    state: AuthState;
+    dispatch: AuthDispatch;
+    auth0: WebAuth;
+    callback_domain: string;
+    navigate: (path: string) => void;
+};

@@ -1,13 +1,19 @@
 import React, { createContext, useReducer, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Auth0 from "auth0-js";
+import Auth0, { AuthOptions } from "auth0-js";
 
 import { authReducer } from "./authReducer";
 import { handleAuthResult } from "./useAuth";
+import {
+    AuthProviderInterface,
+    AuthState,
+    AuthAction,
+    AuthContextState
+} from "./types";
 
-export const AuthContext = createContext(null);
+export const AuthContext = createContext<AuthContextState>(null);
 
-export const AuthProvider = ({
+export const AuthProvider: AuthProviderInterface = ({
     children,
     navigate,
     auth0_domain,
@@ -19,7 +25,7 @@ export const AuthProvider = ({
             ? `${window.location.protocol}//${window.location.host}`
             : "http://localhost:8000";
 
-    const params = {
+    const params: AuthOptions = {
         domain: auth0_domain,
         clientID: auth0_client_id,
         redirectUri: `${callback_domain}/auth0_callback`,
@@ -32,13 +38,16 @@ export const AuthProvider = ({
     const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
 
     // Holds authentication state
-    const [state, dispatch] = useReducer(authReducer, {
-        user: {},
-        expiresAt: null,
-        isAuthenticating: false
-    });
+    const [state, dispatch] = useReducer<React.Reducer<AuthState, AuthAction>>(
+        authReducer,
+        {
+            user: {},
+            expiresAt: null,
+            isAuthenticating: false
+        }
+    );
 
-    const [contextValue, setContextValue] = useState({
+    const [contextValue, setContextValue] = useState<AuthContextState>({
         state,
         dispatch,
         auth0,
@@ -50,7 +59,10 @@ export const AuthProvider = ({
     // This patterns avoids unnecessary deep renders
     // https://reactjs.org/docs/context.html#caveats
     useEffect(() => {
-        setContextValue(contextValue => ({ ...contextValue, state }));
+        setContextValue((contextValue: AuthContextState) => ({
+            ...contextValue,
+            state
+        }));
     }, [state]);
 
     // Verify user is logged-in on AuthProvider mount
@@ -82,12 +94,4 @@ export const AuthProvider = ({
             {children}
         </AuthContext.Provider>
     );
-};
-
-AuthProvider.propTypes = {
-    children: PropTypes.element,
-    navigate: PropTypes.func,
-    auth0_domain: PropTypes.string,
-    auth0_client_id: PropTypes.string,
-    auth0_params: PropTypes.object
 };
