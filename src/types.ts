@@ -10,25 +10,25 @@ import { ReactNode, Dispatch } from "react";
 
 export type AuthState = {
     user: Auth0UserProfile | { sub?: string };
-    authResult?: Auth0DecodedHash;
+    authResult?: Auth0DecodedHash | null;
     expiresAt: number | null;
     isAuthenticating: boolean;
     errorType?: string;
-    error?: Error;
+    error?: Error | Auth0Error | Auth0ParseHashError;
 };
 
-export type AuthAction = {
-    type:
-        | "login"
-        | "logout"
-        | "startAuthenticating"
-        | "stopAuthenticating"
-        | "error";
-    authResult?: Auth0DecodedHash;
-    user?: Auth0UserProfile;
-    errorType?: string;
-    error?: Error | Auth0Error;
-};
+export type AuthAction =
+    | {
+          type: "login";
+          authResult: Auth0DecodedHash;
+          user: Auth0UserProfile;
+      }
+    | { type: "logout" | "stopAuthenticating" | "startAuthenticating" }
+    | {
+          type: "error";
+          errorType: string;
+          error: Error | Auth0Error | Auth0ParseHashError;
+      };
 
 export interface useAuthInterface {
     (): {
@@ -36,7 +36,7 @@ export interface useAuthInterface {
         isAuthenticated: () => boolean;
         user: Auth0UserProfile | { sub?: string };
         userId: string | null | undefined;
-        authResult: Auth0DecodedHash | undefined;
+        authResult: Auth0DecodedHash | undefined | null;
         login: () => void;
         logout: () => void;
         handleAuthentication: ({

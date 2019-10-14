@@ -8,7 +8,7 @@ export const authReducer = (
         case "login":
             const { authResult, user } = action;
             const expiresAt =
-                authResult.expiresIn * 1000 + new Date().getTime();
+                authResult.expiresIn! * 1000 + new Date().getTime();
 
             if (typeof localStorage !== "undefined") {
                 localStorage.setItem("expires_at", JSON.stringify(expiresAt));

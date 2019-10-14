@@ -12,8 +12,8 @@
     "license": "MIT",
     "private": false,
     "scripts": {
-        "build": "microbundle --jsx react",
-        "dev": "microbundle watch --jsx react"
+        "build": "microbundle --jsx React.createElement",
+        "dev": "microbundle watch --jsx React.createElement"
     },
     "files": [
         "src",
