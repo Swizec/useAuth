@@ -240,7 +240,7 @@ For a more detailed understanding of why this is happening you can have a read t
 
 Since version 0.4.0 useAuth exposes the entire Auth0 authResult object so you can access your user's id or access token. This is useful when you have to log the user into your own backend as well as the frontend.
 
-For refence:
+For reference:
 
 -   https://github.com/Swizec/useAuth/issues/11
 -   https://github.com/Swizec/useAuth/issues/22
