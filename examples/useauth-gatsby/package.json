@@ -30,9 +30,9 @@
         "prettier": "^1.18.2",
         "relative-deps": "^0.1.2"
     },
-    "relativeDependencies": {
-        "react-use-auth": "../../"
-    },
+    // "relativeDependencies": {
+    // "react-use-auth": "../../"
+    // },
     "keywords": [
         "gatsby"
     ],
