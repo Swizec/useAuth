@@ -1,4 +1,5 @@
 import React from "react";
+import App from "next/app";
 import { AuthProvider } from "react-use-auth";
 import { useRouter } from "next/router";
 
@@ -16,4 +17,9 @@ function MyApp({ Component, pageProps }) {
     );
 }
 
-export default MyApp;
+// extend App component and return our function so we can use useRouter :P
+export default class _App extends App {
+    render() {
+        return <MyApp {...this.props} />;
+    }
+}

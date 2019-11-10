@@ -1363,7 +1363,7 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-auth0-js@^9.11.2:
+auth0-js@^9.11.2, auth0-js@^9.11.3:
   version "9.11.3"
   resolved "https://registry.yarnpkg.com/auth0-js/-/auth0-js-9.11.3.tgz#a19add9f5c47d155b7a6f87a6dd2b197a9a43860"
   integrity sha512-86EGbaXPHBuyYPPPpvkckH7rCnEgS14DHsK64v2tb4ph4NsZ+peW6pjwBHkOdz4Ytd/ibhGTYCEbA9xdHWSqiA==
@@ -4755,10 +4755,10 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.10.2.tgz#984120fd4d16800e9a738208ab1fba422d23b5ab"
   integrity sha512-INBT1QEgtcCCgvccr5/86CfD71fw9EPmDxgiJX4I2Ddr6ZsV6iFXsuby+qWJPtmNuMY0zByTsG4468P7nHuNWA==
 
-react-use-auth@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-0.4.3.tgz#5d2bc9b7a530a9178f67bc319af3fca6f23e550c"
-  integrity sha512-4qlajnvSnDusSnxwhB8BDut3DFeQavEpssuBsjQ6ZXGc+Uwb3nRkX+AXWOUShTlzM+WPOyKFoBbwquTnsYtq5A==
+react-use-auth@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-0.5.1.tgz#226d44c3d939a60f2b6d9da2ffae72fe0806db0e"
+  integrity sha512-93Z9ExoP0tyP94hp6a9CsrBtA48NYHnzddPqKMk/Xkl3u7osBwO9wFitq/6abgF2lvFnsGHJPU5fFUI00MtNyQ==
   dependencies:
     auth0-js "^9.11.2"
 

@@ -5,19 +5,25 @@ import { Flex, Button, Box } from "rebass";
 import { useAuth } from "react-use-auth";
 
 const Login = () => {
-    const { isAuthenticated, login, logout } = useAuth();
-    console.log(isAuthenticated);
+    const { isAuthenticated, isAuthenticating, login, logout } = useAuth();
+
     if (isAuthenticated()) {
         return (
-            <Button onClick={logout} style={{ backgroundColor: "#067df7" }}>
-                Logout
-            </Button>
+            <>
+                <Button onClick={logout} style={{ backgroundColor: "#067df7" }}>
+                    Logout
+                </Button>
+                <small>{isAuthenticating ? "Authenticating ..." : null}</small>
+            </>
         );
     } else {
         return (
-            <Button onClick={login} style={{ backgroundColor: "#067df7" }}>
-                Login
-            </Button>
+            <>
+                <Button onClick={login} style={{ backgroundColor: "#067df7" }}>
+                    Login
+                </Button>
+                <small>{isAuthenticating ? "Authenticating ..." : null}</small>
+            </>
         );
     }
 };
