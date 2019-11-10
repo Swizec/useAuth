@@ -135,6 +135,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "oyvinmar",
+      "name": "Øyvind Marthinsen",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/364853?v=4",
+      "profile": "https://www.oyvinmar.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
