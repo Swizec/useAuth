@@ -126,6 +126,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "vasco3",
+      "name": "Jorge Cuadra",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/804301?v=4",
+      "profile": "https://github.com/vasco3",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
