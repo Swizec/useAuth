@@ -83,7 +83,7 @@ export type AuthProviderInterface = ({
     auth0_domain: string;
     auth0_client_id: string;
     auth0_params: AuthOptions;
-}) => ReactNode;
+}) => JSX.Element;
 
 export type AuthContextState = {
     state: AuthState;
