@@ -311,6 +311,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://joelb.dev"><img src="https://avatars0.githubusercontent.com/u/6668097?v=4" width="100px;" alt="Joel Bartlett"/><br /><sub><b>Joel Bartlett</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=murbar" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/smehdii"><img src="https://avatars1.githubusercontent.com/u/22805576?v=4" width="100px;" alt="SIDDIK MEHDI "/><br /><sub><b>SIDDIK MEHDI </b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=smehdii" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/sophister"><img src="https://avatars1.githubusercontent.com/u/219501?v=4" width="100px;" alt="Jess"/><br /><sub><b>Jess</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/issues?q=author%3Asophister" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/vasco3"><img src="https://avatars0.githubusercontent.com/u/804301?v=4" width="100px;" alt="Jorge Cuadra"/><br /><sub><b>Jorge Cuadra</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=vasco3" title="Documentation">📖</a></td>
   </tr>
 </table>
 
