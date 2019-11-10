@@ -144,6 +144,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "fredrik-sogaard",
+      "name": "Fredrik Søgaard",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/764318?v=4",
+      "profile": "http://feed.no",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
