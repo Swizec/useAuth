@@ -28,7 +28,7 @@
         "eslint-config-prettier": "^6.0.0",
         "eslint-plugin-prettier": "^3.1.0",
         "eslint-plugin-react": "^7.14.3",
-        "microbundle": "^0.11.0",
+        "microbundle": "^0.12.0-next.6",
         "prettier": "^1.18.2",
         "react": "^16.8.6"
     },
