@@ -315,6 +315,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://www.oyvinmar.com/"><img src="https://avatars0.githubusercontent.com/u/364853?v=4" width="100px;" alt="Øyvind Marthinsen"/><br /><sub><b>Øyvind Marthinsen</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=oyvinmar" title="Code">💻</a></td>
+    <td align="center"><a href="http://feed.no"><img src="https://avatars3.githubusercontent.com/u/764318?v=4" width="100px;" alt="Fredrik Søgaard"/><br /><sub><b>Fredrik Søgaard</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=fredrik-sogaard" title="Code">💻</a></td>
   </tr>
 </table>
 
