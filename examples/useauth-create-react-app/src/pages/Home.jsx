@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   const { isAuthenticated, login, logout } = useAuth();
-  console.log(isAuthenticated);
   if (isAuthenticated()) {
     return <Button onClick={logout}>Logout</Button>;
   } else {
