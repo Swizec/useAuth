@@ -3,7 +3,7 @@
   <a href="#contributors-">
     <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-11-orange.svg?style=round-square"/>
   </a>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.4.3-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.5.1-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Swizec/useAuth/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
@@ -212,7 +212,7 @@ You need to allow both local development and your production app in callback URL
 
 ![](https://i.imgur.com/xz8UK8Z.png)
 
-**Allowed Web Origins**
+⚠️ **Allowed Web Origins**
 
 useAuth avoids using local storage for secure tokens. For Auth0 to know that our `checkSession` request is coming from the right source, you need to add your URLs to allowed web origins.
 
@@ -220,7 +220,7 @@ useAuth avoids using local storage for secure tokens. For Auth0 to know that our
 
 **Allowed logout urls**
 
-After logging out, Auth0 redirects back to your app. Again, it needs to know you aren't up to anything shady.
+After logging out, Auth0 redirects back to your app. Again, it needs to know you aren't up to anything shady. If you are getting 400 response errors on page load, this is the most likely culprit.
 
 ![](https://i.imgur.com/S160EiI.png)
 
@@ -228,7 +228,7 @@ After logging out, Auth0 redirects back to your app. Again, it needs to know you
 
 ## Persisting login after refresh
 
-**NB Make sure you're not blocking cookies! Extensions like privacy badger will prevent Auth0 from setting cookies so refreshing between logins wont work**
+**NB Make sure you're not blocking cookies! Extensions like privacy badger and the Brave browser will prevent Auth0 from setting cookies so refreshing between logins wont work**
 
 After you've set everything up (and you're using social sign on methods) you'll notice that refreshing doesn't keep your user logged in... 👎
 
