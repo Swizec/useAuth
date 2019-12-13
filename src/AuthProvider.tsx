@@ -11,14 +11,36 @@ import {
     AuthContextState
 } from "./types";
 
-const DEFAULT_STATE = {
-    user: {},
-    expiresAt: null,
-    isAuthenticating: false
-};
+function getDefaultState(): AuthState {
+    const DEFAULT_STATE = {
+        user: {},
+        expiresAt: null,
+        isAuthenticating: false
+    };
+
+    let stored_state = {};
+
+    if (typeof localStorage !== "undefined") {
+        const expiresAt = new Date(
+            localStorage.getItem("useAuth:expires_at") || 0
+        );
+
+        if (expiresAt > new Date()) {
+            stored_state = {
+                user: JSON.parse(localStorage.getItem("useAuth:user") || "{}"),
+                expiresAt: expiresAt
+            };
+        }
+    }
+
+    return {
+        ...DEFAULT_STATE,
+        ...stored_state
+    };
+}
 
 export const AuthContext = createContext<AuthContextState>({
-    state: DEFAULT_STATE,
+    state: getDefaultState(),
     dispatch: () => {},
     auth0: null,
     callback_domain: "http://localhost:8000",
@@ -52,7 +74,7 @@ export const AuthProvider: AuthProviderInterface = ({
     // Holds authentication state
     const [state, dispatch] = useReducer<React.Reducer<AuthState, AuthAction>>(
         authReducer,
-        DEFAULT_STATE
+        getDefaultState()
     );
 
     const [contextValue, setContextValue] = useState<AuthContextState>({
