@@ -22,7 +22,7 @@ function getDefaultState(): AuthState {
 
     if (typeof localStorage !== "undefined") {
         const expiresAt = new Date(
-            localStorage.getItem("useAuth:expires_at") || 0
+            JSON.parse(localStorage.getItem("useAuth:expires_at") || "0")
         );
 
         if (expiresAt > new Date()) {
