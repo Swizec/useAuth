@@ -1,24 +1,38 @@
 import React from "react";
 import "./App.css";
-import { Switch, Route, withRouter } from "react-router-dom";
+import { Switch, Route, withRouter, useHistory } from "react-router-dom";
 import { AuthProvider } from "react-use-auth";
 
 import Home from "./pages/Home";
+import { SuperSecretPage } from "./pages/SuperSecret";
 import AUTHCallback from "./pages/AUTHCallback";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { LoginPage } from "./pages/Login";
 
 function App(props) {
-  return (
-    <AuthProvider
-      navigate={props.history.push}
-      auth0_domain="useauth.auth0.com"
-      auth0_client_id="GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
-    >
-      <Switch>
-        <Route path="/auth0_callback" component={AUTHCallback} />
-        <Route path="/" component={Home} />
-      </Switch>
-    </AuthProvider>
-  );
+    let history = useHistory();
+    return (
+        <AuthProvider
+            navigate={history.replace}
+            auth0_domain="useauth.auth0.com"
+            auth0_client_id="GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
+        >
+            <Switch>
+                <Route path="/auth0_callback">
+                    <AUTHCallback />
+                </Route>
+                <PrivateRoute path="/private">
+                    <SuperSecretPage />
+                </PrivateRoute>
+                <Route path="/login">
+                    <LoginPage />
+                </Route>
+                <Route path="/">
+                    <Home />
+                </Route>
+            </Switch>
+        </AuthProvider>
+    );
 }
 
 export default withRouter(App);

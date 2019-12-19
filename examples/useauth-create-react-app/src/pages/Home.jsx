@@ -22,6 +22,7 @@ const Home = () => {
         <p>Welcome to your new Gatsby site.</p>
         <p>Now go build something great.</p>
         <Login />
+        <p>Go to <Link to="/private">Private page</Link></p>
 
         <div>
           <h2>How to use useAuth</h2>
