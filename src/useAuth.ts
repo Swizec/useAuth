@@ -48,16 +48,14 @@ export const handleAuthResult: handleAuthResultInterface = async ({
     auth0,
     authResult
 }) => {
-    dispatch({
-        type: "stopAuthenticating"
-    });
-
     if (authResult && authResult.accessToken && authResult.idToken) {
         await setSession({ dispatch, auth0, authResult });
+        dispatch({
+            type: "stopAuthenticating"
+        });
 
         return true;
     } else if (err) {
-        console.error(err);
         dispatch({
             type: "error",
             error: err,
@@ -66,6 +64,9 @@ export const handleAuthResult: handleAuthResultInterface = async ({
 
         return false;
     } else {
+        dispatch({
+            type: "stopAuthenticating"
+        });
         return false;
     }
 };

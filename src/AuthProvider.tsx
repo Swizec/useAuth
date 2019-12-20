@@ -14,7 +14,7 @@ import {
 const DEFAULT_STATE = {
     user: {},
     expiresAt: null,
-    isAuthenticating: false
+    isAuthenticating: true
 };
 
 export const AuthContext = createContext<AuthContextState>({
@@ -76,16 +76,7 @@ export const AuthProvider: AuthProviderInterface = ({
     // Verify user is logged-in on AuthProvider mount
     // Avoids storing sensitive data in local storage
     useEffect(() => {
-        dispatch({
-            type: "startAuthenticating"
-        });
-
         auth0.checkSession({}, (err, authResult) => {
-            dispatch({
-                type: "stopAuthenticating"
-            });
-
-            console.log(err);
             if (err) {
                 dispatch({
                     type: "error",

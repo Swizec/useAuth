@@ -49,6 +49,7 @@ export const authReducer = (
                 ...state,
                 user: {},
                 expiresAt: null,
+                isAuthenticating: false,
                 authResult: null,
                 errorType,
                 error
