@@ -16,6 +16,7 @@ export const wrapRootElement = ({ element }) => (
   <ThemeProvider theme={theme}>
     <AuthProvider
       navigate={navigate}
+      callback_domain="https://useauth.dev"
       auth0_domain="useauth.auth0.com"
       auth0_client_id="GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
     >

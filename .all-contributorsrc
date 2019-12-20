@@ -126,6 +126,33 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "vasco3",
+      "name": "Jorge Cuadra",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/804301?v=4",
+      "profile": "https://github.com/vasco3",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "oyvinmar",
+      "name": "Øyvind Marthinsen",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/364853?v=4",
+      "profile": "https://www.oyvinmar.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "fredrik-sogaard",
+      "name": "Fredrik Søgaard",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/764318?v=4",
+      "profile": "http://feed.no",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

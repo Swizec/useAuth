@@ -3,7 +3,7 @@
   <a href="#contributors-">
     <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-11-orange.svg?style=round-square"/>
   </a>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.4.3-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.5.1-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Swizec/useAuth/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
@@ -212,7 +212,7 @@ You need to allow both local development and your production app in callback URL
 
 ![](https://i.imgur.com/xz8UK8Z.png)
 
-**Allowed Web Origins**
+⚠️ **Allowed Web Origins**
 
 useAuth avoids using local storage for secure tokens. For Auth0 to know that our `checkSession` request is coming from the right source, you need to add your URLs to allowed web origins.
 
@@ -220,7 +220,7 @@ useAuth avoids using local storage for secure tokens. For Auth0 to know that our
 
 **Allowed logout urls**
 
-After logging out, Auth0 redirects back to your app. Again, it needs to know you aren't up to anything shady.
+After logging out, Auth0 redirects back to your app. Again, it needs to know you aren't up to anything shady. If you are getting 400 response errors on page load, this is the most likely culprit.
 
 ![](https://i.imgur.com/S160EiI.png)
 
@@ -228,7 +228,7 @@ After logging out, Auth0 redirects back to your app. Again, it needs to know you
 
 ## Persisting login after refresh
 
-**NB Make sure you're not blocking cookies! Extensions like privacy badger will prevent Auth0 from setting cookies so refreshing between logins wont work**
+**NB Make sure you're not blocking cookies! Extensions like privacy badger and the Brave browser will prevent Auth0 from setting cookies so refreshing between logins wont work**
 
 After you've set everything up (and you're using social sign on methods) you'll notice that refreshing doesn't keep your user logged in... 👎
 
@@ -240,7 +240,7 @@ For a more detailed understanding of why this is happening you can have a read t
 
 Since version 0.4.0 useAuth exposes the entire Auth0 authResult object so you can access your user's id or access token. This is useful when you have to log the user into your own backend as well as the frontend.
 
-For refence:
+For reference:
 
 -   https://github.com/Swizec/useAuth/issues/11
 -   https://github.com/Swizec/useAuth/issues/22
@@ -311,6 +311,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://joelb.dev"><img src="https://avatars0.githubusercontent.com/u/6668097?v=4" width="100px;" alt="Joel Bartlett"/><br /><sub><b>Joel Bartlett</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=murbar" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/smehdii"><img src="https://avatars1.githubusercontent.com/u/22805576?v=4" width="100px;" alt="SIDDIK MEHDI "/><br /><sub><b>SIDDIK MEHDI </b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=smehdii" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/sophister"><img src="https://avatars1.githubusercontent.com/u/219501?v=4" width="100px;" alt="Jess"/><br /><sub><b>Jess</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/issues?q=author%3Asophister" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/vasco3"><img src="https://avatars0.githubusercontent.com/u/804301?v=4" width="100px;" alt="Jorge Cuadra"/><br /><sub><b>Jorge Cuadra</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=vasco3" title="Documentation">📖</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.oyvinmar.com/"><img src="https://avatars0.githubusercontent.com/u/364853?v=4" width="100px;" alt="Øyvind Marthinsen"/><br /><sub><b>Øyvind Marthinsen</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=oyvinmar" title="Code">💻</a></td>
+    <td align="center"><a href="http://feed.no"><img src="https://avatars3.githubusercontent.com/u/764318?v=4" width="100px;" alt="Fredrik Søgaard"/><br /><sub><b>Fredrik Søgaard</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=fredrik-sogaard" title="Code">💻</a></td>
   </tr>
 </table>
 

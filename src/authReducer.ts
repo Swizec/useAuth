@@ -11,8 +11,11 @@ export const authReducer = (
                 authResult.expiresIn! * 1000 + new Date().getTime();
 
             if (typeof localStorage !== "undefined") {
-                localStorage.setItem("expires_at", JSON.stringify(expiresAt));
-                localStorage.setItem("user", JSON.stringify(user));
+                localStorage.setItem(
+                    "useAuth:expires_at",
+                    JSON.stringify(expiresAt)
+                );
+                localStorage.setItem("useAuth:user", JSON.stringify(user));
             }
 
             return {
@@ -23,8 +26,8 @@ export const authReducer = (
             };
         case "logout":
             if (typeof localStorage !== "undefined") {
-                localStorage.removeItem("expires_at");
-                localStorage.removeItem("user");
+                localStorage.removeItem("useAuth:expires_at");
+                localStorage.removeItem("useAuth:user");
             }
 
             return {

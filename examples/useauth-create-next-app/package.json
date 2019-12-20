@@ -1,0 +1,18 @@
+{
+    "name": "useauth-create-next-app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev -p 8000",
+        "build": "next build",
+        "start": "next start"
+    },
+    "dependencies": {
+        "auth0-js": "^9.11.3",
+        "next": "9.0.8",
+        "react": "16.10.2",
+        "react-dom": "16.10.2",
+        "react-use-auth": "^0.5.1",
+        "rebass": "^4.0.6"
+    }
+}

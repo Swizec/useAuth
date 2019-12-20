@@ -1,12 +1,11 @@
 {
     "name": "react-use-auth",
-    "version": "0.5.0",
+    "version": "0.5.3",
     "description": "The simplest way to add authentication to your React app. Handles everything for you. Users, login forms, redirects, sharing state between components. Everything",
     "source": "src/index.ts",
     "main": "dist/index.js",
     "module": "dist/index.module.js",
     "unpkg": "dist/index.umd.js",
-    "types": "dist/types.d.ts",
     "repository": "git@github.com:Swizec/useAuth.git",
     "author": "Swizec Teller <swizec@swizec.com>",
     "license": "MIT",
@@ -29,7 +28,7 @@
         "eslint-config-prettier": "^6.0.0",
         "eslint-plugin-prettier": "^3.1.0",
         "eslint-plugin-react": "^7.14.3",
-        "microbundle": "^0.11.0",
+        "microbundle": "^0.12.0-next.6",
         "prettier": "^1.18.2",
         "react": "^16.8.6"
     },
