@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAuth } from "react-use-auth";
 import { POST_LOGIN_ROUTE_KEY } from "../components/PrivateRoute";
 
@@ -11,13 +11,10 @@ const AUTHCallback = () => {
 
     let postLoginRoute = route || '/';
     handleAuthentication({ postLoginRoute });
-  }, [handleAuthentication]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  return (
-    <h1>
-      This is the auth callback page, you should be redirected immediately.
-    </h1>
-  );
+  return null;
 };
 
 export default AUTHCallback;
