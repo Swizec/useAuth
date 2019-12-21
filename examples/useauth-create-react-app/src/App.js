@@ -8,6 +8,7 @@ import { SuperSecretPage } from "./pages/SuperSecret";
 import AUTHCallback from "./pages/AUTHCallback";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { LoginPage } from "./pages/Login";
+import { AuthErrorPage } from "./pages/AuthError";
 
 function App(props) {
     let history = useHistory();
@@ -26,6 +27,9 @@ function App(props) {
                 </PrivateRoute>
                 <Route path="/login">
                     <LoginPage />
+                </Route>
+                <Route path="/auth-error">
+                    <AuthErrorPage />
                 </Route>
                 <Route path="/">
                     <Home />

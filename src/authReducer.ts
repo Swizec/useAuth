@@ -22,7 +22,9 @@ export const authReducer = (
                 ...state,
                 user,
                 expiresAt,
-                authResult
+                authResult,
+                errorType: undefined,
+                error: undefined
             };
         case "logout":
             if (typeof localStorage !== "undefined") {
@@ -34,7 +36,9 @@ export const authReducer = (
                 ...state,
                 user: {},
                 expiresAt: null,
-                authResult: null
+                authResult: null,
+                errorType: undefined,
+                error: undefined
             };
         case "stopAuthenticating":
             return {
@@ -44,7 +48,9 @@ export const authReducer = (
         case "startAuthenticating":
             return {
                 ...state,
-                isAuthenticating: true
+                isAuthenticating: true,
+                errorType: undefined,
+                error: undefined
             };
         case "error":
             const { errorType, error } = action;

@@ -37,6 +37,8 @@ export interface useAuthInterface {
         user: Auth0UserProfile | { sub?: string };
         userId: string | null | undefined;
         authResult: Auth0DecodedHash | undefined | null;
+        error?: Error | Auth0Error | Auth0ParseHashError;
+        errorType?: string;
         login: () => void;
         logout: () => void;
         handleAuthentication: ({

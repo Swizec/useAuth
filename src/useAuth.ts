@@ -56,6 +56,7 @@ export const handleAuthResult: handleAuthResultInterface = async ({
 
         return true;
     } else if (err) {
+        console.error(err);
         dispatch({
             type: "error",
             error: err,
@@ -128,6 +129,8 @@ export const useAuth: useAuthInterface = () => {
         user: state.user,
         userId: state.user ? state.user.sub : null,
         authResult: state.authResult,
+        error: state.error,
+        errorType: state.errorType,
         login,
         logout,
         handleAuthentication
