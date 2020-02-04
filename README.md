@@ -21,9 +21,11 @@
 
 ```
 $ yarn add react-use-auth
+or
+$ npm i react-use-auth
 ```
 
-Downloads from npm, adds to your package.json, etc. You can use `npm` as well.
+Downloads from npm, adds to your package.json, etc.
 
 ### 2. Set up AuthProvider
 
@@ -95,10 +97,9 @@ Auth0 and most other authentication providers use OAuth. That requires redirecti
 Any way of creating React pages should work, here's what I use for Gatsby.
 
 ```javascript
-// src/pages/auth0_callback
+// src/pages/auth0_callback.js
 
 import React, { useEffect } from "react";
-
 import { useAuth } from "react-use-auth";
 import Layout from "../components/layout";
 
