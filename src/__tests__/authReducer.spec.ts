@@ -159,16 +159,4 @@ describe("authReducer", () => {
             expect(authReducer(state, action).authResult).toBe(null);
         });
     });
-
-    // describe("default", () => {
-    //     it("returns state", () => {
-    //         const state: AuthState = {
-    //             user: { sub: "1234" },
-    //             expiresAt: new Date().getTime(),
-    //             isAuthenticating: false
-    //         };
-
-    //         expect(authReducer(state, { type: null })).toStrictEqual(state);
-    //     });
-    // });
 });

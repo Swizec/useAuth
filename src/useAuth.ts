@@ -53,9 +53,13 @@ export const handleAuthResult: handleAuthResultInterface = async ({
     });
 
     if (authResult && authResult.accessToken && authResult.idToken) {
-        await setSession({ dispatch, auth0, authResult });
+        try {
+            await setSession({ dispatch, auth0, authResult });
 
-        return true;
+            return true;
+        } catch (e) {
+            return false;
+        }
     } else if (err) {
         console.error(err);
         dispatch({
