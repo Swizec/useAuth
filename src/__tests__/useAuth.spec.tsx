@@ -1,17 +1,60 @@
+import React from "react";
+import ReactRenderer from "react-test-renderer";
+
 import { useAuth, handleAuthResult } from "../useAuth";
+import { AuthContext } from "../AuthProvider";
 import Auth0 from "auth0-js";
 
-describe("useAuth", () => {});
+const auth0 = new Auth0.WebAuth({
+    domain: "localhost",
+    clientID: "12345",
+    redirectUri: `localhost/auth0_callback`,
+    audience: `https://localhost/api/v2/`,
+    responseType: "token id_token",
+    scope: "openid profile email"
+});
+auth0.authorize = jest.fn();
+
+describe("useAuth", () => {
+    const context = {
+        state: {
+            user: { sub: "1234" },
+            expiresAt: null,
+            isAuthenticating: true
+        },
+        dispatch: jest.fn(),
+        auth0,
+        callback_domain: "localhost",
+        navigate: jest.fn()
+    };
+
+    describe("login", () => {
+        it("calls auth0.authorize()", () => {
+            const Mock = () => {
+                const { login } = useAuth();
+                login();
+
+                return null;
+            };
+
+            ReactRenderer.create(
+                <AuthContext.Provider value={context}>
+                    <Mock />
+                </AuthContext.Provider>
+            );
+
+            expect(auth0.authorize).toBeCalled();
+        });
+    });
+
+    describe("logout", () => {});
+
+    describe("handleAuthentication", () => {});
+
+    describe("isAuthenticated", () => {});
+});
 
 describe("handleAuthResult", () => {
-    const auth0 = new Auth0.WebAuth({
-        domain: "localhost",
-        clientID: "12345",
-        redirectUri: `localhost/auth0_callback`,
-        audience: `https://localhost/api/v2/`,
-        responseType: "token id_token",
-        scope: "openid profile email"
-    });
     const user = {
         name: "swizec",
         nickname: "swiz",
