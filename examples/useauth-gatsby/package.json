@@ -6,7 +6,7 @@
   "author": "Swizec Teller <swizec@swizec.com>",
   "dependencies": {
     "@rebass/preset": "^4.0.0",
-    "auth0-js": "^9.11.3",
+    "auth0-js": "^9.13.2",
     "emotion-theming": "^10.0.14",
     "gatsby": "^2.17.11",
     "gatsby-image": "^2.2.31",
