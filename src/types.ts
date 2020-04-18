@@ -75,12 +75,14 @@ export type AuthProviderInterface = ({
     children,
     navigate,
     auth0_domain,
+    auth0_audience_domain,
     auth0_client_id,
     auth0_params
 }: {
     children: ReactNode;
     navigate: (path: string) => void;
     auth0_domain: string;
+    auth0_audience_domain: string;
     auth0_client_id: string;
     auth0_params: AuthOptions;
 }) => JSX.Element;

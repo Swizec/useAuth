@@ -72,7 +72,7 @@ const params = {
     domain: auth0_domain,
     clientID: auth0_client_id,
     redirectUri: `${callback_domain}/auth0_callback`,
-    audience: `https://${auth0_domain}/api/v2/`,
+    audience: `https://${auth0_audience_domain || auth0_domain}/api/v2/`,
     responseType: "token id_token",
     scope: "openid profile email"
 };
@@ -82,7 +82,7 @@ const params = {
 
 `redirectUri` is set to use the `auth0_callback` page on the current domain. Auth0 redirects here after users login so you can set cookies and stuff. `useAuth` will handle this for you ✌️
 
-`audience` is set to use api/v2. I know this is necessary but honestly have been copypasting it through several of my projects.
+`audience` is set to use api/v2. I know this is necessary but honestly have been copypasting it through several of my projects. You can define a custom audience domain with `auth0_audience_domain`.
 
 `responseType` same here. I copy paste this from old projects so I figured it's a good default.
 
@@ -323,6 +323,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

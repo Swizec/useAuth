@@ -55,16 +55,18 @@ export const AuthProvider: AuthProviderInterface = ({
     auth0_client_id,
     auth0_params
 }) => {
-    const callback_domain =
+    const callbackDomain =
         typeof window !== "undefined"
             ? `${window.location.protocol}//${window.location.host}`
             : "http://localhost:8000";
 
+    const audienceDomain = auth0_audience_domain || auth0_domain;
+
     const params: AuthOptions = {
         domain: auth0_domain,
         clientID: auth0_client_id,
-        redirectUri: `${callback_domain}/auth0_callback`,
-        audience: `https://${auth0_audience_domain}/api/v2/`,
+        redirectUri: `${callbackDomain}/auth0_callback`,
+        audience: `https://${audienceDomain}/api/v2/`,
         responseType: "token id_token",
         scope: "openid profile email"
     };
