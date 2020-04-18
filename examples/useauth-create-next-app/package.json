@@ -8,7 +8,7 @@
         "start": "next start"
     },
     "dependencies": {
-        "auth0-js": "^9.11.3",
+        "auth0-js": "^9.13.2",
         "next": "9.0.8",
         "react": "16.10.2",
         "react-dom": "16.10.2",
