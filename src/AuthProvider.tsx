@@ -84,7 +84,7 @@ export const AuthProvider: AuthProviderInterface = ({
         state,
         dispatch,
         auth0,
-        callback_domain,
+        callback_domain: callbackDomain,
         navigate
     });
 

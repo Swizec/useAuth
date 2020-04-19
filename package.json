@@ -21,7 +21,7 @@
     ],
     "dependencies": {
         "@types/react-test-renderer": "^16.9.2",
-        "auth0-js": "^9.11.2"
+        "auth0-js": "^9.13.2"
     },
     "devDependencies": {
         "@types/auth0-js": "^9.10.6",
