@@ -6,12 +6,6 @@ import {
     handleAuthResultInterface,
     setSessionInterface
 } from "./types";
-import {
-    Auth0DecodedHash,
-    Auth0UserProfile,
-    Auth0Error,
-    Auth0ParseHashError
-} from "auth0-js";
 
 const setSession: setSessionInterface = async ({
     dispatch,
@@ -19,26 +13,27 @@ const setSession: setSessionInterface = async ({
     authResult
 }) => {
     return new Promise((resolve, reject) => {
-        auth0.client.userInfo(
-            authResult.accessToken || "",
-            (err: Auth0Error | null, user: Auth0UserProfile) => {
-                if (err) {
-                    dispatch({
-                        type: "error",
-                        errorType: "userInfo",
-                        error: err
-                    });
-                    reject(err);
-                } else {
-                    dispatch({
-                        type: "login",
-                        authResult,
-                        user
-                    });
-                    resolve(user);
-                }
-            }
-        );
+        resolve();
+        // auth0.client.userInfo(
+        //     authResult.accessToken || "",
+        //     (err: any | null, user: any) => {
+        //         if (err) {
+        //             dispatch({
+        //                 type: "error",
+        //                 errorType: "userInfo",
+        //                 error: err
+        //             });
+        //             reject(err);
+        //         } else {
+        //             dispatch({
+        //                 type: "login",
+        //                 authResult,
+        //                 user
+        //             });
+        //             resolve(user);
+        //         }
+        //     }
+        // );
     });
 };
 
@@ -48,6 +43,8 @@ export const handleAuthResult: handleAuthResultInterface = async ({
     auth0,
     authResult
 }) => {
+    console.log(authResult);
+
     dispatch({
         type: "stopAuthenticating"
     });
@@ -80,7 +77,7 @@ export const useAuth: useAuthInterface = () => {
     );
 
     const login = () => {
-        auth0 && auth0.authorize();
+        auth0 && auth0.loginWithRedirect();
     };
 
     const logout = () => {
@@ -96,28 +93,17 @@ export const useAuth: useAuthInterface = () => {
         navigate("/");
     };
 
-    const handleAuthentication = ({ postLoginRoute = "/" } = {}) => {
+    const handleAuthentication = async ({ postLoginRoute = "/" } = {}) => {
         if (typeof window !== "undefined") {
             dispatch({
                 type: "startAuthenticating"
             });
 
-            auth0 &&
-                auth0.parseHash(
-                    async (
-                        err: Auth0ParseHashError | null,
-                        authResult: Auth0DecodedHash | null
-                    ) => {
-                        await handleAuthResult({
-                            err,
-                            authResult,
-                            dispatch,
-                            auth0
-                        });
-
-                        navigate(postLoginRoute);
-                    }
-                );
+            if (auth0) {
+                const authResult = await auth0.handleRedirectCallback();
+                await handleAuthResult({ authResult, dispatch, auth0 });
+                navigate(postLoginRoute);
+            }
         }
     };
 

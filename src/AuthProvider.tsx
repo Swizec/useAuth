@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useEffect, useState } from "react";
-import Auth0 from "auth0-js";
-import { AuthOptions } from "auth0-js";
+// import Auth0 from "auth0-js";
+import { Auth0ClientOptions } from "@auth0/auth0-spa-js";
+import createAuth0Client from "@auth0/auth0-spa-js";
 
 import { authReducer } from "./authReducer";
 import { handleAuthResult } from "./useAuth";
@@ -62,17 +63,14 @@ export const AuthProvider: AuthProviderInterface = ({
 
     const audienceDomain = auth0_audience_domain || auth0_domain;
 
-    const params: AuthOptions = {
+    const params: Auth0ClientOptions = {
         domain: auth0_domain,
-        clientID: auth0_client_id,
-        redirectUri: `${callbackDomain}/auth0_callback`,
+        client_id: auth0_client_id,
+        redirect_uri: `${callbackDomain}/auth0_callback`,
         audience: `https://${audienceDomain}/api/v2/`,
         responseType: "token id_token",
         scope: "openid profile email"
     };
-
-    // Instantiate Auth0 client
-    const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
 
     // Holds authentication state
     const [state, dispatch] = useReducer<React.Reducer<AuthState, AuthAction>>(
@@ -83,10 +81,26 @@ export const AuthProvider: AuthProviderInterface = ({
     const [contextValue, setContextValue] = useState<AuthContextState>({
         state,
         dispatch,
-        auth0,
+        auth0: null,
         callback_domain: callbackDomain,
         navigate
     });
+
+    // Instantiate Auth0 client on component mount
+    useEffect(() => {
+        async function createClient() {
+            const auth0 = await createAuth0Client({
+                ...params,
+                ...auth0_params
+            });
+
+            setContextValue({ ...contextValue, auth0 });
+        }
+
+        if (typeof window !== "undefined") {
+            createClient();
+        }
+    }, []);
 
     // Update context value and trigger re-render
     // This patterns avoids unnecessary deep renders
@@ -105,23 +119,25 @@ export const AuthProvider: AuthProviderInterface = ({
             type: "startAuthenticating"
         });
 
-        auth0.checkSession({}, (err, authResult) => {
-            dispatch({
-                type: "stopAuthenticating"
-            });
+        const auth0 = contextValue.auth0;
 
-            console.log(err);
-            if (err) {
-                dispatch({
-                    type: "error",
-                    errorType: "checkSession",
-                    error: err
-                });
-            } else {
-                handleAuthResult({ dispatch, auth0, authResult });
-            }
-        });
-    }, []);
+        // auth0!.checkSession({}, (err, authResult) => {
+        //     dispatch({
+        //         type: "stopAuthenticating"
+        //     });
+
+        //     console.log(err);
+        //     if (err) {
+        //         dispatch({
+        //             type: "error",
+        //             errorType: "checkSession",
+        //             error: err
+        //         });
+        //     } else {
+        //         handleAuthResult({ dispatch, auth0, authResult });
+        //     }
+        // });
+    }, [contextValue.auth0]);
 
     return (
         <AuthContext.Provider value={contextValue}>
