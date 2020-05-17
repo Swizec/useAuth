@@ -9,7 +9,9 @@ import {
 import { ReactNode, Dispatch } from "react";
 
 export type AuthState = {
-    user: Auth0UserProfile | { sub?: string; user_metadata?: any };
+    user:
+        | Auth0UserProfile & { [key: string]: any } // adds metadata support for Auth0 Rules
+        | { sub?: string; [key: string]: any };
     authResult?: Auth0DecodedHash | null;
     expiresAt: number | null;
     isAuthenticating: boolean;
@@ -78,7 +80,8 @@ export type AuthProviderInterface = ({
     auth0_domain,
     auth0_audience_domain,
     auth0_client_id,
-    auth0_params
+    auth0_params,
+    customPropertyNamespace
 }: {
     children: ReactNode;
     navigate: (path: string) => void;
@@ -86,6 +89,7 @@ export type AuthProviderInterface = ({
     auth0_audience_domain: string;
     auth0_client_id: string;
     auth0_params: AuthOptions;
+    customPropertyNamespace: string;
 }) => JSX.Element;
 
 export type AuthContextState = {
@@ -93,5 +97,6 @@ export type AuthContextState = {
     dispatch: AuthDispatch;
     auth0: WebAuth | null;
     callback_domain: string;
+    customPropertyNamespace: string;
     navigate: (path: string) => void;
 };

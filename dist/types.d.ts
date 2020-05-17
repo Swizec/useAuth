@@ -1,9 +1,11 @@
 import { Auth0UserProfile, Auth0DecodedHash, WebAuth, Auth0Error, AuthOptions, Auth0ParseHashError } from "auth0-js";
 import { ReactNode, Dispatch } from "react";
 export declare type AuthState = {
-    user: Auth0UserProfile | {
+    user: (Auth0UserProfile & {
+        [key: string]: any;
+    }) | {
         sub?: string;
-        user_metadata?: any;
+        [key: string]: any;
     };
     authResult?: Auth0DecodedHash | null;
     expiresAt: number | null;
@@ -51,18 +53,20 @@ export declare type setSessionInterface = ({ dispatch, auth0, authResult }: {
     auth0: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;
-export declare type AuthProviderInterface = ({ children, navigate, auth0_domain, auth0_audience_domain, auth0_client_id, auth0_params }: {
+export declare type AuthProviderInterface = ({ children, navigate, auth0_domain, auth0_audience_domain, auth0_client_id, auth0_params, customPropertyNamespace }: {
     children: ReactNode;
     navigate: (path: string) => void;
     auth0_domain: string;
     auth0_audience_domain: string;
     auth0_client_id: string;
     auth0_params: AuthOptions;
+    customPropertyNamespace: string;
 }) => JSX.Element;
 export declare type AuthContextState = {
     state: AuthState;
     dispatch: AuthDispatch;
     auth0: WebAuth | null;
     callback_domain: string;
+    customPropertyNamespace: string;
     navigate: (path: string) => void;
 };

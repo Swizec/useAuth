@@ -44,6 +44,7 @@ export const AuthContext = createContext<AuthContextState>({
     dispatch: () => {},
     auth0: null,
     callback_domain: "http://localhost:8000",
+    customPropertyNamespace: "http://localhost:8000",
     navigate: (path: string) => {}
 });
 
@@ -53,7 +54,8 @@ export const AuthProvider: AuthProviderInterface = ({
     auth0_audience_domain,
     auth0_domain,
     auth0_client_id,
-    auth0_params
+    auth0_params,
+    customPropertyNamespace
 }) => {
     const callbackDomain =
         typeof window !== "undefined"
@@ -85,6 +87,7 @@ export const AuthProvider: AuthProviderInterface = ({
         dispatch,
         auth0,
         callback_domain: callbackDomain,
+        customPropertyNamespace,
         navigate
     });
 

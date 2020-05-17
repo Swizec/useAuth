@@ -27,6 +27,7 @@ describe("useAuth", () => {
         dispatch: jest.fn(),
         auth0,
         callback_domain: "localhost",
+        customPropertyNamespace: "localhost",
         navigate: jest.fn()
     };
 
@@ -154,7 +155,9 @@ describe("useAuth", () => {
                 return null;
             };
 
-            context.state.user.user_metadata = { roles: ["testRole"] };
+            context.state.user["localhost/user_metadata"] = {
+                roles: ["testRole"]
+            };
 
             render(context, Mock);
         });
@@ -168,7 +171,7 @@ describe("useAuth", () => {
                 return null;
             };
 
-            context.state.user.user_metadata = { roles: [] };
+            context.state.user["localhost/user_metadata"] = { roles: [] };
 
             render(context, Mock);
         });
@@ -182,7 +185,9 @@ describe("useAuth", () => {
                 return null;
             };
 
-            context.state.user.user_metadata = { roles: ["testRole"] };
+            context.state.user["localhost/user_metadata"] = {
+                roles: ["testRole"]
+            };
             context.state.expiresAt = new Date().getTime() - 3600 * 1000;
 
             render(context, Mock);

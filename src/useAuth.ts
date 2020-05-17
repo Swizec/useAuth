@@ -75,9 +75,14 @@ export const handleAuthResult: handleAuthResultInterface = async ({
 };
 
 export const useAuth: useAuthInterface = () => {
-    const { state, dispatch, auth0, callback_domain, navigate } = useContext(
-        AuthContext
-    );
+    const {
+        state,
+        dispatch,
+        auth0,
+        callback_domain,
+        navigate,
+        customPropertyNamespace
+    } = useContext(AuthContext);
 
     const login = () => {
         auth0 && auth0.authorize();
@@ -127,10 +132,13 @@ export const useAuth: useAuthInterface = () => {
 
     const isAuthorized = (role: string) => {
         console.log("USER", state.user);
+        console.log("key", `${customPropertyNamespace}/user_metadata`);
         return (
             isAuthenticated() &&
-            (state.user.user_metadata &&
-                state.user.user_metadata.roles.includes(role))
+            (state.user[`${customPropertyNamespace}/user_metadata`] &&
+                state.user[
+                    `${customPropertyNamespace}/user_metadata`
+                ].roles.includes(role))
         );
     };
 
