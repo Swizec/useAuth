@@ -9,7 +9,7 @@ import {
 import { ReactNode, Dispatch } from "react";
 
 export type AuthState = {
-    user: Auth0UserProfile | { sub?: string };
+    user: Auth0UserProfile | { sub?: string; user_metadata?: any };
     authResult?: Auth0DecodedHash | null;
     expiresAt: number | null;
     isAuthenticating: boolean;
@@ -34,6 +34,7 @@ export interface useAuthInterface {
     (): {
         isAuthenticating: boolean;
         isAuthenticated: () => boolean;
+        isAuthorized: (role: string) => boolean;
         user: Auth0UserProfile | { sub?: string };
         userId: string | null | undefined;
         authResult: Auth0DecodedHash | undefined | null;

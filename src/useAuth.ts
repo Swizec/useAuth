@@ -125,9 +125,17 @@ export const useAuth: useAuthInterface = () => {
         return !!(state.expiresAt && new Date().getTime() < state.expiresAt);
     };
 
+    const isAuthorized = (role: string) => {
+        return (
+            state.user.user_metadata &&
+            state.user.user_metadata.roles.includes(role)
+        );
+    };
+
     return {
         isAuthenticating: state.isAuthenticating,
         isAuthenticated,
+        isAuthorized,
         user: state.user,
         userId: state.user ? state.user.sub : null,
         authResult: state.authResult,
