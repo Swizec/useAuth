@@ -257,6 +257,66 @@ function SomeComponent() {
 }
 ```
 
+## Granular role-based permissions
+
+Since version 0.7.0 useAuth supports role-based permissions. Using roles, you can granularly control which parts of your site are available to which users.
+
+You'll need to add some config on Auth0 and when using useAuth.
+
+### Set up a Auth0 Rule
+
+Auth0 rules are little snippets of JavaScript that run when you request user data.
+
+Go to `Rules` and click `Create Rule`. Start an empty rule and add this code:
+
+```javascript
+function (user, context, callback) {
+  const namespace = 'https://YOUR_DOMAIN';
+  const assignedRoles = (context.authorization || {}).roles;
+
+  user.user_metadata = user.user_metadata || {};
+
+  user.user_metadata.roles = assignedRoles;
+
+  context.idToken[namespace + '/user_metadata'] = user.user_metadata;
+
+  callback(null, user, context);
+}
+```
+
+This rule adds user roles to their meta data. You have to define the `namespace`. Make sure it looks like a URL.
+
+### Add customPropertyNamespace to AuthProvider
+
+When rendering your `<AuthProvider>` add the custom property namespace. Make sure it matches the namespace you used above.
+
+```javascript
+export const wrapPageElement = ({ element, props }) => (
+  <AuthProvider
+    navigate={navigate}
+    // ...
+    customPropertyNamespace="https://YOUR_DOMAIN"
+  >
+```
+
+### use isAuthorized to check role permissions
+
+Now you can use `isAuthorized` to check if the current user has access to some part of your site.
+
+```javascript
+        {isAuthorized("Student") ? (
+          <Content
+            {...props}
+            fullwidth={fullwidth}
+            menu={menu}
+            setMenu={setMenu}
+            nav={nav}
+          />
+        : null}
+```
+
+If current user is authenticated _and_ has the `Student` role, show the content. Otherwise null.
+
 ---
 
 You can try it out here 👉 https://gatsby-useauth-example.now.sh/

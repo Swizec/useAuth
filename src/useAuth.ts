@@ -131,8 +131,6 @@ export const useAuth: useAuthInterface = () => {
     };
 
     const isAuthorized = (role: string) => {
-        console.log("USER", state.user);
-        console.log("key", `${customPropertyNamespace}/user_metadata`);
         return (
             isAuthenticated() &&
             (state.user[`${customPropertyNamespace}/user_metadata`] &&
