@@ -31,6 +31,7 @@ export interface useAuthInterface {
         userId: string | null | undefined;
         authResult: Auth0DecodedHash | undefined | null;
         login: () => void;
+        signup: () => void;
         logout: () => void;
         handleAuthentication: ({ postLoginRoute }: {
             postLoginRoute?: string;
