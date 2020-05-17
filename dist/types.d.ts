@@ -3,6 +3,7 @@ import { ReactNode, Dispatch } from "react";
 export declare type AuthState = {
     user: Auth0UserProfile | {
         sub?: string;
+        user_metadata?: any;
     };
     authResult?: Auth0DecodedHash | null;
     expiresAt: number | null;
@@ -25,6 +26,7 @@ export interface useAuthInterface {
     (): {
         isAuthenticating: boolean;
         isAuthenticated: () => boolean;
+        isAuthorized: (role: string) => boolean;
         user: Auth0UserProfile | {
             sub?: string;
         };
