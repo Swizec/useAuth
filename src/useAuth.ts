@@ -127,8 +127,9 @@ export const useAuth: useAuthInterface = () => {
 
     const isAuthorized = (role: string) => {
         return (
-            state.user.user_metadata &&
-            state.user.user_metadata.roles.includes(role)
+            isAuthenticated() &&
+            (state.user.user_metadata &&
+                state.user.user_metadata.roles.includes(role))
         );
     };
 

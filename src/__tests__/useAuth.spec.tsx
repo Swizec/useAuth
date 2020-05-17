@@ -159,7 +159,34 @@ describe("useAuth", () => {
             render(context, Mock);
         });
 
-        it("returns false if role does not exist", () => {});
+        it("returns false if role does not exist", () => {
+            const Mock = () => {
+                const { isAuthorized } = useAuth();
+
+                expect(isAuthorized("testRole")).toBe(false);
+
+                return null;
+            };
+
+            context.state.user.user_metadata = { roles: [] };
+
+            render(context, Mock);
+        });
+
+        it("returns false if role exists but user not authenticated", () => {
+            const Mock = () => {
+                const { isAuthorized } = useAuth();
+
+                expect(isAuthorized("testRole")).toBe(false);
+
+                return null;
+            };
+
+            context.state.user.user_metadata = { roles: ["testRole"] };
+            context.state.expiresAt = new Date().getTime() - 3600 * 1000;
+
+            render(context, Mock);
+        });
     });
 });
 
