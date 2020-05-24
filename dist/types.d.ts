@@ -28,7 +28,7 @@ export interface useAuthInterface {
     (): {
         isAuthenticating: boolean;
         isAuthenticated: () => boolean;
-        isAuthorized: (role: string) => boolean;
+        isAuthorized: (role: string | string[]) => boolean;
         user: Auth0UserProfile | {
             sub?: string;
         };
