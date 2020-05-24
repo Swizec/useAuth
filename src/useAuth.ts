@@ -130,14 +130,15 @@ export const useAuth: useAuthInterface = () => {
         return !!(state.expiresAt && new Date().getTime() < state.expiresAt);
     };
 
-    const isAuthorized = (role: string) => {
-        return (
-            isAuthenticated() &&
-            (state.user[`${customPropertyNamespace}/user_metadata`] &&
-                state.user[
-                    `${customPropertyNamespace}/user_metadata`
-                ].roles.includes(role))
-        );
+    const isAuthorized = (roles: string | string[]) => {
+        const _roles = Array.isArray(roles) ? roles : [roles];
+        const metadata = state.user[`${customPropertyNamespace}/user_metadata`];
+
+        if (!isAuthenticated() || !metadata) {
+            return false;
+        } else {
+            return _roles.some(role => metadata.roles.includes(role));
+        }
     };
 
     return {

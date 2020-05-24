@@ -192,6 +192,44 @@ describe("useAuth", () => {
 
             render(context, Mock);
         });
+
+        describe("array argument", () => {
+            it("true if at least 1 present", () => {
+                const Mock = () => {
+                    const { isAuthorized } = useAuth();
+
+                    expect(isAuthorized(["testRole1", "testRole2"])).toBe(true);
+
+                    return null;
+                };
+
+                context.state.user["localhost/user_metadata"] = {
+                    roles: ["testRole1"]
+                };
+                context.state.expiresAt = new Date().getTime() + 3600 * 1000;
+
+                render(context, Mock);
+            });
+
+            it("false if none present", () => {
+                const Mock = () => {
+                    const { isAuthorized } = useAuth();
+
+                    expect(isAuthorized(["testRole1", "testRole2"])).toBe(
+                        false
+                    );
+
+                    return null;
+                };
+
+                context.state.user["localhost/user_metadata"] = {
+                    roles: ["testRole"]
+                };
+                context.state.expiresAt = new Date().getTime() + 3600 * 1000;
+
+                render(context, Mock);
+            });
+        });
     });
 });
 
