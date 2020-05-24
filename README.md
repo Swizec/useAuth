@@ -304,7 +304,20 @@ export const wrapPageElement = ({ element, props }) => (
 Now you can use `isAuthorized` to check if the current user has access to some part of your site.
 
 ```javascript
+    // show something only if current user has Student role
         {isAuthorized("Student") ? (
+          <Content
+            {...props}
+            fullwidth={fullwidth}
+            menu={menu}
+            setMenu={setMenu}
+            nav={nav}
+          />
+        : null}
+
+    // you can also use an OR'd array
+    // show something if user has Student role OR Admin role
+        {isAuthorized(["Student", "Admin"]) ? (
           <Content
             {...props}
             fullwidth={fullwidth}
@@ -316,6 +329,8 @@ Now you can use `isAuthorized` to check if the current user has access to some p
 ```
 
 If current user is authenticated _and_ has the `Student` role, show the content. Otherwise null.
+
+For convenience you can also pass multiple roles to check with an OR condition. If any fit the current user, `isAuthorized` returns `true`.
 
 ---
 
