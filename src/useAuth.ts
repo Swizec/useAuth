@@ -134,6 +134,8 @@ export const useAuth: useAuthInterface = () => {
         const _roles = Array.isArray(roles) ? roles : [roles];
         const metadata = state.user[`${customPropertyNamespace}/user_metadata`];
 
+        console.log({ _roles, metadata }, isAuthenticated());
+
         if (!isAuthenticated() || !metadata) {
             return false;
         } else {
