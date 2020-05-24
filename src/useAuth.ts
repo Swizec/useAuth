@@ -132,7 +132,16 @@ export const useAuth: useAuthInterface = () => {
 
     const isAuthorized = (roles: string | string[]) => {
         const _roles = Array.isArray(roles) ? roles : [roles];
-        const metadata = state.user[`${customPropertyNamespace}/user_metadata`];
+        const metadata =
+            state.user[
+                // make this friendlier to use if you leave a trailing slash in config
+                `${customPropertyNamespace}/user_metadata`.replace(
+                    /\/+user_metadata/,
+                    "/user_metadata"
+                )
+            ];
+
+        console.log({ _roles, metadata, customPropertyNamespace }, state.user);
 
         if (!isAuthenticated() || !metadata) {
             return false;
