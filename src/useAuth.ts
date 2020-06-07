@@ -141,8 +141,6 @@ export const useAuth: useAuthInterface = () => {
                 )
             ];
 
-        console.log({ _roles, metadata, customPropertyNamespace }, state.user);
-
         if (!isAuthenticated() || !metadata) {
             return false;
         } else {
