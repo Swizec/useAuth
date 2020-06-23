@@ -1,0 +1,40 @@
+## 4. Enjoy useAuth
+
+
+You're ready to use useAuth for authentication in your React app.
+
+Here's a login button for example:
+
+```jsx
+const Login = () => {
+    const { isAuthenticated, login, logout } = useAuth()
+
+    if (isAuthenticated()) {
+        return <Button onClick={logout}>Logout</Button>
+    } else {
+        return <Button onClick={login}>Login</Button>
+    }
+}
+```
+
+```isAuthenticated``` is a method that checks if the user's cookie is still valid.
+
+```login``` and ```logout``` trigger their respective actions.
+
+You can even say hello to your users:
+
+```jsx
+// src/pages/index.js
+
+const IndexPage = () => {
+  const { isAuthenticated, user } = useAuth()
+
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <h1>Hi {isAuthenticated() ? user.name : "people"}</h1>
+  )
+}
+```
+
+Check ```isAuthenticated``` then use the user object. Simple as that.
