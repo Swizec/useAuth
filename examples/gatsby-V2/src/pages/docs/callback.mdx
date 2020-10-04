@@ -1,0 +1,36 @@
+## 3. Create the callback page
+
+
+Auth0 and most other authentication providers use OAuth. That requires redirecting your user to their login form. After login, the provider redirects the user back to your app.
+
+Any way of creating React pages should work, here's what I use for Gatsby:
+
+```jsx
+import React, { useEffect } from "react"
+import { useAuth } from "react-use-auth"
+import Layout from "../components/layout"
+
+const Auth0CallbackPage = () = {
+    const { handleAuthentication } = useAuth()
+    useEffect(() => {
+        handleAuthentication()
+    }, [])
+
+    return (
+        <Layout>
+          <h1>
+            This is the auth callback page, 
+            you should be redirected immediately!
+          </h1>
+        </Layout>
+    )
+}
+
+export default Auth0CallbackPage
+```
+
+The goal is to load a page, briefly show some text, and run the ```handleAuthentication``` method from useAuthon page load.
+
+That method will create a cookie in local storage with your user's information and redirect back to homepage. Redirecting to other post-login pages currently isn't supported but is a good idea now that I thought of it 🤔
+
+PS: Make sure you add ```domain/auth0_callback``` as a valid callback URL in your Auth0 config
