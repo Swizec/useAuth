@@ -393,12 +393,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.oyvinmar.com/"><img src="https://avatars0.githubusercontent.com/u/364853?v=4" width="100px;" alt=""/><br /><sub><b>Øyvind Marthinsen</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=oyvinmar" title="Code">💻</a></td>
     <td align="center"><a href="http://feed.no"><img src="https://avatars3.githubusercontent.com/u/764318?v=4" width="100px;" alt=""/><br /><sub><b>Fredrik Søgaard</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=fredrik-sogaard" title="Code">💻</a></td>
     <td align="center"><a href="http://ottofeller.com"><img src="https://avatars1.githubusercontent.com/u/58164?v=4" width="100px;" alt=""/><br /><sub><b>Artem Rudenko</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=gvidon" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/traverspinkerton"><img src="https://avatars3.githubusercontent.com/u/6158476?v=4" width="100px;" alt=""/><br /><sub><b>Travers Pinkerton</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=traverspinkerton" title="Code">💻</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
