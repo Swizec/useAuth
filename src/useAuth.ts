@@ -88,6 +88,10 @@ export const useAuth: useAuthInterface = () => {
         auth0 && auth0.authorize();
     };
 
+    const signup = () => {
+        auth0 && auth0.authorize({ mode: "signUp", screen_hint: "signup" });
+    };
+
     const logout = () => {
         auth0 &&
             auth0.logout({
@@ -156,6 +160,7 @@ export const useAuth: useAuthInterface = () => {
         userId: state.user ? state.user.sub : null,
         authResult: state.authResult,
         login,
+        signup,
         logout,
         handleAuthentication
     };
