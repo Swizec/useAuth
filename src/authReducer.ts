@@ -1,4 +1,57 @@
+import { Machine, assign, interpret } from "xstate";
 import { AuthState, AuthAction } from "./types";
+
+const authMachine = Machine<AuthState>(
+    {
+        id: "useAuth",
+        initial: "unauthenticated",
+        context: {
+            user: {},
+            expiresAt: null,
+            authResult: null,
+            isAuthenticating: false,
+            error: undefined,
+            errorType: undefined
+        },
+        states: {
+            unauthenticated: {
+                on: {
+                    LOGIN: "authenticating"
+                }
+            },
+            authenticating: {
+                on: {
+                    ERROR: "error",
+                    AUTHENTICATED: "authenticated"
+                },
+                entry: ["startAuthenticating"],
+                exit: ["stopAuthenticating"]
+            },
+            authenticated: {
+                on: {
+                    LOGOUT: "unauthenticated"
+                }
+            },
+            error: {}
+        }
+    },
+    {
+        actions: {
+            startAuthenticating: assign(context => {
+                return {
+                    isAuthenticating: true
+                };
+            }),
+            stopAuthenticating: assign(context => {
+                return {
+                    isAuthenticating: false
+                };
+            })
+        }
+    }
+);
+
+export const authState = interpret(authMachine);
 
 export const authReducer = (
     state: AuthState,
