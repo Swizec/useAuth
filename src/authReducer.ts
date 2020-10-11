@@ -1,7 +1,7 @@
 import { Machine, assign, interpret } from "xstate";
 import { AuthState, AuthAction } from "./types";
 
-const authMachine = Machine<AuthState>(
+export const authMachine = Machine<AuthState>(
     {
         id: "useAuth",
         initial: "unauthenticated",
@@ -30,7 +30,8 @@ const authMachine = Machine<AuthState>(
             authenticated: {
                 on: {
                     LOGOUT: "unauthenticated"
-                }
+                },
+                entry: ["saveUserToContext", "saveUserToLocalstorage"]
             },
             error: {}
         }
@@ -46,7 +47,29 @@ const authMachine = Machine<AuthState>(
                 return {
                     isAuthenticating: false
                 };
-            })
+            }),
+            saveUserToContext: assign((context, event) => {
+                const { authResult, user } = event;
+                const expiresAt =
+                    authResult.expiresIn! * 1000 + new Date().getTime();
+
+                return {
+                    user,
+                    authResult,
+                    expiresAt
+                };
+            }),
+            saveUserToLocalstorage: (context, event) => {
+                const { expiresAt, user } = context;
+
+                if (typeof localStorage !== "undefined") {
+                    localStorage.setItem(
+                        "useAuth:expires_at",
+                        JSON.stringify(expiresAt)
+                    );
+                    localStorage.setItem("useAuth:user", JSON.stringify(user));
+                }
+            }
         }
     }
 );
