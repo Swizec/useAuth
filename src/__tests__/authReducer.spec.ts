@@ -3,28 +3,28 @@ import { authReducer, authState, authMachine } from "../authReducer";
 import { AuthState, AuthAction } from "src/types";
 
 describe("authReducer", () => {
-    describe.only("LOGIN", () => {
-        const currentTime = new Date().getTime();
-        const initialContext: AuthState = {
-            user: { sub: "1234" },
-            expiresAt: null,
-            isAuthenticating: true
-        };
+    const loginPayload = {
+        authResult: { accessToken: "12345", expiresIn: 500 },
+        user: {
+            name: "swizec",
+            nickname: "swiz",
+            picture: "https://avatar",
+            user_id: "12345",
+            clientID: "12345",
+            identities: [],
+            created_at: "2020-03-22",
+            updated_at: "2020-03-22",
+            sub: "12345"
+        }
+    };
+    const initialContext: AuthState = {
+        user: { sub: "1234" },
+        expiresAt: null,
+        isAuthenticating: true
+    };
 
-        const payload = {
-            authResult: { accessToken: "12345", expiresIn: 500 },
-            user: {
-                name: "swizec",
-                nickname: "swiz",
-                picture: "https://avatar",
-                user_id: "12345",
-                clientID: "12345",
-                identities: [],
-                created_at: "2020-03-22",
-                updated_at: "2020-03-22",
-                sub: "12345"
-            }
-        };
+    describe("LOGIN", () => {
+        const currentTime = new Date().getTime();
 
         function initStateMachine() {
             const state = interpret(
@@ -41,14 +41,14 @@ describe("authReducer", () => {
             localStorage.removeItem("useAuth:user");
 
             authState.send("LOGIN");
-            authState.send("AUTHENTICATED", payload);
+            authState.send("AUTHENTICATED", loginPayload);
 
             expect(
                 JSON.parse(localStorage.getItem("useAuth:expires_at")!)
             ).toBeGreaterThanOrEqual(currentTime + 500 * 1000);
 
             expect(localStorage.getItem("useAuth:user")).toEqual(
-                JSON.stringify(payload.user)
+                JSON.stringify(loginPayload.user)
             );
         });
 
@@ -62,9 +62,9 @@ describe("authReducer", () => {
             });
 
             authState.send("LOGIN");
-            authState.send("AUTHENTICATED", payload);
+            authState.send("AUTHENTICATED", loginPayload);
 
-            expect(savedContext.user).toEqual(payload.user);
+            expect(savedContext.user).toEqual(loginPayload.user);
         });
         it("sets expiresAt", () => {
             const authState = initStateMachine();
@@ -76,7 +76,7 @@ describe("authReducer", () => {
             });
 
             authState.send("LOGIN");
-            authState.send("AUTHENTICATED", payload);
+            authState.send("AUTHENTICATED", loginPayload);
 
             expect(savedContext.expiresAt).toBeGreaterThanOrEqual(
                 currentTime + 500 * 1000
@@ -92,99 +92,73 @@ describe("authReducer", () => {
             });
 
             authState.send("LOGIN");
-            authState.send("AUTHENTICATED", payload);
+            authState.send("AUTHENTICATED", loginPayload);
 
-            expect(savedContext.authResult).toBe(payload.authResult);
+            expect(savedContext.authResult).toBe(loginPayload.authResult);
         });
     });
 
-    describe("logout", () => {
-        const state: AuthState = {
-            user: { sub: "1234" },
-            expiresAt: new Date().getTime(),
-            isAuthenticating: true
-        };
-        const action: AuthAction = {
-            type: "logout"
-        };
+    describe.only("LOGOUT", () => {
+        function initStateMachine() {
+            const state = interpret(authMachine).start();
+            state.send("LOGIN");
+            state.send("AUTHENTICATED", loginPayload);
+
+            return state;
+        }
 
         it("removes user from local storage", () => {
+            const authState = initStateMachine();
+
             localStorage.setItem("useAuth:expires_at", "12345");
             localStorage.setItem("useAuth:user", "12345");
 
-            authReducer(state, action);
+            authState.send("LOGOUT");
 
             expect(localStorage.getItem("useAuth:expires_at")).toEqual(null);
             expect(localStorage.getItem("useAuth:user")).toEqual(null);
         });
 
         it("empties user", () => {
-            expect(authReducer(state, action).user).toEqual({});
+            const authState = initStateMachine();
+
+            let savedContext: AuthState = initialContext;
+
+            authState.subscribe(state => {
+                savedContext = state.context;
+            });
+
+            authState.send("LOGOUT");
+
+            expect(savedContext.user).toEqual({});
         });
         it("nullifies expiresAt", () => {
-            expect(authReducer(state, action).expiresAt).toEqual(null);
+            const authState = initStateMachine();
+
+            let savedContext: AuthState = initialContext;
+
+            authState.subscribe(state => {
+                savedContext = state.context;
+            });
+
+            authState.send("LOGOUT");
+
+            expect(savedContext.expiresAt).toEqual(null);
         });
         it("nullifies authResult", () => {
-            expect(authReducer(state, action).authResult).toBe(null);
+            const authState = initStateMachine();
+
+            let savedContext: AuthState = initialContext;
+
+            authState.subscribe(state => {
+                savedContext = state.context;
+            });
+
+            authState.send("LOGOUT");
+
+            expect(savedContext.authResult).toBe(null);
         });
     });
-
-    describe("stopAuthenticating", () => {
-        const state: AuthState = {
-            user: { sub: "1234" },
-            expiresAt: new Date().getTime(),
-            isAuthenticating: true
-        };
-        const action: AuthAction = {
-            type: "stopAuthenticating"
-        };
-
-        it("changes isAuthenticating to false", () => {
-            expect(authReducer(state, action).isAuthenticating).toBe(false);
-        });
-
-        it("preserves other properties", () => {
-            expect(authReducer(state, action).user).toStrictEqual(state.user);
-            expect(authReducer(state, action).expiresAt).toStrictEqual(
-                state.expiresAt
-            );
-        });
-    });
-
-    // describe("LOGIN", () => {
-    //     // const state: AuthState = {
-    //     //     user: { sub: "1234" },
-    //     //     expiresAt: new Date().getTime(),
-    //     //     isAuthenticating: false
-    //     // };
-    //     // const action: AuthAction = {
-    //     //     type: "startAuthenticating"
-    //     // };
-    //     const context: AuthState = {
-    //         user: { sub: "1234" },
-    //         expiresAt: new Date().getTime(),
-    //         isAuthenticating: false
-    //     };
-
-    //     it("changes isAuthenticating to true", () => {
-    //         const state = interpret(
-    //             authMachine.withContext({
-    //                 ...context,
-    //                 isAuthenticating: false
-    //             })
-    //         ).start();
-
-    //         let savedContext = context;
-
-    //         state
-    //             .onTransition(state => {
-    //                 savedContext = state.context;
-    //             })
-    //             .send("LOGIN");
-
-    //         expect(savedContext.isAuthenticating).toBe(true);
-    //     });
-    // });
 
     describe("error", () => {
         const state: AuthState = {

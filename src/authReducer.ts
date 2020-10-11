@@ -31,7 +31,8 @@ export const authMachine = Machine<AuthState>(
                 on: {
                     LOGOUT: "unauthenticated"
                 },
-                entry: ["saveUserToContext", "saveUserToLocalstorage"]
+                entry: ["saveUserToContext", "saveToLocalStorage"],
+                exit: ["clearUserFromContext", "clearLocalStorage"]
             },
             error: {}
         }
@@ -59,7 +60,14 @@ export const authMachine = Machine<AuthState>(
                     expiresAt
                 };
             }),
-            saveUserToLocalstorage: (context, event) => {
+            clearUserFromContext: assign(context => {
+                return {
+                    user: {},
+                    expiresAt: null,
+                    authResult: null
+                };
+            }),
+            saveToLocalStorage: (context, event) => {
                 const { expiresAt, user } = context;
 
                 if (typeof localStorage !== "undefined") {
@@ -68,6 +76,12 @@ export const authMachine = Machine<AuthState>(
                         JSON.stringify(expiresAt)
                     );
                     localStorage.setItem("useAuth:user", JSON.stringify(user));
+                }
+            },
+            clearLocalStorage: () => {
+                if (typeof localStorage !== "undefined") {
+                    localStorage.removeItem("useAuth:expires_at");
+                    localStorage.removeItem("useAuth:user");
                 }
             }
         }
