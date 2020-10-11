@@ -34,7 +34,13 @@ export const authMachine = Machine<AuthState>(
                 entry: ["saveUserToContext", "saveToLocalStorage"],
                 exit: ["clearUserFromContext", "clearLocalStorage"]
             },
-            error: {}
+            error: {
+                entry: [
+                    "saveErrorToContext",
+                    "clearUserFromContext",
+                    "clearLocalStorage"
+                ]
+            }
         }
     },
     {
@@ -83,7 +89,13 @@ export const authMachine = Machine<AuthState>(
                     localStorage.removeItem("useAuth:expires_at");
                     localStorage.removeItem("useAuth:user");
                 }
-            }
+            },
+            saveErrorToContext: assign((context, event) => {
+                return {
+                    errorType: event.errorType,
+                    error: event.error
+                };
+            })
         }
     }
 );

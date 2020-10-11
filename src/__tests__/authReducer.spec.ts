@@ -98,7 +98,7 @@ describe("authReducer", () => {
         });
     });
 
-    describe.only("LOGOUT", () => {
+    describe("LOGOUT", () => {
         function initStateMachine() {
             const state = interpret(authMachine).start();
             state.send("LOGIN");
@@ -160,33 +160,84 @@ describe("authReducer", () => {
         });
     });
 
-    describe("error", () => {
-        const state: AuthState = {
-            user: { sub: "1234" },
-            expiresAt: new Date().getTime(),
-            isAuthenticating: false
-        };
-        const action: AuthAction = {
-            type: "error",
+    describe("ERROR", () => {
+        const errorPayload = {
             errorType: "auth error",
             error: new Error()
         };
 
+        function initStateMachine() {
+            const state = interpret(authMachine).start();
+            state.send("LOGIN");
+
+            return state;
+        }
+
         it("sets errorType", () => {
-            expect(authReducer(state, action).errorType).toEqual("auth error");
+            const authState = initStateMachine();
+
+            let savedContext: AuthState = initialContext;
+
+            authState.subscribe(state => {
+                savedContext = state.context;
+            });
+
+            authState.send("ERROR", errorPayload);
+
+            expect(savedContext.errorType).toEqual("auth error");
         });
 
         it("sets error", () => {
-            expect(authReducer(state, action).error).toBeDefined();
+            const authState = initStateMachine();
+
+            let savedContext: AuthState = initialContext;
+
+            authState.subscribe(state => {
+                savedContext = state.context;
+            });
+
+            authState.send("ERROR", errorPayload);
+
+            expect(savedContext.error).toBeDefined();
         });
         it("empties user", () => {
-            expect(authReducer(state, action).user).toEqual({});
+            const authState = initStateMachine();
+
+            let savedContext: AuthState = initialContext;
+
+            authState.subscribe(state => {
+                savedContext = state.context;
+            });
+
+            authState.send("ERROR", errorPayload);
+
+            expect(savedContext.user).toEqual({});
         });
         it("nullifies expiresAt", () => {
-            expect(authReducer(state, action).expiresAt).toEqual(null);
+            const authState = initStateMachine();
+
+            let savedContext: AuthState = initialContext;
+
+            authState.subscribe(state => {
+                savedContext = state.context;
+            });
+
+            authState.send("ERROR", errorPayload);
+
+            expect(savedContext.expiresAt).toEqual(null);
         });
         it("nullifies authResult", () => {
-            expect(authReducer(state, action).authResult).toBe(null);
+            const authState = initStateMachine();
+
+            let savedContext: AuthState = initialContext;
+
+            authState.subscribe(state => {
+                savedContext = state.context;
+            });
+
+            authState.send("ERROR", errorPayload);
+
+            expect(savedContext.authResult).toBe(null);
         });
     });
 });
