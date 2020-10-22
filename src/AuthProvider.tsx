@@ -1,8 +1,9 @@
 import React, { createContext, useReducer, useEffect, useState } from "react";
 import Auth0 from "auth0-js";
 import { AuthOptions } from "auth0-js";
+import { useMachine } from '@xstate/react'
 
-import { authReducer } from "./authReducer";
+import { authMachine } from "./authReducer";
 import { handleAuthResult } from "./useAuth";
 import {
     AuthProviderInterface,
@@ -41,7 +42,7 @@ function getDefaultState(): AuthState {
 
 export const AuthContext = createContext<AuthContextState>({
     state: getDefaultState(),
-    dispatch: () => {},
+    send: () => {},
     auth0: null,
     callback_domain: "http://localhost:8000",
     customPropertyNamespace: "http://localhost:8000",
@@ -77,14 +78,11 @@ export const AuthProvider: AuthProviderInterface = ({
     const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
 
     // Holds authentication state
-    const [state, dispatch] = useReducer<React.Reducer<AuthState, AuthAction>>(
-        authReducer,
-        getDefaultState()
-    );
+    const [state, send] = useMachine(authMachine)
 
     const [contextValue, setContextValue] = useState<AuthContextState>({
-        state,
-        dispatch,
+        state: state.context,
+        send,
         auth0,
         callback_domain: callbackDomain,
         customPropertyNamespace,
@@ -97,31 +95,24 @@ export const AuthProvider: AuthProviderInterface = ({
     useEffect(() => {
         setContextValue((contextValue: AuthContextState) => ({
             ...contextValue,
-            state
+            state: state.context
         }));
     }, [state]);
 
     // Verify user is logged-in on AuthProvider mount
     // Avoids storing sensitive data in local storage
     useEffect(() => {
-        dispatch({
-            type: "startAuthenticating"
-        });
+        send('LOGIN')
 
         auth0.checkSession({}, (err, authResult) => {
-            dispatch({
-                type: "stopAuthenticating"
-            });
-
             console.log(err);
             if (err) {
-                dispatch({
-                    type: "error",
+                send('ERROR',{
                     errorType: "checkSession",
                     error: err
                 });
             } else {
-                handleAuthResult({ dispatch, auth0, authResult });
+                handleAuthResult({ send, auth0, authResult });
             }
         });
     }, []);

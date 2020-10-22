@@ -13,25 +13,19 @@ import {
     Auth0ParseHashError
 } from "auth0-js";
 
-const setSession: setSessionInterface = async ({
-    dispatch,
-    auth0,
-    authResult
-}) => {
+const setSession: setSessionInterface = async ({ send, auth0, authResult }) => {
     return new Promise((resolve, reject) => {
         auth0.client.userInfo(
             authResult.accessToken || "",
             (err: Auth0Error | null, user: Auth0UserProfile) => {
                 if (err) {
-                    dispatch({
-                        type: "error",
+                    send("ERROR", {
                         errorType: "userInfo",
                         error: err
                     });
                     reject(err);
                 } else {
-                    dispatch({
-                        type: "login",
+                    send("AUTHENTICATED", {
                         authResult,
                         user
                     });
@@ -44,17 +38,13 @@ const setSession: setSessionInterface = async ({
 
 export const handleAuthResult: handleAuthResultInterface = async ({
     err,
-    dispatch,
+    send,
     auth0,
     authResult
 }) => {
-    dispatch({
-        type: "stopAuthenticating"
-    });
-
     if (authResult && authResult.accessToken && authResult.idToken) {
         try {
-            await setSession({ dispatch, auth0, authResult });
+            await setSession({ send, auth0, authResult });
 
             return true;
         } catch (e) {
@@ -62,8 +52,7 @@ export const handleAuthResult: handleAuthResultInterface = async ({
         }
     } else if (err) {
         console.error(err);
-        dispatch({
-            type: "error",
+        send("ERROR", {
             error: err,
             errorType: "authResult"
         });
@@ -91,7 +80,7 @@ export const handleAuthResult: handleAuthResultInterface = async ({
 export const useAuth: useAuthInterface = () => {
     const {
         state,
-        dispatch,
+        send,
         auth0,
         callback_domain,
         navigate,
@@ -111,9 +100,7 @@ export const useAuth: useAuthInterface = () => {
             auth0.logout({
                 returnTo: callback_domain
             });
-        dispatch({
-            type: "logout"
-        });
+        send("LOGOUT");
 
         // Return to the homepage after logout.
         navigate("/");
@@ -121,10 +108,7 @@ export const useAuth: useAuthInterface = () => {
 
     const handleAuthentication = ({ postLoginRoute = "/" } = {}) => {
         if (typeof window !== "undefined") {
-            dispatch({
-                type: "startAuthenticating"
-            });
-
+            send("LOGIN");
             auth0 &&
                 auth0.parseHash(
                     async (
@@ -134,7 +118,7 @@ export const useAuth: useAuthInterface = () => {
                         await handleAuthResult({
                             err,
                             authResult,
-                            dispatch,
+                            send,
                             auth0
                         });
 

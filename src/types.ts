@@ -7,6 +7,7 @@ import {
     Auth0ParseHashError
 } from "auth0-js";
 import { ReactNode, Dispatch } from "react";
+import { Interpreter } from "xstate";
 
 export type AuthState = {
     user:
@@ -55,22 +56,22 @@ export type AuthDispatch = Dispatch<AuthAction>;
 
 export type handleAuthResultInterface = ({
     err,
-    dispatch,
+    send,
     auth0,
     authResult
 }: {
     err?: Error | Auth0ParseHashError | null;
-    dispatch: AuthDispatch;
+    send: any;
     auth0: WebAuth;
     authResult: Auth0DecodedHash | null;
 }) => Promise<boolean>;
 
 export type setSessionInterface = ({
-    dispatch,
+    send,
     auth0,
     authResult
 }: {
-    dispatch: AuthDispatch;
+    send: any;
     auth0: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;
@@ -95,7 +96,8 @@ export type AuthProviderInterface = ({
 
 export type AuthContextState = {
     state: AuthState;
-    dispatch: AuthDispatch;
+    // TODO: figure out proper typing
+    send: any;
     auth0: WebAuth | null;
     callback_domain: string;
     customPropertyNamespace: string;

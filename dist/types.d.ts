@@ -43,14 +43,14 @@ export interface useAuthInterface {
     };
 }
 export declare type AuthDispatch = Dispatch<AuthAction>;
-export declare type handleAuthResultInterface = ({ err, dispatch, auth0, authResult }: {
+export declare type handleAuthResultInterface = ({ err, send, auth0, authResult }: {
     err?: Error | Auth0ParseHashError | null;
-    dispatch: AuthDispatch;
+    send: any;
     auth0: WebAuth;
     authResult: Auth0DecodedHash | null;
 }) => Promise<boolean>;
-export declare type setSessionInterface = ({ dispatch, auth0, authResult }: {
-    dispatch: AuthDispatch;
+export declare type setSessionInterface = ({ send, auth0, authResult }: {
+    send: any;
     auth0: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;
@@ -65,7 +65,7 @@ export declare type AuthProviderInterface = ({ children, navigate, auth0_domain,
 }) => JSX.Element;
 export declare type AuthContextState = {
     state: AuthState;
-    dispatch: AuthDispatch;
+    send: any;
     auth0: WebAuth | null;
     callback_domain: string;
     customPropertyNamespace: string;

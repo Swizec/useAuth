@@ -21,6 +21,7 @@
     ],
     "dependencies": {
         "@types/react-test-renderer": "^16.9.2",
+        "@xstate/react": "^1.0.1",
         "auth0-js": "^9.13.2",
         "xstate": "^4.13.0"
     },
