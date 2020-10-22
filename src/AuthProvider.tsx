@@ -1,47 +1,38 @@
 import React, { createContext, useReducer, useEffect, useState } from "react";
 import Auth0 from "auth0-js";
 import { AuthOptions } from "auth0-js";
-import { useMachine } from '@xstate/react'
+import { useMachine } from "@xstate/react";
 
 import { authMachine } from "./authReducer";
 import { handleAuthResult } from "./useAuth";
-import {
-    AuthProviderInterface,
-    AuthState,
-    AuthAction,
-    AuthContextState
-} from "./types";
+import { AuthProviderInterface, AuthContextState } from "./types";
 
-function getDefaultState(): AuthState {
-    const DEFAULT_STATE = {
-        user: {},
-        expiresAt: null,
-        isAuthenticating: false
-    };
-
-    let stored_state = {};
-
+function hydrateFromLocalStorage(send: any) {
     if (typeof localStorage !== "undefined") {
         const expiresAt = new Date(
             JSON.parse(localStorage.getItem("useAuth:expires_at") || "0")
         );
 
         if (expiresAt > new Date()) {
-            stored_state = {
+            const stored_state = {
                 user: JSON.parse(localStorage.getItem("useAuth:user") || "{}"),
                 expiresAt: expiresAt
             };
+            send("LOGIN");
+            send("AUTHENTICATED", stored_state);
         }
     }
-
-    return {
-        ...DEFAULT_STATE,
-        ...stored_state
-    };
 }
 
 export const AuthContext = createContext<AuthContextState>({
-    state: getDefaultState(),
+    state: {
+        user: {},
+        expiresAt: null,
+        authResult: null,
+        isAuthenticating: false,
+        error: undefined,
+        errorType: undefined
+    },
     send: () => {},
     auth0: null,
     callback_domain: "http://localhost:8000",
@@ -78,7 +69,8 @@ export const AuthProvider: AuthProviderInterface = ({
     const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
 
     // Holds authentication state
-    const [state, send] = useMachine(authMachine)
+    const [state, send] = useMachine(authMachine);
+    hydrateFromLocalStorage(send);
 
     const [contextValue, setContextValue] = useState<AuthContextState>({
         state: state.context,
@@ -102,12 +94,12 @@ export const AuthProvider: AuthProviderInterface = ({
     // Verify user is logged-in on AuthProvider mount
     // Avoids storing sensitive data in local storage
     useEffect(() => {
-        send('LOGIN')
+        send("LOGIN");
 
         auth0.checkSession({}, (err, authResult) => {
             console.log(err);
             if (err) {
-                send('ERROR',{
+                send("ERROR", {
                     errorType: "checkSession",
                     error: err
                 });
