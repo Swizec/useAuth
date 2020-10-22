@@ -34,9 +34,19 @@ describe("authReducer", () => {
             return state;
         }
 
-        it("adds user to local storage", () => {
-            const authState = initStateMachine();
+        // init with values to easily tell TypeScript the type
+        let authState = initStateMachine(),
+            savedContext = initialContext;
 
+        beforeEach(() => {
+            authState = initStateMachine();
+
+            authState.subscribe(state => {
+                savedContext = state.context;
+            });
+        });
+
+        it("adds user to local storage", () => {
             localStorage.removeItem("useAuth:expires_at");
             localStorage.removeItem("useAuth:user");
 
@@ -53,28 +63,12 @@ describe("authReducer", () => {
         });
 
         it("sets user", () => {
-            const authState = initStateMachine();
-
-            let savedContext: AuthState = initialContext;
-
-            authState.subscribe(state => {
-                savedContext = state.context;
-            });
-
             authState.send("LOGIN");
             authState.send("AUTHENTICATED", loginPayload);
 
             expect(savedContext.user).toEqual(loginPayload.user);
         });
         it("sets expiresAt", () => {
-            const authState = initStateMachine();
-
-            let savedContext: AuthState = initialContext;
-
-            authState.subscribe(state => {
-                savedContext = state.context;
-            });
-
             authState.send("LOGIN");
             authState.send("AUTHENTICATED", loginPayload);
 
@@ -83,14 +77,6 @@ describe("authReducer", () => {
             );
         });
         it("sets authResult", () => {
-            const authState = initStateMachine();
-
-            let savedContext: AuthState = initialContext;
-
-            authState.subscribe(state => {
-                savedContext = state.context;
-            });
-
             authState.send("LOGIN");
             authState.send("AUTHENTICATED", loginPayload);
 
