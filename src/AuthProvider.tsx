@@ -14,12 +14,17 @@ function hydrateFromLocalStorage(send: any) {
         );
 
         if (expiresAt > new Date()) {
-            const stored_state = {
-                user: JSON.parse(localStorage.getItem("useAuth:user") || "{}"),
-                expiresAt: expiresAt
-            };
+            const user = JSON.parse(
+                localStorage.getItem("useAuth:user") || "{}"
+            );
             send("LOGIN");
-            send("AUTHENTICATED", stored_state);
+            send("AUTHENTICATED", {
+                user,
+                authResult: {
+                    expiresIn:
+                        (new Date().getTime() - expiresAt.getTime()) / 1000
+                }
+            });
         }
     }
 }
