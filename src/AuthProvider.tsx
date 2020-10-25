@@ -1,33 +1,8 @@
-import React, { createContext, useReducer, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import Auth0 from "auth0-js";
 import { AuthOptions } from "auth0-js";
-import { useMachine } from "@xstate/react";
 
-import { authMachine } from "./authReducer";
-import { handleAuthResult } from "./useAuth";
 import { AuthProviderInterface, AuthContextState } from "./types";
-
-function hydrateFromLocalStorage(send: any) {
-    if (typeof localStorage !== "undefined") {
-        const expiresAt = new Date(
-            JSON.parse(localStorage.getItem("useAuth:expires_at") || "0")
-        );
-
-        if (expiresAt > new Date()) {
-            const user = JSON.parse(
-                localStorage.getItem("useAuth:user") || "{}"
-            );
-            send("LOGIN");
-            send("AUTHENTICATED", {
-                user,
-                authResult: {
-                    expiresIn:
-                        (new Date().getTime() - expiresAt.getTime()) / 1000
-                }
-            });
-        }
-    }
-}
 
 export const AuthContext = createContext<AuthContextState>({
     auth0: null,

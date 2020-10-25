@@ -10023,10 +10023,10 @@ react-side-effect@^1.1.0:
   dependencies:
     shallowequal "^1.0.1"
 
-react-use-auth@0.9.0-4:
-  version "0.9.0-4"
-  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-0.9.0-4.tgz#e3e1f03666d185c39c72504dd924d77c258bd631"
-  integrity sha512-AsAX28o9GaYvYl6eHYYq2FIiKoUoNeEZiV0Z/TETtYFRpQyOHAGoDvzyIAONUapGejoOj30NhDCr74Elj6nTzw==
+react-use-auth@0.9.0-5:
+  version "0.9.0-5"
+  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-0.9.0-5.tgz#eab4e36c358af0b754435f30be54e5f35375a172"
+  integrity sha512-u9SmZtV3WsFPaIqdM5U1q45Ist/4CzZDui4XpyzJSsCOQtMUYQbSnt9V8ZQ/h8zJbOP0nvWfsFzDlES/dPTYOg==
   dependencies:
     "@types/react-test-renderer" "^16.9.2"
     "@xstate/react" "^1.0.1"

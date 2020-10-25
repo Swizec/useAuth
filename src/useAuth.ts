@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 
 import { AuthContext } from "./AuthProvider";
 import {
@@ -12,9 +12,8 @@ import {
     Auth0Error,
     Auth0ParseHashError
 } from "auth0-js";
-import { interpret } from "xstate";
-import { authMachine } from "./authReducer";
-import { useMachine, useService } from "@xstate/react";
+import { useService } from "@xstate/react";
+import { authService } from "./authReducer";
 
 const setSession: setSessionInterface = async ({ send, auth0, authResult }) => {
     return new Promise((resolve, reject) => {
@@ -66,9 +65,6 @@ export const handleAuthResult: handleAuthResultInterface = async ({
     }
 };
 
-const authService = interpret(authMachine);
-authService.start();
-
 /**
  * The main API for useAuth
  *
@@ -94,9 +90,12 @@ export const useAuth: useAuthInterface = () => {
     const [state, eventSend] = useService(authService);
 
     // TODO: ask David why these are different
-    const send = (eventName: string, eventData?: any) => {
-        eventSend({ type: eventName, ...(eventData || {}) });
-    };
+    const send = useCallback(
+        (eventName: string, eventData?: any) => {
+            eventSend({ type: eventName, ...(eventData || {}) });
+        },
+        [eventSend]
+    );
 
     const login = () => {
         auth0 && auth0.authorize();
