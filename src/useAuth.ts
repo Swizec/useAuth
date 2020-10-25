@@ -67,6 +67,7 @@ export const handleAuthResult: handleAuthResultInterface = async ({
 };
 
 const authService = interpret(authMachine);
+authService.start();
 
 /**
  * The main API for useAuth
