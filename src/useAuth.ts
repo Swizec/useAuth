@@ -14,7 +14,7 @@ import {
 } from "auth0-js";
 import { interpret } from "xstate";
 import { authMachine } from "./authReducer";
-import { useService } from "@xstate/react";
+import { useMachine, useService } from "@xstate/react";
 
 const setSession: setSessionInterface = async ({ send, auth0, authResult }) => {
     return new Promise((resolve, reject) => {
@@ -91,7 +91,12 @@ export const useAuth: useAuthInterface = () => {
         customPropertyNamespace
     } = useContext(AuthContext);
 
-    const [state, send] = useService(authService);
+    const [state, eventSend] = useService(authService);
+
+    // TODO: ask David why these are different
+    const send = (eventName: string, eventData?: any) => {
+        eventSend({ type: eventName, ...(eventData || {}) });
+    };
 
     const login = () => {
         auth0 && auth0.authorize();
