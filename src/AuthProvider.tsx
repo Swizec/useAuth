@@ -30,15 +30,6 @@ function hydrateFromLocalStorage(send: any) {
 }
 
 export const AuthContext = createContext<AuthContextState>({
-    state: {
-        user: {},
-        expiresAt: null,
-        authResult: null,
-        isAuthenticating: false,
-        error: undefined,
-        errorType: undefined
-    },
-    send: () => {},
     auth0: null,
     callback_domain: "http://localhost:8000",
     customPropertyNamespace: "http://localhost:8000",
@@ -74,12 +65,12 @@ export const AuthProvider: AuthProviderInterface = ({
     const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
 
     // Holds authentication state
-    const [state, send] = useMachine(authMachine);
-    hydrateFromLocalStorage(send);
+    // const [state, send] = useMachine(authMachine);
+    // hydrateFromLocalStorage(send);
 
     const [contextValue, setContextValue] = useState<AuthContextState>({
-        state: state.context,
-        send,
+        // state: state.context,
+        // send,
         auth0,
         callback_domain: callbackDomain,
         customPropertyNamespace,
@@ -91,28 +82,28 @@ export const AuthProvider: AuthProviderInterface = ({
     // https://reactjs.org/docs/context.html#caveats
     useEffect(() => {
         setContextValue((contextValue: AuthContextState) => ({
-            ...contextValue,
-            state: state.context
+            ...contextValue
+            // state: state.context
         }));
-    }, [state]);
-
-    // Verify user is logged-in on AuthProvider mount
-    // Avoids storing sensitive data in local storage
-    useEffect(() => {
-        send("LOGIN");
-
-        auth0.checkSession({}, (err, authResult) => {
-            console.log(err);
-            if (err) {
-                send("ERROR", {
-                    errorType: "checkSession",
-                    error: err
-                });
-            } else {
-                handleAuthResult({ send, auth0, authResult });
-            }
-        });
     }, []);
+
+    // // Verify user is logged-in on AuthProvider mount
+    // // Avoids storing sensitive data in local storage
+    // useEffect(() => {
+    //     send("LOGIN");
+
+    //     auth0.checkSession({}, (err, authResult) => {
+    //         console.log(err);
+    //         if (err) {
+    //             send("ERROR", {
+    //                 errorType: "checkSession",
+    //                 error: err
+    //             });
+    //         } else {
+    //             handleAuthResult({ send, auth0, authResult });
+    //         }
+    //     });
+    // }, []);
 
     return (
         <AuthContext.Provider value={contextValue}>

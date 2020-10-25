@@ -12,6 +12,9 @@ import {
     Auth0Error,
     Auth0ParseHashError
 } from "auth0-js";
+import { interpret } from "xstate";
+import { authMachine } from "./authReducer";
+import { useService } from "@xstate/react";
 
 const setSession: setSessionInterface = async ({ send, auth0, authResult }) => {
     return new Promise((resolve, reject) => {
@@ -63,6 +66,8 @@ export const handleAuthResult: handleAuthResultInterface = async ({
     }
 };
 
+const authService = interpret(authMachine);
+
 /**
  * The main API for useAuth
  *
@@ -79,13 +84,13 @@ export const handleAuthResult: handleAuthResultInterface = async ({
  */
 export const useAuth: useAuthInterface = () => {
     const {
-        state,
-        send,
         auth0,
         callback_domain,
         navigate,
         customPropertyNamespace
     } = useContext(AuthContext);
+
+    const [state, send] = useService(authService);
 
     const login = () => {
         auth0 && auth0.authorize();
@@ -129,13 +134,16 @@ export const useAuth: useAuthInterface = () => {
     };
 
     const isAuthenticated = () => {
-        return !!(state.expiresAt && new Date().getTime() < state.expiresAt);
+        return !!(
+            state.context.expiresAt &&
+            new Date().getTime() < state.context.expiresAt
+        );
     };
 
     const isAuthorized = (roles: string | string[]) => {
         const _roles = Array.isArray(roles) ? roles : [roles];
         const metadata =
-            state.user[
+            state.context.user[
                 // make this friendlier to use if you leave a trailing slash in config
                 `${customPropertyNamespace}/user_metadata`.replace(
                     /\/+user_metadata/,
@@ -151,12 +159,12 @@ export const useAuth: useAuthInterface = () => {
     };
 
     return {
-        isAuthenticating: state.isAuthenticating,
+        isAuthenticating: state.context.isAuthenticating,
         isAuthenticated,
         isAuthorized,
-        user: state.user,
-        userId: state.user ? state.user.sub : null,
-        authResult: state.authResult,
+        user: state.context.user,
+        userId: state.context.user ? state.context.user.sub : null,
+        authResult: state.context.authResult,
         login,
         signup,
         logout,
