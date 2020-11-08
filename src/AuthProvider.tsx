@@ -3,8 +3,6 @@ import Auth0 from "auth0-js";
 import { AuthOptions } from "auth0-js";
 
 import { AuthProviderInterface, AuthContextState } from "./types";
-import { useService } from "@xstate/react";
-import { authService } from "./authReducer";
 import { useAuth } from "./useAuth";
 
 export const AuthContext = createContext<AuthContextState>({
@@ -54,6 +52,9 @@ export const AuthProvider: AuthProviderInterface = ({
     useEffect(() => {
         dispatch("SET_CONFIG", { customPropertyNamespace });
     }, [customPropertyNamespace]);
+    useEffect(() => {
+        dispatch("SET_CONFIG", { callbackDomain });
+    }, [callbackDomain]);
 
     // Holds authentication state
     // const [state, send] = useMachine(authMachine);
@@ -96,5 +97,5 @@ export const AuthProvider: AuthProviderInterface = ({
     //     });
     // }, []);
 
-    return <>{children}</>;
+    return <React.Fragment>{children}</React.Fragment>;
 };

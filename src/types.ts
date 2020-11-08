@@ -18,9 +18,10 @@ export type AuthState = {
     errorType?: string;
     error?: Error | Auth0Error | Auth0ParseHashError;
     config: {
-        navigate?: Function;
-        customPropertyNamespace?: string;
+        navigate: Function;
+        customPropertyNamespace: string;
         authProvider?: any;
+        callbackDomain: string;
     };
 };
 
@@ -60,22 +61,22 @@ export interface useAuthInterface {
 export type handleAuthResultInterface = ({
     err,
     dispatch,
-    auth0,
+    authProvider,
     authResult
 }: {
     err?: Error | Auth0ParseHashError | null;
     dispatch: any;
-    auth0: WebAuth;
+    authProvider: WebAuth;
     authResult: Auth0DecodedHash | null;
 }) => Promise<boolean>;
 
 export type setSessionInterface = ({
     dispatch,
-    auth0,
+    authProvider,
     authResult
 }: {
     dispatch: any;
-    auth0: WebAuth;
+    authProvider: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;
 

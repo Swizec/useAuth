@@ -17,11 +17,11 @@ import { authService } from "./authReducer";
 
 const setSession: setSessionInterface = async ({
     dispatch,
-    auth0,
+    authProvider,
     authResult
 }) => {
     return new Promise((resolve, reject) => {
-        auth0.client.userInfo(
+        authProvider.client.userInfo(
             authResult.accessToken || "",
             (err: Auth0Error | null, user: Auth0UserProfile) => {
                 if (err) {
@@ -45,12 +45,12 @@ const setSession: setSessionInterface = async ({
 export const handleAuthResult: handleAuthResultInterface = async ({
     err,
     dispatch,
-    auth0,
+    authProvider,
     authResult
 }) => {
     if (authResult && authResult.accessToken && authResult.idToken) {
         try {
-            await setSession({ dispatch, auth0, authResult });
+            await setSession({ dispatch, authProvider, authResult });
 
             return true;
         } catch (e) {
@@ -84,14 +84,14 @@ export const handleAuthResult: handleAuthResultInterface = async ({
  * @return {function} handleAuthentication function to call on your callback page
  */
 export const useAuth: useAuthInterface = () => {
-    const {
-        auth0,
-        callback_domain,
-        navigate,
-        customPropertyNamespace
-    } = useContext(AuthContext);
-
     const [state, eventSend] = useService(authService);
+
+    const {
+        authProvider,
+        navigate,
+        callbackDomain,
+        customPropertyNamespace
+    } = state.context.config;
 
     // TODO: ask David why these are different
     const dispatch = useCallback(
@@ -102,17 +102,18 @@ export const useAuth: useAuthInterface = () => {
     );
 
     const login = () => {
-        auth0 && auth0.authorize();
+        authProvider && authProvider.authorize();
     };
 
     const signup = () => {
-        auth0 && auth0.authorize({ mode: "signUp", screen_hint: "signup" });
+        authProvider &&
+            authProvider.authorize({ mode: "signUp", screen_hint: "signup" });
     };
 
     const logout = () => {
-        auth0 &&
-            auth0.logout({
-                returnTo: callback_domain
+        authProvider &&
+            authProvider.logout({
+                returnTo: callbackDomain
             });
         dispatch("LOGOUT");
 
@@ -123,8 +124,8 @@ export const useAuth: useAuthInterface = () => {
     const handleAuthentication = ({ postLoginRoute = "/" } = {}) => {
         if (typeof window !== "undefined") {
             dispatch("LOGIN");
-            auth0 &&
-                auth0.parseHash(
+            authProvider &&
+                authProvider.parseHash(
                     async (
                         err: Auth0ParseHashError | null,
                         authResult: Auth0DecodedHash | null
@@ -133,7 +134,7 @@ export const useAuth: useAuthInterface = () => {
                             err,
                             authResult,
                             dispatch,
-                            auth0
+                            authProvider
                         });
 
                         navigate(postLoginRoute);

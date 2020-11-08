@@ -12,7 +12,14 @@ export const authMachine = Machine<AuthState>(
             isAuthenticating: false,
             error: undefined,
             errorType: undefined,
-            config: {}
+            config: {
+                navigate: () =>
+                    console.error(
+                        "Please specify a navigation method that works with your router"
+                    ),
+                callbackDomain: "http://localhost:8000",
+                customPropertyNamespace: "http://localhost:8000"
+            }
         },
         states: {
             unauthenticated: {
