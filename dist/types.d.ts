@@ -1,5 +1,5 @@
 import { Auth0UserProfile, Auth0DecodedHash, WebAuth, Auth0Error, AuthOptions, Auth0ParseHashError } from "auth0-js";
-import { ReactNode, Dispatch } from "react";
+import { ReactNode } from "react";
 export declare type AuthState = {
     user: (Auth0UserProfile & {
         [key: string]: any;
@@ -12,6 +12,12 @@ export declare type AuthState = {
     isAuthenticating: boolean;
     errorType?: string;
     error?: Error | Auth0Error | Auth0ParseHashError;
+    config: {
+        navigate: Function;
+        customPropertyNamespace: string;
+        authProvider?: any;
+        callbackDomain: string;
+    };
 };
 export declare type AuthAction = {
     type: "login";
@@ -40,18 +46,18 @@ export interface useAuthInterface {
         handleAuthentication: ({ postLoginRoute }: {
             postLoginRoute?: string;
         }) => void;
+        dispatch: (eventName: string, eventData?: any) => void;
     };
 }
-export declare type AuthDispatch = Dispatch<AuthAction>;
-export declare type handleAuthResultInterface = ({ err, send, auth0, authResult }: {
+export declare type handleAuthResultInterface = ({ err, dispatch, authProvider, authResult }: {
     err?: Error | Auth0ParseHashError | null;
-    send: any;
-    auth0: WebAuth;
+    dispatch: any;
+    authProvider: WebAuth;
     authResult: Auth0DecodedHash | null;
 }) => Promise<boolean>;
-export declare type setSessionInterface = ({ send, auth0, authResult }: {
-    send: any;
-    auth0: WebAuth;
+export declare type setSessionInterface = ({ dispatch, authProvider, authResult }: {
+    dispatch: any;
+    authProvider: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;
 export declare type AuthProviderInterface = ({ children, navigate, auth0_domain, auth0_audience_domain, auth0_client_id, auth0_params, customPropertyNamespace }: {
