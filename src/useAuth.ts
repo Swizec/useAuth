@@ -121,25 +121,43 @@ export const useAuth: useAuthInterface = () => {
         navigate("/");
     };
 
-    const handleAuthentication = ({ postLoginRoute = "/" } = {}) => {
+    const handleAuthentication = ({
+        postLoginRoute = "/",
+        callCount = 0
+    } = {}) => {
         if (typeof window !== "undefined") {
             dispatch("LOGIN");
-            authProvider &&
-                authProvider.parseHash(
-                    async (
-                        err: Auth0ParseHashError | null,
-                        authResult: Auth0DecodedHash | null
-                    ) => {
-                        await handleAuthResult({
-                            err,
-                            authResult,
-                            dispatch,
-                            authProvider
-                        });
 
-                        navigate(postLoginRoute);
-                    }
-                );
+            if (!authProvider) {
+                if (callCount < 5) {
+                    window.requestAnimationFrame(() =>
+                        handleAuthentication({
+                            postLoginRoute,
+                            callCount: callCount + 1
+                        })
+                    );
+                } else {
+                    console.error(
+                        "authProvider not configured, please ensure you send the correct SET_CONFIG events"
+                    );
+                }
+            }
+
+            authProvider.parseHash(
+                async (
+                    err: Auth0ParseHashError | null,
+                    authResult: Auth0DecodedHash | null
+                ) => {
+                    await handleAuthResult({
+                        err,
+                        authResult,
+                        dispatch,
+                        authProvider
+                    });
+
+                    navigate(postLoginRoute);
+                }
+            );
         }
     };
 

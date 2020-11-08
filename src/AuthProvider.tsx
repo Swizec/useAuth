@@ -45,7 +45,6 @@ export const AuthProvider: AuthProviderInterface = ({
         const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
         dispatch("SET_CONFIG", { authProvider: auth0 });
     }, []);
-
     useEffect(() => {
         dispatch("SET_CONFIG", { navigate });
     }, [navigate]);
