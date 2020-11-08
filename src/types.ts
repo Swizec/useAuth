@@ -6,8 +6,7 @@ import {
     AuthOptions,
     Auth0ParseHashError
 } from "auth0-js";
-import { ReactNode, Dispatch } from "react";
-import { Interpreter } from "xstate";
+import { ReactNode } from "react";
 
 export type AuthState = {
     user:
@@ -18,6 +17,11 @@ export type AuthState = {
     isAuthenticating: boolean;
     errorType?: string;
     error?: Error | Auth0Error | Auth0ParseHashError;
+    config: {
+        navigate?: Function;
+        customPropertyNamespace?: string;
+        authProvider?: any;
+    };
 };
 
 export type AuthAction =
@@ -49,29 +53,28 @@ export interface useAuthInterface {
         }: {
             postLoginRoute?: string;
         }) => void;
+        dispatch: (eventName: string, eventData?: any) => void;
     };
 }
 
-export type AuthDispatch = Dispatch<AuthAction>;
-
 export type handleAuthResultInterface = ({
     err,
-    send,
+    dispatch,
     auth0,
     authResult
 }: {
     err?: Error | Auth0ParseHashError | null;
-    send: any;
+    dispatch: any;
     auth0: WebAuth;
     authResult: Auth0DecodedHash | null;
 }) => Promise<boolean>;
 
 export type setSessionInterface = ({
-    send,
+    dispatch,
     auth0,
     authResult
 }: {
-    send: any;
+    dispatch: any;
     auth0: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;

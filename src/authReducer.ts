@@ -11,25 +11,35 @@ export const authMachine = Machine<AuthState>(
             authResult: null,
             isAuthenticating: false,
             error: undefined,
-            errorType: undefined
+            errorType: undefined,
+            config: {}
         },
         states: {
             unauthenticated: {
                 on: {
-                    LOGIN: "authenticating"
+                    LOGIN: "authenticating",
+                    SET_CONFIG: {
+                        actions: ["setConfig"]
+                    }
                 }
             },
             authenticating: {
                 on: {
                     ERROR: "error",
-                    AUTHENTICATED: "authenticated"
+                    AUTHENTICATED: "authenticated",
+                    SET_CONFIG: {
+                        actions: ["setConfig"]
+                    }
                 },
                 entry: ["startAuthenticating"],
                 exit: ["stopAuthenticating"]
             },
             authenticated: {
                 on: {
-                    LOGOUT: "unauthenticated"
+                    LOGOUT: "unauthenticated",
+                    SET_CONFIG: {
+                        actions: ["setConfig"]
+                    }
                 },
                 entry: ["saveUserToContext", "saveToLocalStorage"],
                 exit: ["clearUserFromContext", "clearLocalStorage"]
@@ -94,6 +104,15 @@ export const authMachine = Machine<AuthState>(
                 return {
                     errorType: event.errorType,
                     error: event.error
+                };
+            }),
+            setConfig: assign((context, event) => {
+                console.log("SET CONFIG", context, event);
+                return {
+                    config: {
+                        ...context.config,
+                        ...event
+                    }
                 };
             })
         }

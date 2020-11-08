@@ -15,19 +15,23 @@ import {
 import { useService } from "@xstate/react";
 import { authService } from "./authReducer";
 
-const setSession: setSessionInterface = async ({ send, auth0, authResult }) => {
+const setSession: setSessionInterface = async ({
+    dispatch,
+    auth0,
+    authResult
+}) => {
     return new Promise((resolve, reject) => {
         auth0.client.userInfo(
             authResult.accessToken || "",
             (err: Auth0Error | null, user: Auth0UserProfile) => {
                 if (err) {
-                    send("ERROR", {
+                    dispatch("ERROR", {
                         errorType: "userInfo",
                         error: err
                     });
                     reject(err);
                 } else {
-                    send("AUTHENTICATED", {
+                    dispatch("AUTHENTICATED", {
                         authResult,
                         user
                     });
@@ -40,13 +44,13 @@ const setSession: setSessionInterface = async ({ send, auth0, authResult }) => {
 
 export const handleAuthResult: handleAuthResultInterface = async ({
     err,
-    send,
+    dispatch,
     auth0,
     authResult
 }) => {
     if (authResult && authResult.accessToken && authResult.idToken) {
         try {
-            await setSession({ send, auth0, authResult });
+            await setSession({ dispatch, auth0, authResult });
 
             return true;
         } catch (e) {
@@ -54,7 +58,7 @@ export const handleAuthResult: handleAuthResultInterface = async ({
         }
     } else if (err) {
         console.error(err);
-        send("ERROR", {
+        dispatch("ERROR", {
             error: err,
             errorType: "authResult"
         });
@@ -90,7 +94,7 @@ export const useAuth: useAuthInterface = () => {
     const [state, eventSend] = useService(authService);
 
     // TODO: ask David why these are different
-    const send = useCallback(
+    const dispatch = useCallback(
         (eventName: string, eventData?: any) => {
             eventSend({ type: eventName, ...(eventData || {}) });
         },
@@ -110,7 +114,7 @@ export const useAuth: useAuthInterface = () => {
             auth0.logout({
                 returnTo: callback_domain
             });
-        send("LOGOUT");
+        dispatch("LOGOUT");
 
         // Return to the homepage after logout.
         navigate("/");
@@ -118,7 +122,7 @@ export const useAuth: useAuthInterface = () => {
 
     const handleAuthentication = ({ postLoginRoute = "/" } = {}) => {
         if (typeof window !== "undefined") {
-            send("LOGIN");
+            dispatch("LOGIN");
             auth0 &&
                 auth0.parseHash(
                     async (
@@ -128,7 +132,7 @@ export const useAuth: useAuthInterface = () => {
                         await handleAuthResult({
                             err,
                             authResult,
-                            send,
+                            dispatch,
                             auth0
                         });
 
@@ -173,6 +177,7 @@ export const useAuth: useAuthInterface = () => {
         login,
         signup,
         logout,
-        handleAuthentication
+        handleAuthentication,
+        dispatch
     };
 };

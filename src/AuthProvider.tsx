@@ -3,6 +3,9 @@ import Auth0 from "auth0-js";
 import { AuthOptions } from "auth0-js";
 
 import { AuthProviderInterface, AuthContextState } from "./types";
+import { useService } from "@xstate/react";
+import { authService } from "./authReducer";
+import { useAuth } from "./useAuth";
 
 export const AuthContext = createContext<AuthContextState>({
     auth0: null,
@@ -36,31 +39,44 @@ export const AuthProvider: AuthProviderInterface = ({
         scope: "openid profile email"
     };
 
+    const { dispatch } = useAuth();
+
     // Instantiate Auth0 client
-    const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
+
+    useEffect(() => {
+        const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
+        dispatch("SET_CONFIG", { authProvider: auth0 });
+    }, []);
+
+    useEffect(() => {
+        dispatch("SET_CONFIG", { navigate });
+    }, [navigate]);
+    useEffect(() => {
+        dispatch("SET_CONFIG", { customPropertyNamespace });
+    }, [customPropertyNamespace]);
 
     // Holds authentication state
     // const [state, send] = useMachine(authMachine);
     // hydrateFromLocalStorage(send);
 
-    const [contextValue, setContextValue] = useState<AuthContextState>({
-        // state: state.context,
-        // send,
-        auth0,
-        callback_domain: callbackDomain,
-        customPropertyNamespace,
-        navigate
-    });
+    // const [contextValue, setContextValue] = useState<AuthContextState>({
+    //     // state: state.context,
+    //     // send,
+    //     auth0,
+    //     callback_domain: callbackDomain,
+    //     customPropertyNamespace,
+    //     navigate
+    // });
 
     // Update context value and trigger re-render
     // This patterns avoids unnecessary deep renders
     // https://reactjs.org/docs/context.html#caveats
-    useEffect(() => {
-        setContextValue((contextValue: AuthContextState) => ({
-            ...contextValue
-            // state: state.context
-        }));
-    }, []);
+    // useEffect(() => {
+    //     setContextValue((contextValue: AuthContextState) => ({
+    //         ...contextValue
+    //         // state: state.context
+    //     }));
+    // }, []);
 
     // // Verify user is logged-in on AuthProvider mount
     // // Avoids storing sensitive data in local storage
@@ -80,9 +96,5 @@ export const AuthProvider: AuthProviderInterface = ({
     //     });
     // }, []);
 
-    return (
-        <AuthContext.Provider value={contextValue}>
-            {children}
-        </AuthContext.Provider>
-    );
+    return <>{children}</>;
 };
