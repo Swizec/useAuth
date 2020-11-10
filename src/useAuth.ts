@@ -1,6 +1,5 @@
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 
-import { AuthContext } from "./AuthProvider";
 import {
     useAuthInterface,
     handleAuthResultInterface,
@@ -121,45 +120,35 @@ export const useAuth: useAuthInterface = () => {
         navigate("/");
     };
 
-    const handleAuthentication = ({
-        postLoginRoute = "/",
-        callCount = 0
-    } = {}) => {
-        if (typeof window !== "undefined") {
-            dispatch("LOGIN");
-
-            if (!authProvider) {
-                if (callCount < 5) {
-                    window.requestAnimationFrame(() =>
-                        handleAuthentication({
-                            postLoginRoute,
-                            callCount: callCount + 1
-                        })
-                    );
-                } else {
-                    console.error(
-                        "authProvider not configured, please ensure you send the correct SET_CONFIG events"
-                    );
-                }
+    const handleAuthentication = useCallback(
+        ({ postLoginRoute = "/" } = {}) => {
+            if (!authProvider || !navigate || !callbackDomain) {
+                console.warn("authProvider not configured yet");
+                return;
             }
 
-            authProvider.parseHash(
-                async (
-                    err: Auth0ParseHashError | null,
-                    authResult: Auth0DecodedHash | null
-                ) => {
-                    await handleAuthResult({
-                        err,
-                        authResult,
-                        dispatch,
-                        authProvider
-                    });
+            if (typeof window !== "undefined") {
+                dispatch("LOGIN");
 
-                    navigate(postLoginRoute);
-                }
-            );
-        }
-    };
+                authProvider.parseHash(
+                    async (
+                        err: Auth0ParseHashError | null,
+                        authResult: Auth0DecodedHash | null
+                    ) => {
+                        await handleAuthResult({
+                            err,
+                            authResult,
+                            dispatch,
+                            authProvider
+                        });
+
+                        navigate(postLoginRoute);
+                    }
+                );
+            }
+        },
+        [authProvider, navigate, callbackDomain]
+    );
 
     const isAuthenticated = () => {
         return !!(

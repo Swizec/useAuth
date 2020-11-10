@@ -43,17 +43,13 @@ export const AuthProvider: AuthProviderInterface = ({
 
     useEffect(() => {
         const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
-        dispatch("SET_CONFIG", { authProvider: auth0 });
-    }, []);
-    useEffect(() => {
-        dispatch("SET_CONFIG", { navigate });
-    }, [navigate]);
-    useEffect(() => {
-        dispatch("SET_CONFIG", { customPropertyNamespace });
-    }, [customPropertyNamespace]);
-    useEffect(() => {
-        dispatch("SET_CONFIG", { callbackDomain });
-    }, [callbackDomain]);
+        dispatch("SET_CONFIG", {
+            authProvider: auth0,
+            navigate,
+            customPropertyNamespace,
+            callbackDomain
+        });
+    }, [navigate, customPropertyNamespace, callbackDomain]);
 
     // Holds authentication state
     // const [state, send] = useMachine(authMachine);
