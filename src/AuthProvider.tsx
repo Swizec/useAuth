@@ -51,46 +51,5 @@ export const AuthProvider: AuthProviderInterface = ({
         });
     }, [navigate, customPropertyNamespace, callbackDomain]);
 
-    // Holds authentication state
-    // const [state, send] = useMachine(authMachine);
-    // hydrateFromLocalStorage(send);
-
-    // const [contextValue, setContextValue] = useState<AuthContextState>({
-    //     // state: state.context,
-    //     // send,
-    //     auth0,
-    //     callback_domain: callbackDomain,
-    //     customPropertyNamespace,
-    //     navigate
-    // });
-
-    // Update context value and trigger re-render
-    // This patterns avoids unnecessary deep renders
-    // https://reactjs.org/docs/context.html#caveats
-    // useEffect(() => {
-    //     setContextValue((contextValue: AuthContextState) => ({
-    //         ...contextValue
-    //         // state: state.context
-    //     }));
-    // }, []);
-
-    // // Verify user is logged-in on AuthProvider mount
-    // // Avoids storing sensitive data in local storage
-    // useEffect(() => {
-    //     send("LOGIN");
-
-    //     auth0.checkSession({}, (err, authResult) => {
-    //         console.log(err);
-    //         if (err) {
-    //             send("ERROR", {
-    //                 errorType: "checkSession",
-    //                 error: err
-    //             });
-    //         } else {
-    //             handleAuthResult({ send, auth0, authResult });
-    //         }
-    //     });
-    // }, []);
-
     return <React.Fragment>{children}</React.Fragment>;
 };
