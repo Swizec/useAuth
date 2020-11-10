@@ -1,16 +1,9 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Auth0 from "auth0-js";
 import { AuthOptions } from "auth0-js";
 
-import { AuthProviderInterface, AuthContextState } from "./types";
+import { AuthProviderInterface } from "./types";
 import { useAuth } from "./useAuth";
-
-export const AuthContext = createContext<AuthContextState>({
-    auth0: null,
-    callback_domain: "http://localhost:8000",
-    customPropertyNamespace: "http://localhost:8000",
-    navigate: (path: string) => {}
-});
 
 export const AuthProvider: AuthProviderInterface = ({
     children,

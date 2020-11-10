@@ -97,13 +97,3 @@ export type AuthProviderInterface = ({
     auth0_params: AuthOptions;
     customPropertyNamespace: string;
 }) => JSX.Element;
-
-export type AuthContextState = {
-    // state: AuthState;
-    // TODO: figure out proper typing
-    // send: any;
-    auth0: WebAuth | null;
-    callback_domain: string;
-    customPropertyNamespace: string;
-    navigate: (path: string) => void;
-};
