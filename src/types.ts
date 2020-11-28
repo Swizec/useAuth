@@ -10,7 +10,7 @@ import { ReactNode } from "react";
 
 export type AuthState = {
     user:
-        | Auth0UserProfile & { [key: string]: any } // adds metadata support for Auth0 Rules
+        | (Auth0UserProfile & { [key: string]: any }) // adds metadata support for Auth0 Rules
         | { sub?: string; [key: string]: any };
     authResult?: Auth0DecodedHash | null;
     expiresAt: number | null;
@@ -24,19 +24,6 @@ export type AuthState = {
         callbackDomain: string;
     };
 };
-
-export type AuthAction =
-    | {
-          type: "login";
-          authResult: Auth0DecodedHash;
-          user: Auth0UserProfile;
-      }
-    | { type: "logout" | "stopAuthenticating" | "startAuthenticating" }
-    | {
-          type: "error";
-          errorType: string;
-          error: Error | Auth0Error | Auth0ParseHashError;
-      };
 
 export interface useAuthInterface {
     (): {

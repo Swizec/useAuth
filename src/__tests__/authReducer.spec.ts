@@ -1,6 +1,6 @@
 import { interpret } from "xstate";
-import { authReducer, authState, authMachine } from "../authReducer";
-import { AuthState, AuthAction } from "src/types";
+import { authMachine } from "../authReducer";
+import { AuthState } from "src/types";
 
 describe("authReducer", () => {
     const loginPayload = {
@@ -20,7 +20,12 @@ describe("authReducer", () => {
     const initialContext: AuthState = {
         user: { sub: "1234" },
         expiresAt: null,
-        isAuthenticating: true
+        isAuthenticating: true,
+        config: {
+            navigate: () => null,
+            callbackDomain: "localhost:8000",
+            customPropertyNamespace: "localhost:8000"
+        }
     };
 
     describe("LOGIN", () => {

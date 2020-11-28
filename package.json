@@ -20,12 +20,12 @@
         "dist"
     ],
     "dependencies": {
-        "@types/react-test-renderer": "^16.9.2",
         "@xstate/react": "^1.0.3",
         "auth0-js": "^9.13.2",
         "xstate": "^4.13.0"
     },
     "devDependencies": {
+        "@types/react-test-renderer": "^16.9.2",
         "@types/auth0-js": "^9.10.6",
         "@types/jest": "^25.1.4",
         "@types/react": "^16.9.34",
@@ -42,7 +42,7 @@
         "ts-jest": "^25.2.1"
     },
     "peerDependencies": {
-        "react": "^16.8.0"
+        "react": "^16.8.0 | ^17.0.0"
     },
     "eslintConfig": {
         "extends": [

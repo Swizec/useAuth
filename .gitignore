@@ -1,2 +1,3 @@
 node_modules
 .rts2_cache*
+dist/__tests__

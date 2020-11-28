@@ -1,5 +1,5 @@
 import { Machine, assign, interpret } from "xstate";
-import { AuthState, AuthAction } from "./types";
+import { AuthState } from "./types";
 
 export const authMachine = Machine<AuthState>(
     {
@@ -114,7 +114,6 @@ export const authMachine = Machine<AuthState>(
                 };
             }),
             setConfig: assign((context, event) => {
-                console.log("SET CONFIG", context, event);
                 return {
                     config: {
                         ...context.config,
