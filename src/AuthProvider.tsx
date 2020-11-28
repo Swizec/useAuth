@@ -11,7 +11,7 @@ export const AuthProvider: AuthProviderInterface = ({
     auth0_audience_domain,
     auth0_domain,
     auth0_client_id,
-    auth0_params,
+    auth0_params = {},
     customPropertyNamespace
 }) => {
     const callbackDomain =
@@ -36,6 +36,7 @@ export const AuthProvider: AuthProviderInterface = ({
 
     useEffect(() => {
         const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
+
         dispatch("SET_CONFIG", {
             authProvider: auth0,
             navigate,

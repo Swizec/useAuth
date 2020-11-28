@@ -45,42 +45,25 @@ export interface useAuthInterface {
     };
 }
 
-export type handleAuthResultInterface = ({
-    err,
-    dispatch,
-    authProvider,
-    authResult
-}: {
+export type handleAuthResultInterface = (args: {
     err?: Error | Auth0ParseHashError | null;
     dispatch: any;
     authProvider: WebAuth;
     authResult: Auth0DecodedHash | null;
 }) => Promise<boolean>;
 
-export type setSessionInterface = ({
-    dispatch,
-    authProvider,
-    authResult
-}: {
+export type setSessionInterface = (args: {
     dispatch: any;
     authProvider: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;
 
-export type AuthProviderInterface = ({
-    children,
-    navigate,
-    auth0_domain,
-    auth0_audience_domain,
-    auth0_client_id,
-    auth0_params,
-    customPropertyNamespace
-}: {
+export type AuthProviderInterface = (props: {
     children: ReactNode;
     navigate: (path: string) => void;
     auth0_domain: string;
-    auth0_audience_domain: string;
+    auth0_audience_domain?: string;
     auth0_client_id: string;
-    auth0_params: AuthOptions;
-    customPropertyNamespace: string;
+    auth0_params?: AuthOptions;
+    customPropertyNamespace?: string;
 }) => JSX.Element;
