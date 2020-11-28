@@ -1,6 +1,6 @@
 {
     "name": "react-use-auth",
-    "version": "0.9.0-10",
+    "version": "0.9.0-17",
     "description": "The simplest way to add authentication to your React app. Handles everything for you. Users, login forms, redirects, sharing state between components. Everything",
     "source": "src/index.ts",
     "main": "dist/index.js",
@@ -13,7 +13,8 @@
     "scripts": {
         "build": "microbundle --jsx React.createElement",
         "dev": "microbundle watch --jsx React.createElement",
-        "test": "jest"
+        "test": "jest",
+        "install-peers": "install-peers"
     },
     "files": [
         "src",
@@ -22,6 +23,7 @@
     "dependencies": {
         "@xstate/react": "^1.0.3",
         "auth0-js": "^9.13.2",
+        "date-fns": "^2.16.1",
         "xstate": "^4.13.0"
     },
     "devDependencies": {
@@ -35,15 +37,16 @@
         "eslint-plugin-prettier": "^3.1.0",
         "eslint-plugin-react": "^7.14.3",
         "fetch-mock": "^9.3.0",
+        "install-peers-cli": "^2.2.0",
         "jest": "^25.1.0",
         "microbundle": "^0.12.0-next.6",
         "prettier": "^1.18.2",
-        "react": "^17.0.1",
+        "react": "^17.0.0",
         "react-test-renderer": "^17.0.1",
         "ts-jest": "^25.2.1"
     },
     "peerDependencies": {
-        "react": "^16.8.0 | ^17.0.0",
+        "react": "^17.0.0",
         "react-dom": "^17.0.1"
     },
     "eslintConfig": {

@@ -1,6 +1,7 @@
 import { interpret } from "xstate";
 import { authMachine } from "../authReducer";
 import { AuthState } from "src/types";
+import { addSeconds } from "date-fns";
 
 describe("authReducer", () => {
     const loginPayload = {
@@ -29,7 +30,7 @@ describe("authReducer", () => {
     };
 
     describe("LOGIN", () => {
-        const currentTime = new Date().getTime();
+        const currentTime = new Date();
 
         function initStateMachine() {
             const state = interpret(
@@ -59,8 +60,8 @@ describe("authReducer", () => {
             authState.send("AUTHENTICATED", loginPayload);
 
             expect(
-                JSON.parse(localStorage.getItem("useAuth:expires_at")!)
-            ).toBeGreaterThanOrEqual(currentTime + 500 * 1000);
+                new Date(localStorage.getItem("useAuth:expires_at")!).getTime()
+            ).toBeGreaterThanOrEqual(addSeconds(currentTime, 400).getTime());
 
             expect(localStorage.getItem("useAuth:user")).toEqual(
                 JSON.stringify(loginPayload.user)
@@ -77,8 +78,8 @@ describe("authReducer", () => {
             authState.send("LOGIN");
             authState.send("AUTHENTICATED", loginPayload);
 
-            expect(savedContext.expiresAt).toBeGreaterThanOrEqual(
-                currentTime + 500 * 1000
+            expect(savedContext.expiresAt!.getTime()).toBeGreaterThanOrEqual(
+                addSeconds(currentTime, 400).getTime()
             );
         });
         it("sets authResult", () => {

@@ -13,7 +13,7 @@ export type AuthState = {
         | (Auth0UserProfile & { [key: string]: any }) // adds metadata support for Auth0 Rules
         | { sub?: string; [key: string]: any };
     authResult?: Auth0DecodedHash | null;
-    expiresAt: number | null;
+    expiresAt: Date | null;
     isAuthenticating: boolean;
     errorType?: string;
     error?: Error | Auth0Error | Auth0ParseHashError;

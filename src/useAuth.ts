@@ -13,6 +13,7 @@ import {
 } from "auth0-js";
 import { useService } from "@xstate/react";
 import { authService } from "./authReducer";
+import { isAfter } from "date-fns";
 
 const setSession: setSessionInterface = async ({
     dispatch,
@@ -143,9 +144,10 @@ export const useAuth: useAuthInterface = () => {
     );
 
     const isAuthenticated = () => {
+        // console.log("isAuthenticated", state.context.expiresAt, new Date());
         return !!(
             state.context.expiresAt &&
-            new Date().getTime() < state.context.expiresAt
+            isAfter(state.context.expiresAt, new Date())
         );
     };
 

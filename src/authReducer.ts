@@ -1,3 +1,4 @@
+import { addSeconds, differenceInSeconds, isAfter } from "date-fns";
 import { Machine, assign, interpret } from "xstate";
 import { AuthState } from "./types";
 
@@ -74,8 +75,7 @@ export const authMachine = Machine<AuthState>(
             }),
             saveUserToContext: assign((context, event) => {
                 const { authResult, user } = event;
-                const expiresAt =
-                    authResult.expiresIn! * 1000 + new Date().getTime();
+                const expiresAt = addSeconds(new Date(), authResult.expiresIn);
 
                 return {
                     user,
@@ -96,7 +96,7 @@ export const authMachine = Machine<AuthState>(
                 if (typeof localStorage !== "undefined") {
                     localStorage.setItem(
                         "useAuth:expires_at",
-                        JSON.stringify(expiresAt)
+                        expiresAt ? expiresAt.toISOString() : "0"
                     );
                     localStorage.setItem("useAuth:user", JSON.stringify(user));
                 }
@@ -129,21 +129,24 @@ export const authMachine = Machine<AuthState>(
 function hydrateFromLocalStorage(send: any) {
     if (typeof localStorage !== "undefined") {
         const expiresAt = new Date(
-            JSON.parse(localStorage.getItem("useAuth:expires_at") || "0")
-        );
+                localStorage.getItem("useAuth:expires_at") || "0"
+            ),
+            now = new Date();
 
-        if (expiresAt > new Date()) {
+        if (isAfter(expiresAt, now)) {
             const user = JSON.parse(
                 localStorage.getItem("useAuth:user") || "{}"
             );
+            console.log(user);
             send("LOGIN");
             send("AUTHENTICATED", {
                 user,
                 authResult: {
-                    expiresIn:
-                        (new Date().getTime() - expiresAt.getTime()) / 1000
+                    expiresIn: differenceInSeconds(expiresAt, now)
                 }
             });
+
+            console.log(authService.state);
         }
     }
 }

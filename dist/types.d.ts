@@ -8,7 +8,7 @@ export declare type AuthState = {
         [key: string]: any;
     };
     authResult?: Auth0DecodedHash | null;
-    expiresAt: number | null;
+    expiresAt: Date | null;
     isAuthenticating: boolean;
     errorType?: string;
     error?: Error | Auth0Error | Auth0ParseHashError;
@@ -18,17 +18,6 @@ export declare type AuthState = {
         authProvider?: any;
         callbackDomain: string;
     };
-};
-export declare type AuthAction = {
-    type: "login";
-    authResult: Auth0DecodedHash;
-    user: Auth0UserProfile;
-} | {
-    type: "logout" | "stopAuthenticating" | "startAuthenticating";
-} | {
-    type: "error";
-    errorType: string;
-    error: Error | Auth0Error | Auth0ParseHashError;
 };
 export interface useAuthInterface {
     (): {
@@ -49,23 +38,23 @@ export interface useAuthInterface {
         dispatch: (eventName: string, eventData?: any) => void;
     };
 }
-export declare type handleAuthResultInterface = ({ err, dispatch, authProvider, authResult }: {
+export declare type handleAuthResultInterface = (args: {
     err?: Error | Auth0ParseHashError | null;
     dispatch: any;
     authProvider: WebAuth;
     authResult: Auth0DecodedHash | null;
 }) => Promise<boolean>;
-export declare type setSessionInterface = ({ dispatch, authProvider, authResult }: {
+export declare type setSessionInterface = (args: {
     dispatch: any;
     authProvider: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;
-export declare type AuthProviderInterface = ({ children, navigate, auth0_domain, auth0_audience_domain, auth0_client_id, auth0_params, customPropertyNamespace }: {
+export declare type AuthProviderInterface = (props: {
     children: ReactNode;
     navigate: (path: string) => void;
     auth0_domain: string;
-    auth0_audience_domain: string;
+    auth0_audience_domain?: string;
     auth0_client_id: string;
-    auth0_params: AuthOptions;
-    customPropertyNamespace: string;
+    auth0_params?: AuthOptions;
+    customPropertyNamespace?: string;
 }) => JSX.Element;

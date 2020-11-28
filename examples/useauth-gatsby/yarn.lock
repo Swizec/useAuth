@@ -1443,13 +1443,6 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react-test-renderer@^16.9.2":
-  version "16.9.3"
-  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-16.9.3.tgz#96bab1860904366f4e848b739ba0e2f67bcae87e"
-  integrity sha512-wJ7IlN5NI82XMLOyHSa+cNN4Z0I+8/YaLl04uDgcZ+W+ExWCmCiVTLT/7fRNqzy4OhStZcUwIqLNF7q+AdW43Q==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react@*", "@types/react@^15.0.0 || ^16.0.0", "@types/react@^16.8.12", "@types/react@^16.8.6":
   version "16.9.11"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.11.tgz#70e0b7ad79058a7842f25ccf2999807076ada120"
@@ -3772,6 +3765,11 @@ dashdash@^1.12.0:
   integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   dependencies:
     assert-plus "^1.0.0"
+
+date-fns@^2.16.1:
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
+  integrity sha512-sAJVKx/FqrLYHAQeN7VpJrPhagZc9R4ImZIWYRFZaaohR3KzmuK88touwsSwSVT8Qcbd4zoDsnGfX4GFB4imyQ==
 
 debug@2, debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.3, debug@^2.6.6, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
@@ -10023,14 +10021,14 @@ react-side-effect@^1.1.0:
   dependencies:
     shallowequal "^1.0.1"
 
-react-use-auth@0.9.0-10:
-  version "0.9.0-10"
-  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-0.9.0-10.tgz#32410ead7bf5b407848a22a3f402b41d629ff167"
-  integrity sha512-qizZbsz+rv9E9yhtaDZvj0HeuqyBBxrabwGAHXuJYZvH9tF4rrbAyPQMGVQPxbybgn6rtAk7Zqdu/lwx5/oURQ==
+react-use-auth@0.9.0-17:
+  version "0.9.0-17"
+  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-0.9.0-17.tgz#ee9d4189dc0bcddd1225ccc240b2aaa3c724bf14"
+  integrity sha512-WmjaWVR+m7kogp8Ynzt7kUi73DmaJRtH69b+Ypr72TBfyGHOU8r1cBOgvDOlVnmO8FakvfgQsAraEwi3sh6FEg==
   dependencies:
-    "@types/react-test-renderer" "^16.9.2"
     "@xstate/react" "^1.0.3"
     auth0-js "^9.13.2"
+    date-fns "^2.16.1"
     xstate "^4.13.0"
 
 react@^16.11.0:
