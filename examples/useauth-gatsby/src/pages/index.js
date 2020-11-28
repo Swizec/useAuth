@@ -10,8 +10,6 @@ import SEO from "../components/seo"
 const Login = () => {
   const { isAuthenticated, login, logout, signup, isAuthenticating } = useAuth()
 
-  console.log("Rendering login", isAuthenticated())
-
   if (isAuthenticated()) {
     return (
       <>

@@ -1,6 +1,8 @@
 import { addSeconds, differenceInSeconds, isAfter } from "date-fns";
 import { Machine, assign, interpret } from "xstate";
+import { choose } from "xstate/lib/actions";
 import { AuthState } from "./types";
+import { checkSession } from "./useAuth";
 
 export const authMachine = Machine<AuthState>(
     {
@@ -26,6 +28,7 @@ export const authMachine = Machine<AuthState>(
             unauthenticated: {
                 on: {
                     LOGIN: "authenticating",
+                    CHECK_SESSION: "verifying",
                     SET_CONFIG: {
                         actions: ["setConfig"]
                     }
@@ -42,15 +45,39 @@ export const authMachine = Machine<AuthState>(
                 entry: ["startAuthenticating"],
                 exit: ["stopAuthenticating"]
             },
+            verifying: {
+                invoke: {
+                    id: "checkSession",
+                    src: (context, event) =>
+                        checkSession({
+                            authProvider: context.config.authProvider
+                        }),
+                    onDone: {
+                        target: "authenticated"
+                    },
+                    onError: {
+                        target: "error"
+                    }
+                },
+                entry: ["startAuthenticating"],
+                exit: ["stopAuthenticating"]
+            },
             authenticated: {
                 on: {
                     LOGOUT: "unauthenticated",
                     SET_CONFIG: {
                         actions: ["setConfig"]
-                    }
+                    },
+                    CHECK_SESSION: "verifying"
                 },
                 entry: ["saveUserToContext", "saveToLocalStorage"],
-                exit: ["clearUserFromContext", "clearLocalStorage"]
+                exit: choose([
+                    {
+                        cond: (context, event) =>
+                            event.type !== "CHECK_SESSION",
+                        actions: ["clearUserFromContext", "clearLocalStorage"]
+                    }
+                ])
             },
             error: {
                 entry: [
@@ -74,7 +101,7 @@ export const authMachine = Machine<AuthState>(
                 };
             }),
             saveUserToContext: assign((context, event) => {
-                const { authResult, user } = event;
+                const { authResult, user } = event.data ? event.data : event;
                 const expiresAt = addSeconds(new Date(), authResult.expiresIn);
 
                 return {
@@ -137,7 +164,6 @@ function hydrateFromLocalStorage(send: any) {
             const user = JSON.parse(
                 localStorage.getItem("useAuth:user") || "{}"
             );
-            console.log(user);
             send("LOGIN");
             send("AUTHENTICATED", {
                 user,
@@ -145,8 +171,6 @@ function hydrateFromLocalStorage(send: any) {
                     expiresIn: differenceInSeconds(expiresAt, now)
                 }
             });
-
-            console.log(authService.state);
         }
     }
 }

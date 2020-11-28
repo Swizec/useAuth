@@ -3,7 +3,7 @@ import Auth0 from "auth0-js";
 import { AuthOptions } from "auth0-js";
 
 import { AuthProviderInterface } from "./types";
-import { useAuth } from "./useAuth";
+import { handleAuthResult, useAuth } from "./useAuth";
 
 export const AuthProvider: AuthProviderInterface = ({
     children,
@@ -43,6 +43,8 @@ export const AuthProvider: AuthProviderInterface = ({
             customPropertyNamespace,
             callbackDomain
         });
+
+        dispatch("CHECK_SESSION");
     }, [navigate, customPropertyNamespace, callbackDomain]);
 
     return <React.Fragment>{children}</React.Fragment>;

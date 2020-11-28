@@ -3,38 +3,27 @@ import { useCallback } from "react";
 import {
     useAuthInterface,
     handleAuthResultInterface,
-    setSessionInterface
+    fetchUserInterface
 } from "./types";
 import {
     Auth0DecodedHash,
     Auth0UserProfile,
     Auth0Error,
-    Auth0ParseHashError
+    Auth0ParseHashError,
+    WebAuth
 } from "auth0-js";
 import { useService } from "@xstate/react";
 import { authService } from "./authReducer";
 import { isAfter } from "date-fns";
 
-const setSession: setSessionInterface = async ({
-    dispatch,
-    authProvider,
-    authResult
-}) => {
+const fetchUser: fetchUserInterface = async ({ authProvider, authResult }) => {
     return new Promise((resolve, reject) => {
         authProvider.client.userInfo(
             authResult.accessToken || "",
             (err: Auth0Error | null, user: Auth0UserProfile) => {
                 if (err) {
-                    dispatch("ERROR", {
-                        errorType: "userInfo",
-                        error: err
-                    });
                     reject(err);
                 } else {
-                    dispatch("AUTHENTICATED", {
-                        authResult,
-                        user
-                    });
                     resolve(user);
                 }
             }
@@ -50,10 +39,22 @@ export const handleAuthResult: handleAuthResultInterface = async ({
 }) => {
     if (authResult && authResult.accessToken && authResult.idToken) {
         try {
-            await setSession({ dispatch, authProvider, authResult });
+            const user = await fetchUser({
+                authProvider,
+                authResult
+            });
+
+            dispatch("AUTHENTICATED", {
+                authResult,
+                user
+            });
 
             return true;
         } catch (e) {
+            dispatch("ERROR", {
+                error: e,
+                errorType: "fetchUser"
+            });
             return false;
         }
     } else if (err) {
@@ -68,6 +69,43 @@ export const handleAuthResult: handleAuthResultInterface = async ({
         return false;
     }
 };
+
+// verifies session is still valid
+// returns fresh user info
+// TODO: types are leaking auth provider
+export async function checkSession({
+    authProvider
+}: {
+    authProvider: WebAuth;
+}): Promise<{ user: Auth0UserProfile; authResult: Auth0DecodedHash }> {
+    return new Promise((resolve, reject) => {
+        authProvider.checkSession(
+            {},
+            async (err: any, authResult: Auth0DecodedHash) => {
+                if (
+                    !err &&
+                    authResult &&
+                    authResult.accessToken &&
+                    authResult.idToken
+                ) {
+                    // fetch user data
+                    try {
+                        const user = await fetchUser({
+                            authProvider,
+                            authResult
+                        });
+
+                        resolve({ user, authResult });
+                    } catch (e) {
+                        reject(e);
+                    }
+                } else {
+                    reject(err || new Error("Session invalid"));
+                }
+            }
+        );
+    });
+}
 
 /**
  * The main API for useAuth
@@ -144,7 +182,6 @@ export const useAuth: useAuthInterface = () => {
     );
 
     const isAuthenticated = () => {
-        // console.log("isAuthenticated", state.context.expiresAt, new Date());
         return !!(
             state.context.expiresAt &&
             isAfter(state.context.expiresAt, new Date())

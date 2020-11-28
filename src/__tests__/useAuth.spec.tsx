@@ -16,6 +16,7 @@ const auth0 = new Auth0.WebAuth({
 });
 auth0.authorize = jest.fn();
 auth0.logout = jest.fn();
+auth0.checkSession = jest.fn();
 
 describe("useAuth", () => {
     let container: any = null,

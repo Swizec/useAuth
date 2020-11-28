@@ -52,8 +52,7 @@ export type handleAuthResultInterface = (args: {
     authResult: Auth0DecodedHash | null;
 }) => Promise<boolean>;
 
-export type setSessionInterface = (args: {
-    dispatch: any;
+export type fetchUserInterface = (args: {
     authProvider: WebAuth;
     authResult: Auth0DecodedHash;
 }) => Promise<Auth0UserProfile>;
