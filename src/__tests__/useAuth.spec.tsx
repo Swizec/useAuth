@@ -1,10 +1,10 @@
-import React from "react";
-import ReactRenderer from "react-test-renderer";
-
-import { useAuth, handleAuthResult } from "../useAuth";
-import { AuthContext } from "../AuthProvider";
-import { AuthContextState } from "../types";
+import React, { useEffect } from "react";
+import { render, unmountComponentAtNode } from "react-dom";
+import { act } from "react-dom/test-utils";
 import Auth0 from "auth0-js";
+
+import { useAuth } from "../useAuth";
+import { authService } from "../authReducer";
 
 const auth0 = new Auth0.WebAuth({
     domain: "localhost",
@@ -18,25 +18,26 @@ auth0.authorize = jest.fn();
 auth0.logout = jest.fn();
 
 describe("useAuth", () => {
-    const context: AuthContextState = {
-        state: {
-            user: { sub: "1234" },
-            expiresAt: null,
-            isAuthenticating: true
-        },
-        dispatch: jest.fn(),
-        auth0,
-        callback_domain: "localhost",
-        customPropertyNamespace: "localhost",
-        navigate: jest.fn()
-    };
+    let container: any = null,
+        navigate = jest.fn();
 
-    const render = (context: any, Mock: any) =>
-        ReactRenderer.create(
-            <AuthContext.Provider value={context}>
-                <Mock />
-            </AuthContext.Provider>
-        );
+    beforeEach(() => {
+        container = document.createElement("div");
+        document.body.appendChild(container);
+
+        authService.send("SET_CONFIG", {
+            authProvider: auth0,
+            navigate,
+            customPropertyNamespace: "localhost:8000",
+            callbackDomain: "localhost:8000"
+        });
+    });
+
+    afterEach(() => {
+        unmountComponentAtNode(container);
+        container.remove();
+        container = null;
+    });
 
     describe("login", () => {
         it("calls auth0.authorize()", () => {
@@ -47,7 +48,9 @@ describe("useAuth", () => {
                 return null;
             };
 
-            render(context, Mock);
+            act(() => {
+                render(<Mock />, container);
+            });
 
             expect(auth0.authorize).toBeCalled();
         });
@@ -56,52 +59,66 @@ describe("useAuth", () => {
     describe("logout", () => {
         const Mock = () => {
             const { logout } = useAuth();
-            logout();
+            useEffect(() => {
+                logout();
+            }, []);
 
             return null;
         };
 
         it("calls auth0.logout()", () => {
-            render(context, Mock);
+            act(() => {
+                render(<Mock />, container);
+            });
 
             expect(auth0.logout).toBeCalledWith({
-                returnTo: context.callback_domain
+                returnTo: "localhost:8000"
             });
         });
 
-        it("dispatches logout action", () => {
-            render(context, Mock);
-
-            expect(context.dispatch).toBeCalledWith({
-                type: "logout"
+        it("puts user in unauthenticated state", () => {
+            act(() => {
+                render(<Mock />, container);
             });
+
+            expect(authService.state.value).toBe("unauthenticated");
         });
     });
 
     describe("handleAuthentication", () => {
         const Mock = () => {
             const { handleAuthentication } = useAuth();
-            handleAuthentication({ postLoginRoute: "/route" });
+            useEffect(() => {
+                handleAuthentication({ postLoginRoute: "/route" });
+            }, []);
 
             return null;
         };
 
-        it("dispatches startAuthenticating", () => {
-            render(context, Mock);
-
-            expect(context.dispatch).toBeCalledWith({
-                type: "startAuthenticating"
+        it("puts user in authenticating state", () => {
+            act(() => {
+                render(<Mock />, container);
             });
+
+            expect(authService.state.value).toBe("authenticating");
         });
 
         it("navigates to postLoginRoute", () => {
-            render(context, Mock);
+            act(() => {
+                render(<Mock />, container);
+            });
 
-            expect(context.navigate).toBeCalledWith("/route");
+            expect(navigate).toBeCalledWith("/route");
         });
     });
 
     describe("isAuthenticated", () => {
+        afterEach(() => {
+            act(() => {
+                authService.send("LOGOUT");
+            });
+        });
+
         it("is false when expiresAt not set", () => {
             const Mock = () => {
                 const { isAuthenticated } = useAuth();
@@ -111,9 +128,9 @@ describe("useAuth", () => {
                 return null;
             };
 
-            context.state.expiresAt = null;
-
-            render(context, Mock);
+            act(() => {
+                render(<Mock />, container);
+            });
         });
 
         it("is false when expiresAt in the past", () => {
@@ -125,223 +142,199 @@ describe("useAuth", () => {
                 return null;
             };
 
-            context.state.expiresAt = new Date().getTime() - 3600 * 1000;
+            authService.send("LOGIN");
+            authService.send("AUTHENTICATED", {
+                authResult: {
+                    expiresIn: -10 * 1000 * 60 * 24
+                }
+            });
 
-            render(context, Mock);
+            act(() => {
+                render(<Mock />, container);
+            });
         });
 
         it("is true when expiresAt in the future", () => {
             const Mock = () => {
                 const { isAuthenticated } = useAuth();
 
-                expect(isAuthenticated()).toBe(true);
+                useEffect(() => {
+                    expect(isAuthenticated()).toBe(true);
+                }, []);
 
                 return null;
             };
 
-            context.state.expiresAt = new Date().getTime() + 3600 * 1000;
+            authService.send("LOGIN");
+            authService.send("AUTHENTICATED", {
+                authResult: {
+                    expiresIn: 10 * 1000 * 60 * 24
+                }
+            });
 
-            render(context, Mock);
+            act(() => {
+                render(<Mock />, container);
+            });
         });
     });
 
     describe("isAuthorized", () => {
+        afterEach(() => {
+            act(() => {
+                authService.send("LOGOUT");
+            });
+        });
+
         it("returns true if role exists", () => {
             const Mock = () => {
                 const { isAuthorized } = useAuth();
 
-                expect(isAuthorized("testRole")).toBe(true);
+                useEffect(() => {
+                    expect(isAuthorized("testRole")).toBe(true);
+                }, []);
 
                 return null;
             };
 
-            context.state.user["localhost/user_metadata"] = {
-                roles: ["testRole"]
-            };
+            authService.send("LOGIN");
+            authService.send("AUTHENTICATED", {
+                authResult: {
+                    expiresIn: 10 * 1000 * 60 * 24
+                },
+                user: {
+                    "localhost:8000/user_metadata": {
+                        roles: ["testRole"]
+                    }
+                }
+            });
 
-            render(context, Mock);
+            act(() => {
+                render(<Mock />, container);
+            });
         });
 
         it("returns false if role does not exist", () => {
             const Mock = () => {
                 const { isAuthorized } = useAuth();
 
-                expect(isAuthorized("testRole")).toBe(false);
+                useEffect(() => {
+                    expect(isAuthorized("testRole")).toBe(false);
+                }, []);
 
                 return null;
             };
 
-            context.state.user["localhost/user_metadata"] = { roles: [] };
+            authService.send("LOGIN");
+            authService.send("AUTHENTICATED", {
+                authResult: {
+                    expiresIn: 10 * 1000 * 60 * 24
+                },
+                user: {
+                    "localhost:8000/user_metadata": {
+                        roles: []
+                    }
+                }
+            });
 
-            render(context, Mock);
+            act(() => {
+                render(<Mock />, container);
+            });
         });
 
         it("returns false if role exists but user not authenticated", () => {
             const Mock = () => {
                 const { isAuthorized } = useAuth();
 
-                expect(isAuthorized("testRole")).toBe(false);
+                useEffect(() => {
+                    expect(isAuthorized("testRole")).toBe(false);
+                }, []);
 
                 return null;
             };
 
-            context.state.user["localhost/user_metadata"] = {
-                roles: ["testRole"]
-            };
-            context.state.expiresAt = new Date().getTime() - 3600 * 1000;
+            authService.send("LOGIN");
+            authService.send("AUTHENTICATED", {
+                authResult: {
+                    expiresIn: -10 * 1000 * 60 * 24
+                },
+                user: {
+                    "localhost:8000/user_metadata": {
+                        roles: ["testRole"]
+                    }
+                }
+            });
 
-            render(context, Mock);
+            act(() => {
+                render(<Mock />, container);
+            });
         });
 
         describe("array argument", () => {
+            afterEach(() => {
+                act(() => {
+                    authService.send("LOGOUT");
+                });
+            });
+
             it("true if at least 1 present", () => {
                 const Mock = () => {
                     const { isAuthorized } = useAuth();
 
-                    expect(isAuthorized(["testRole1", "testRole2"])).toBe(true);
+                    useEffect(() => {
+                        expect(isAuthorized(["testRole1", "testRole2"])).toBe(
+                            true
+                        );
+                    }, []);
 
                     return null;
                 };
 
-                context.state.user["localhost/user_metadata"] = {
-                    roles: ["testRole1"]
-                };
-                context.state.expiresAt = new Date().getTime() + 3600 * 1000;
+                authService.send("LOGIN");
+                authService.send("AUTHENTICATED", {
+                    authResult: {
+                        expiresIn: 10 * 1000 * 60 * 24
+                    },
+                    user: {
+                        "localhost:8000/user_metadata": {
+                            roles: ["testRole1"]
+                        }
+                    }
+                });
 
-                render(context, Mock);
+                act(() => {
+                    render(<Mock />, container);
+                });
             });
 
             it("false if none present", () => {
                 const Mock = () => {
                     const { isAuthorized } = useAuth();
 
-                    expect(isAuthorized(["testRole1", "testRole2"])).toBe(
-                        false
-                    );
+                    useEffect(() => {
+                        expect(isAuthorized(["testRole1", "testRole2"])).toBe(
+                            false
+                        );
+                    }, []);
 
                     return null;
                 };
 
-                context.state.user["localhost/user_metadata"] = {
-                    roles: ["testRole"]
-                };
-                context.state.expiresAt = new Date().getTime() + 3600 * 1000;
+                authService.send("LOGIN");
+                authService.send("AUTHENTICATED", {
+                    authResult: {
+                        expiresIn: 10 * 1000 * 60 * 24
+                    },
+                    user: {
+                        "localhost:8000/user_metadata": {
+                            roles: ["testRole"]
+                        }
+                    }
+                });
 
-                render(context, Mock);
+                act(() => {
+                    render(<Mock />, container);
+                });
             });
-        });
-    });
-});
-
-describe("handleAuthResult", () => {
-    const user = {
-        name: "swizec",
-        nickname: "swiz",
-        picture: "https://avatar",
-        user_id: "12345",
-        clientID: "12345",
-        identities: [],
-        created_at: "2020-03-22",
-        updated_at: "2020-03-22",
-        sub: "12345"
-    };
-
-    const dispatch = jest.fn((action: any) => null);
-
-    beforeEach(() => {
-        // mock auth0.client.userInfo for success
-        auth0.client.userInfo = jest.fn((accessToken, callback) =>
-            callback(null, user)
-        );
-    });
-
-    it("dispatches stopAuthenticating", async () => {
-        await handleAuthResult({ dispatch, auth0, authResult: {} });
-
-        expect(dispatch).toBeCalledWith({ type: "stopAuthenticating" });
-    });
-
-    describe("success", () => {
-        const authResult = {
-            accessToken: "12345",
-            idToken: "12345"
-        };
-
-        it("dispatches login", async () => {
-            await handleAuthResult({ dispatch, auth0, authResult });
-
-            expect(dispatch).toBeCalledWith({
-                type: "login",
-                authResult,
-                user
-            });
-        });
-
-        it("returns true", async () => {
-            expect(
-                await handleAuthResult({ dispatch, auth0, authResult })
-            ).toBe(true);
-        });
-    });
-
-    describe("no userInfo returned from auth0.client", () => {
-        const authResult = {
-            accessToken: "12345",
-            idToken: "12345"
-        };
-        const error = {
-            error: "no info"
-        };
-
-        beforeEach(() => {
-            // mock auth0.client.userInfo for failure
-            auth0.client.userInfo = jest.fn((accessToken, callback) =>
-                callback(error, user)
-            );
-        });
-
-        it("dispatches error", async () => {
-            await handleAuthResult({ dispatch, auth0, authResult });
-
-            expect(dispatch).toBeCalledWith({
-                type: "error",
-                errorType: "userInfo",
-                error
-            });
-        });
-
-        it("returns false", async () => {
-            expect(
-                await handleAuthResult({ dispatch, auth0, authResult })
-            ).toBe(false);
-        });
-    });
-
-    describe("error", () => {
-        it("dispatches error", async () => {
-            const err = new Error();
-
-            await handleAuthResult({ err, dispatch, auth0, authResult: {} });
-
-            expect(dispatch).toBeCalledWith({
-                type: "error",
-                errorType: "authResult",
-                error: err
-            });
-        });
-
-        it("returns false", async () => {
-            expect(
-                await handleAuthResult({ dispatch, auth0, authResult: {} })
-            ).toBe(false);
-        });
-    });
-
-    describe("bad data", () => {
-        it("returns false", async () => {
-            expect(
-                await handleAuthResult({ dispatch, auth0, authResult: {} })
-            ).toBe(false);
         });
     });
 });
