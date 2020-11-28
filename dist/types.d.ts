@@ -69,9 +69,3 @@ export declare type AuthProviderInterface = ({ children, navigate, auth0_domain,
     auth0_params: AuthOptions;
     customPropertyNamespace: string;
 }) => JSX.Element;
-export declare type AuthContextState = {
-    auth0: WebAuth | null;
-    callback_domain: string;
-    customPropertyNamespace: string;
-    navigate: (path: string) => void;
-};

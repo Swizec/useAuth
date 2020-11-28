@@ -83,7 +83,7 @@ export const handleAuthResult: handleAuthResultInterface = async ({
  * @return {function} handleAuthentication function to call on your callback page
  */
 export const useAuth: useAuthInterface = () => {
-    const [state, eventSend] = useService(authService);
+    const [state, dispatch] = useService(authService);
 
     const {
         authProvider,
@@ -91,14 +91,6 @@ export const useAuth: useAuthInterface = () => {
         callbackDomain,
         customPropertyNamespace
     } = state.context.config;
-
-    // TODO: ask David why these are different
-    const dispatch = useCallback(
-        (eventName: string, eventData?: any) => {
-            eventSend({ type: eventName, ...(eventData || {}) });
-        },
-        [eventSend]
-    );
 
     const login = () => {
         authProvider && authProvider.authorize();

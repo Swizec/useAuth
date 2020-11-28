@@ -1,6 +1,6 @@
 {
     "name": "react-use-auth",
-    "version": "0.9.0-9",
+    "version": "0.9.0-10",
     "description": "The simplest way to add authentication to your React app. Handles everything for you. Users, login forms, redirects, sharing state between components. Everything",
     "source": "src/index.ts",
     "main": "dist/index.js",
@@ -21,7 +21,7 @@
     ],
     "dependencies": {
         "@types/react-test-renderer": "^16.9.2",
-        "@xstate/react": "^1.0.1",
+        "@xstate/react": "^1.0.3",
         "auth0-js": "^9.13.2",
         "xstate": "^4.13.0"
     },
