@@ -3,7 +3,7 @@ import Auth0 from "auth0-js";
 import { AuthOptions } from "auth0-js";
 
 import { AuthProviderInterface } from "./types";
-import { handleAuthResult, useAuth } from "./useAuth";
+import { useAuth } from "./useAuth";
 
 export const AuthProvider: AuthProviderInterface = ({
     children,
