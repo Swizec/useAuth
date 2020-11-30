@@ -19,8 +19,7 @@ export const authMachine = Machine<AuthState>(
                     console.error(
                         "Please specify a navigation method that works with your router"
                     ),
-                callbackDomain: "http://localhost:8000",
-                customPropertyNamespace: "http://localhost:8000"
+                callbackDomain: "http://localhost:8000"
             }
         },
         states: {

@@ -40,9 +40,6 @@ describe("AuthProvider", () => {
         });
 
         expect((savedContext as AuthState).config.authProvider).not.toBeNull();
-        expect((savedContext as AuthState).config.customPropertyNamespace).toBe(
-            "testhost:8000"
-        );
         expect((savedContext as AuthState).config.callbackDomain).toBe(
             "http://localhost"
         );

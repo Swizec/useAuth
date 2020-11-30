@@ -12,9 +12,11 @@ import { AuthOptions, AuthProviderClass, AuthUser } from "../types";
 export class Auth0 implements AuthProviderClass {
     private auth0: Auth0Client.WebAuth;
     private dispatch: (eventName: string, eventData?: any) => void;
+    private customPropertyNamespace?: string;
 
     constructor(params: AuthOptions) {
         this.dispatch = params.dispatch;
+        this.customPropertyNamespace = params.customPropertyNamespace;
         this.auth0 = new Auth0Client.WebAuth({
             ...(params as Auth0Options)
         });
@@ -44,14 +46,11 @@ export class Auth0 implements AuthProviderClass {
     }
 
     // Returns user roles from Auth0 shape of data
-    public userRoles(
-        user: AuthUser,
-        customPropertyNamespace: string
-    ): string[] | null {
+    public userRoles(user: AuthUser): string[] | null {
         const metadata =
             user[
                 // make this friendlier to use if you leave a trailing slash in config
-                `${customPropertyNamespace}/user_metadata`.replace(
+                `${this.customPropertyNamespace}/user_metadata`.replace(
                     /\/+user_metadata/,
                     "/user_metadata"
                 )

@@ -22,12 +22,7 @@ import { isAfter } from "date-fns";
 export const useAuth: useAuthInterface = () => {
     const [state, dispatch] = useService(authService);
 
-    const {
-        authProvider,
-        navigate,
-        callbackDomain,
-        customPropertyNamespace
-    } = state.context.config;
+    const { authProvider, navigate, callbackDomain } = state.context.config;
 
     const login = () => {
         authProvider?.authorize();
@@ -77,10 +72,7 @@ export const useAuth: useAuthInterface = () => {
     // TODO: this is potentially too tied to Auth0
     const isAuthorized = (roles: string | string[]) => {
         const _roles = Array.isArray(roles) ? roles : [roles];
-        const userRoles = authProvider?.userRoles(
-            state.context.user,
-            customPropertyNamespace
-        );
+        const userRoles = authProvider?.userRoles(state.context.user);
 
         if (!isAuthenticated() || !userRoles) {
             return false;

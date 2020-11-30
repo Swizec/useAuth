@@ -29,7 +29,6 @@ describe("useAuth", () => {
         authService.send("SET_CONFIG", {
             authProvider: auth0,
             navigate,
-            customPropertyNamespace: "localhost:8000",
             callbackDomain: "localhost:8000"
         });
     });

@@ -85,10 +85,7 @@ export class NetlifyIdentity implements AuthProviderClass {
     }
 
     // Returns user roles from NetlifyIdentity shape of data
-    public userRoles(
-        user: NetlifyIdentityWidget.User,
-        customPropertyNamespace: string
-    ): string[] | null {
+    public userRoles(user: NetlifyIdentityWidget.User): string[] | null {
         return [user.role] || null;
     }
 }

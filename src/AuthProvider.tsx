@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { AuthOptions } from "auth0-js";
+import { AuthOptions as Auth0Options } from "auth0-js";
 
 import { AuthProviderInterface } from "./types";
 import { useAuth } from "./useAuth";
@@ -21,7 +21,7 @@ export const AuthProvider: AuthProviderInterface = ({
 
     const audienceDomain = auth0_audience_domain || auth0_domain;
 
-    const params: AuthOptions = {
+    const params: Auth0Options = {
         domain: auth0_domain,
         clientID: auth0_client_id,
         redirectUri: `${callbackDomain}/auth0_callback`,
@@ -35,12 +35,16 @@ export const AuthProvider: AuthProviderInterface = ({
     // Instantiate Auth0 client
 
     useEffect(() => {
-        const auth0 = new Auth0({ dispatch, ...params, ...auth0_params });
+        const auth0 = new Auth0({
+            dispatch,
+            customPropertyNamespace,
+            ...params,
+            ...auth0_params
+        });
 
         dispatch("SET_CONFIG", {
             authProvider: auth0,
             navigate,
-            customPropertyNamespace,
             callbackDomain
         });
 

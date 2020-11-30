@@ -24,8 +24,7 @@ describe("authReducer", () => {
         isAuthenticating: true,
         config: {
             navigate: () => null,
-            callbackDomain: "localhost:8000",
-            customPropertyNamespace: "localhost:8000"
+            callbackDomain: "localhost:8000"
         }
     };
 

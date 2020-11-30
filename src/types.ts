@@ -11,6 +11,7 @@ import { AnyEventObject, PayloadSender } from "xstate";
 
 export type AuthOptions = {
     dispatch: (eventName: string, eventData?: any) => void;
+    customPropertyNamespace?: string;
 } & (Auth0Options | NetlifyIdentityWidget.InitOptions);
 
 export type AuthResult = ({ expiresIn: number } & Auth0DecodedHash) | null;
@@ -29,7 +30,6 @@ export type AuthState = {
     error?: Error | Auth0Error | Auth0ParseHashError;
     config: {
         navigate: Function;
-        customPropertyNamespace: string;
         authProvider?: AuthProviderClass;
         callbackDomain: string;
     };
@@ -79,5 +79,5 @@ export interface AuthProviderClass {
         authResult: Auth0DecodedHash;
     }>;
     userId(user: AuthUser): string | null;
-    userRoles(user: AuthUser, customPropertyNamespace: string): string[] | null;
+    userRoles(user: AuthUser): string[] | null;
 }
