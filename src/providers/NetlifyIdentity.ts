@@ -20,8 +20,22 @@ export class NetlifyIdentity implements AuthProviderClass {
         });
         this.netlifyIdentity.on("login", (user: User) => {
             this.dispatch("AUTHENTICATED", {
-                user
+                user,
+                authResult: {
+                    expiresIn: 120 * 60 // 2 hours
+                }
             });
+        });
+        this.netlifyIdentity.on("init", (user: User) => {
+            if (user) {
+                this.dispatch("LOGIN");
+                this.dispatch("AUTHENTICATED", {
+                    user,
+                    authResult: {
+                        expiresIn: 120 * 60 // 2 hours
+                    }
+                });
+            }
         });
     }
 

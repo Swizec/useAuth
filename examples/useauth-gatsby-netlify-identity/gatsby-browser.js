@@ -13,7 +13,7 @@ const Config = () => {
 
   useEffect(() => {
     dispatch("SET_CONFIG", {
-      authProvider: new Providers.NetlifyIdentity(),
+      authProvider: new Providers.NetlifyIdentity({ dispatch }),
       navigate,
       callbackDomain: "",
     })
