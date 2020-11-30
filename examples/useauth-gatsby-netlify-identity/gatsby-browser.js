@@ -5,7 +5,7 @@
  */
 import React from "react"
 import { useAuth } from "react-use-auth"
-import { NetlifyIdentity } from "react-use-auth/dist/providers"
+import { Providers } from "react-use-auth"
 import { navigate } from "gatsby"
 
 // You can delete this file if you're not using it
@@ -13,7 +13,7 @@ export const wrapRootElement = ({ element }) => {
   const { dispatch } = useAuth()
 
   dispatch("SET_CONFIG", {
-    authProvider: new NetlifyIdentity(),
+    authProvider: new Providers.NetlifyIdentity(),
     navigate,
     callbackDomain: "",
   })
