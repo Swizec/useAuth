@@ -1,8 +1,8 @@
-import { AuthProviderClass } from "../types";
-import NetlifyIdentityWidget from "netlify-identity-widget";
+import { AuthOptions, AuthProviderClass } from "../types";
 export declare class NetlifyIdentity implements AuthProviderClass {
     private netlifyIdentity;
-    constructor(params: NetlifyIdentityWidget.InitOptions);
+    private dispatch;
+    constructor(params: AuthOptions);
     authorize(): void;
     signup(): void;
     logout(returnTo?: string): void;

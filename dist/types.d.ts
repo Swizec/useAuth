@@ -1,6 +1,10 @@
 import { Auth0UserProfile, Auth0DecodedHash, Auth0Error, Auth0ParseHashError, AuthOptions as Auth0Options } from "auth0-js";
+import * as NetlifyIdentityWidget from "netlify-identity-widget";
 import { ReactNode } from "react";
 import { AnyEventObject, PayloadSender } from "xstate";
+export declare type AuthOptions = {
+    dispatch: (eventName: string, eventData?: any) => void;
+} & (Auth0Options | NetlifyIdentityWidget.InitOptions);
 export declare type AuthState = {
     user: (Auth0UserProfile & {
         [key: string]: any;

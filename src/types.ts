@@ -5,8 +5,13 @@ import {
     Auth0ParseHashError,
     AuthOptions as Auth0Options
 } from "auth0-js";
+import * as NetlifyIdentityWidget from "netlify-identity-widget";
 import { ReactNode } from "react";
 import { AnyEventObject, PayloadSender } from "xstate";
+
+export type AuthOptions = {
+    dispatch: (eventName: string, eventData?: any) => void;
+} & (Auth0Options | NetlifyIdentityWidget.InitOptions);
 
 // TODO: types are leaking Auth0
 export type AuthState = {

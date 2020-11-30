@@ -3,18 +3,20 @@ import Auth0Client, {
     Auth0Error,
     Auth0ParseHashError,
     Auth0UserProfile,
-    AuthOptions
+    AuthOptions as Auth0Options
 } from "auth0-js";
-import { AuthProviderClass } from "../types";
+import { AuthOptions, AuthProviderClass } from "../types";
 
 // Wrapper that provides a common interface for different providers
 // Modeled after Auth0 because that was first :)
 export class Auth0 implements AuthProviderClass {
     private auth0: Auth0Client.WebAuth;
+    private dispatch: (eventName: string, eventData?: any) => void;
 
     constructor(params: AuthOptions) {
+        this.dispatch = params.dispatch;
         this.auth0 = new Auth0Client.WebAuth({
-            ...params
+            ...(params as Auth0Options)
         });
     }
 
@@ -37,7 +39,7 @@ export class Auth0 implements AuthProviderClass {
     }
 
     // Handles login after redirect back from service
-    public async handleLoginCallback(dispatch: any): Promise<boolean> {
+    public async handleLoginCallback(): Promise<boolean> {
         return new Promise((resolve, reject) => {
             this.auth0.parseHash(
                 async (
@@ -45,7 +47,7 @@ export class Auth0 implements AuthProviderClass {
                     authResult: Auth0DecodedHash | null
                 ) => {
                     if (err) {
-                        dispatch("ERROR", {
+                        this.dispatch("ERROR", {
                             error: err,
                             errorType: "authResult"
                         });
@@ -53,14 +55,13 @@ export class Auth0 implements AuthProviderClass {
                     }
 
                     try {
-                        const loggedIn = await this.handleAuthResult({
-                            authResult,
-                            dispatch
-                        });
+                        const loggedIn = await this.handleAuthResult(
+                            authResult
+                        );
 
                         resolve(loggedIn);
                     } catch (err) {
-                        dispatch("ERROR", {
+                        this.dispatch("ERROR", {
                             error: err,
                             errorType: "handleAuth"
                         });
@@ -89,9 +90,7 @@ export class Auth0 implements AuthProviderClass {
                     ) {
                         // fetch user data
                         try {
-                            const user = await this.fetchUser({
-                                authResult
-                            });
+                            const user = await this.fetchUser(authResult);
 
                             resolve({
                                 user,
@@ -109,18 +108,11 @@ export class Auth0 implements AuthProviderClass {
     }
 
     // Parses auth result and dispatches the AUTHENTICATED event
-    private async handleAuthResult(args: {
-        dispatch: any;
-        authResult: Auth0DecodedHash | null;
-    }) {
-        const { dispatch, authResult } = args;
-
+    private async handleAuthResult(authResult: Auth0DecodedHash | null) {
         if (authResult && authResult.accessToken && authResult.idToken) {
-            const user = await this.fetchUser({
-                authResult
-            });
+            const user = await this.fetchUser(authResult);
 
-            dispatch("AUTHENTICATED", {
+            this.dispatch("AUTHENTICATED", {
                 authResult,
                 user
             });
@@ -132,12 +124,12 @@ export class Auth0 implements AuthProviderClass {
     }
 
     // Fetches current user info
-    private async fetchUser(args: {
-        authResult: Auth0DecodedHash | null;
-    }): Promise<Auth0UserProfile> {
+    private async fetchUser(
+        authResult: Auth0DecodedHash | null
+    ): Promise<Auth0UserProfile> {
         return new Promise((resolve, reject) => {
             this.auth0.client.userInfo(
-                args.authResult?.accessToken || "",
+                authResult?.accessToken || "",
                 (err: Auth0Error | null, user: Auth0UserProfile) => {
                     if (err) {
                         reject(err);

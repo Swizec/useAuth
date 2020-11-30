@@ -35,7 +35,7 @@ export const AuthProvider: AuthProviderInterface = ({
     // Instantiate Auth0 client
 
     useEffect(() => {
-        const auth0 = new Auth0({ ...params, ...auth0_params });
+        const auth0 = new Auth0({ dispatch, ...params, ...auth0_params });
 
         dispatch("SET_CONFIG", {
             authProvider: auth0,

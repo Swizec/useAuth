@@ -1,22 +1,39 @@
-import { AuthProviderClass } from "../types";
-import NetlifyIdentityWidget from "netlify-identity-widget";
+import { AuthOptions, AuthProviderClass } from "../types";
+import NetlifyIdentityWidget, { User } from "netlify-identity-widget";
 
 // Wrapper for NetlifyIdentity conforming to auth provider interface
 export class NetlifyIdentity implements AuthProviderClass {
     private netlifyIdentity: any;
+    private dispatch: (eventName: string, eventData?: any) => void;
 
-    constructor(params: NetlifyIdentityWidget.InitOptions) {
+    constructor(params: AuthOptions) {
         this.netlifyIdentity = NetlifyIdentityWidget;
+
         this.netlifyIdentity.init(params as NetlifyIdentityWidget.InitOptions);
+        this.dispatch = params.dispatch;
+
+        this.netlifyIdentity.on("error", (error: Error) => {
+            this.dispatch("ERROR", {
+                error,
+                errorType: "netlifyError"
+            });
+        });
+        this.netlifyIdentity.on("login", (user: User) => {
+            this.dispatch("AUTHENTICATED", {
+                user
+            });
+        });
     }
 
     // Opens login dialog
     public authorize() {
+        this.dispatch("LOGIN");
         this.netlifyIdentity.open("login");
     }
 
     // Opens signup dialog
     public signup() {
+        this.dispatch("LOGIN");
         this.netlifyIdentity.open("signup");
     }
 
