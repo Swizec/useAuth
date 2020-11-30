@@ -35,7 +35,6 @@ export type AuthState = {
     };
 };
 
-// TODO: types are leaking Auth0
 export interface useAuthInterface {
     (): {
         isAuthenticating: boolean;

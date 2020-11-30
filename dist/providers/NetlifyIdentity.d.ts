@@ -13,5 +13,5 @@ export declare class NetlifyIdentity implements AuthProviderClass {
         authResult: any;
     }>;
     userId(user: NetlifyIdentityWidget.User): string;
-    userRoles(user: NetlifyIdentityWidget.User, customPropertyNamespace: string): string[] | null;
+    userRoles(user: NetlifyIdentityWidget.User): string[] | null;
 }

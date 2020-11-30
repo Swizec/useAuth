@@ -69,7 +69,6 @@ export const useAuth: useAuthInterface = () => {
         );
     };
 
-    // TODO: this is potentially too tied to Auth0
     const isAuthorized = (roles: string | string[]) => {
         const _roles = Array.isArray(roles) ? roles : [roles];
         const userRoles = authProvider?.userRoles(state.context.user);
