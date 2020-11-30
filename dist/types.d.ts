@@ -1,5 +1,6 @@
-import { Auth0UserProfile, Auth0DecodedHash, WebAuth, Auth0Error, AuthOptions, Auth0ParseHashError } from "auth0-js";
+import { Auth0UserProfile, Auth0DecodedHash, Auth0Error, AuthOptions, Auth0ParseHashError } from "auth0-js";
 import { ReactNode } from "react";
+import { AnyEventObject, PayloadSender } from "xstate";
 export declare type AuthState = {
     user: (Auth0UserProfile & {
         [key: string]: any;
@@ -38,16 +39,6 @@ export interface useAuthInterface {
         dispatch: (eventName: string, eventData?: any) => void;
     };
 }
-export declare type handleAuthResultInterface = (args: {
-    err?: Error | Auth0ParseHashError | null;
-    dispatch: any;
-    authProvider: WebAuth;
-    authResult: Auth0DecodedHash | null;
-}) => Promise<boolean>;
-export declare type fetchUserInterface = (args: {
-    authProvider: WebAuth;
-    authResult: Auth0DecodedHash;
-}) => Promise<Auth0UserProfile>;
 export declare type AuthProviderInterface = (props: {
     children: ReactNode;
     navigate: (path: string) => void;
@@ -57,3 +48,17 @@ export declare type AuthProviderInterface = (props: {
     auth0_params?: AuthOptions;
     customPropertyNamespace?: string;
 }) => JSX.Element;
+export interface AuthProviderClass {
+    authorize(): void;
+    signup(): void;
+    logout(args: {
+        returnTo?: string;
+    }): void;
+    handleLoginCallback(args: {
+        dispatch: PayloadSender<AnyEventObject>;
+    }): Promise<boolean>;
+    checkSession(): Promise<{
+        user: Auth0UserProfile;
+        authResult: Auth0DecodedHash;
+    }>;
+}

@@ -1,12 +1,4 @@
-import { useAuthInterface, handleAuthResultInterface } from "./types";
-import { Auth0DecodedHash, Auth0UserProfile, WebAuth } from "auth0-js";
-export declare const handleAuthResult: handleAuthResultInterface;
-export declare function checkSession({ authProvider }: {
-    authProvider: WebAuth;
-}): Promise<{
-    user: Auth0UserProfile;
-    authResult: Auth0DecodedHash;
-}>;
+import { useAuthInterface } from "./types";
 /**
  * The main API for useAuth
  *

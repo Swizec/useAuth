@@ -7,6 +7,7 @@ import {
     Auth0ParseHashError
 } from "auth0-js";
 import { ReactNode } from "react";
+import { AnyEventObject, PayloadSender } from "xstate";
 
 export type AuthState = {
     user:
@@ -45,18 +46,6 @@ export interface useAuthInterface {
     };
 }
 
-export type handleAuthResultInterface = (args: {
-    err?: Error | Auth0ParseHashError | null;
-    dispatch: any;
-    authProvider: WebAuth;
-    authResult: Auth0DecodedHash | null;
-}) => Promise<boolean>;
-
-export type fetchUserInterface = (args: {
-    authProvider: WebAuth;
-    authResult: Auth0DecodedHash;
-}) => Promise<Auth0UserProfile>;
-
 export type AuthProviderInterface = (props: {
     children: ReactNode;
     navigate: (path: string) => void;
@@ -66,3 +55,17 @@ export type AuthProviderInterface = (props: {
     auth0_params?: AuthOptions;
     customPropertyNamespace?: string;
 }) => JSX.Element;
+
+// The shape of auth provider wrappers
+export interface AuthProviderClass {
+    authorize(): void;
+    signup(): void;
+    logout(args: { returnTo?: string }): void;
+    handleLoginCallback(args: {
+        dispatch: PayloadSender<AnyEventObject>;
+    }): Promise<boolean>;
+    checkSession(): Promise<{
+        user: Auth0UserProfile;
+        authResult: Auth0DecodedHash;
+    }>;
+}

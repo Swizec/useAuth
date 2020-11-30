@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import Auth0 from "auth0-js";
 import { AuthOptions } from "auth0-js";
 
 import { AuthProviderInterface } from "./types";
 import { useAuth } from "./useAuth";
+import { Auth0 } from "./providers/auth0";
 
 export const AuthProvider: AuthProviderInterface = ({
     children,
@@ -35,7 +35,7 @@ export const AuthProvider: AuthProviderInterface = ({
     // Instantiate Auth0 client
 
     useEffect(() => {
-        const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
+        const auth0 = new Auth0({ ...params, ...auth0_params });
 
         dispatch("SET_CONFIG", {
             authProvider: auth0,

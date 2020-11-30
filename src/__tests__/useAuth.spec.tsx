@@ -104,7 +104,7 @@ describe("useAuth", () => {
             expect(authService.state.value).toBe("authenticating");
         });
 
-        it("navigates to postLoginRoute", () => {
+        it.only("navigates to postLoginRoute", () => {
             act(() => {
                 render(<Mock />, container);
             });

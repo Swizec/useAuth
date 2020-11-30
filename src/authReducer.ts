@@ -2,7 +2,6 @@ import { addSeconds, differenceInSeconds, isAfter } from "date-fns";
 import { Machine, assign, interpret } from "xstate";
 import { choose } from "xstate/lib/actions";
 import { AuthState } from "./types";
-import { checkSession } from "./useAuth";
 
 export const authMachine = Machine<AuthState>(
     {
@@ -49,9 +48,7 @@ export const authMachine = Machine<AuthState>(
                 invoke: {
                     id: "checkSession",
                     src: (context, event) =>
-                        checkSession({
-                            authProvider: context.config.authProvider
-                        }),
+                        context.config.authProvider.checkSession(),
                     onDone: {
                         target: "authenticated"
                     },
