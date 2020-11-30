@@ -1,4 +1,5 @@
 import { AuthOptions, AuthProviderClass } from "../types";
+import NetlifyIdentityWidget from "netlify-identity-widget";
 export declare class NetlifyIdentity implements AuthProviderClass {
     private netlifyIdentity;
     private dispatch;
@@ -11,4 +12,6 @@ export declare class NetlifyIdentity implements AuthProviderClass {
         user: any;
         authResult: any;
     }>;
+    userId(user: NetlifyIdentityWidget.User): string;
+    userRoles(user: NetlifyIdentityWidget.User, customPropertyNamespace: string): string[] | null;
 }

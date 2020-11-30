@@ -77,19 +77,15 @@ export const useAuth: useAuthInterface = () => {
     // TODO: this is potentially too tied to Auth0
     const isAuthorized = (roles: string | string[]) => {
         const _roles = Array.isArray(roles) ? roles : [roles];
-        const metadata =
-            state.context.user[
-                // make this friendlier to use if you leave a trailing slash in config
-                `${customPropertyNamespace}/user_metadata`.replace(
-                    /\/+user_metadata/,
-                    "/user_metadata"
-                )
-            ];
+        const userRoles = authProvider?.userRoles(
+            state.context.user,
+            customPropertyNamespace
+        );
 
-        if (!isAuthenticated() || !metadata) {
+        if (!isAuthenticated() || !userRoles) {
             return false;
         } else {
-            return _roles.some(role => metadata.roles.includes(role));
+            return _roles.some(role => userRoles.includes(role));
         }
     };
 
@@ -98,7 +94,7 @@ export const useAuth: useAuthInterface = () => {
         isAuthenticated,
         isAuthorized,
         user: state.context.user,
-        userId: state.context.user ? state.context.user.sub : null,
+        userId: authProvider?.userId(state.context.user),
         authResult: state.context.authResult,
         login,
         signup,

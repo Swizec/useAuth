@@ -1,4 +1,4 @@
-import { AuthOptions, AuthProviderClass } from "../types";
+import { AuthOptions, AuthProviderClass, AuthUser } from "../types";
 import NetlifyIdentityWidget, { User } from "netlify-identity-widget";
 
 // Wrapper for NetlifyIdentity conforming to auth provider interface
@@ -22,18 +22,17 @@ export class NetlifyIdentity implements AuthProviderClass {
             this.dispatch("AUTHENTICATED", {
                 user,
                 authResult: {
-                    expiresIn: 120 * 60 // 2 hours
+                    expiresIn: user.token?.expires_in
                 }
             });
         });
         this.netlifyIdentity.on("init", (user: User) => {
-            console.log(user);
             if (user) {
                 this.dispatch("LOGIN");
                 this.dispatch("AUTHENTICATED", {
                     user,
                     authResult: {
-                        expiresIn: 120 * 60 // 2 hours
+                        expiresIn: user.token?.expires_in
                     }
                 });
             }
@@ -59,36 +58,10 @@ export class NetlifyIdentity implements AuthProviderClass {
 
     // Handles login after redirect back from service
     public async handleLoginCallback(dispatch: any): Promise<boolean> {
+        console.warn(
+            "handleLoginCallback is unnecessary with Netlify Identity Widget"
+        );
         return true;
-        // return new Promise((resolve, reject) => {
-        //     this.auth0?.parseHash(
-        //         async (
-        //             err: Auth0ParseHashError | null,
-        //             authResult: Auth0DecodedHash | null
-        //         ) => {
-        //             if (err) {
-        //                 dispatch("ERROR", {
-        //                     error: err,
-        //                     errorType: "authResult"
-        //                 });
-        //                 resolve(false);
-        //             }
-        //             try {
-        //                 const loggedIn = await this.handleAuthResult({
-        //                     authResult,
-        //                     dispatch
-        //                 });
-        //                 resolve(loggedIn);
-        //             } catch (err) {
-        //                 dispatch("ERROR", {
-        //                     error: err,
-        //                     errorType: "handleAuth"
-        //                 });
-        //                 resolve(false);
-        //             }
-        //         }
-        //     );
-        // });
     }
 
     // verifies session is still valid
@@ -97,77 +70,25 @@ export class NetlifyIdentity implements AuthProviderClass {
         user: any;
         authResult: any;
     }> {
-        await this.netlifyIdentity.refresh();
-
-        return { user: {}, authResult: {} };
-        // return new Promise((resolve, reject) => {
-        //     this.auth0?.checkSession(
-        //         {},
-        //         async (err: any, authResult: Auth0DecodedHash) => {
-        //             if (
-        //                 !err &&
-        //                 authResult &&
-        //                 authResult.accessToken &&
-        //                 authResult.idToken
-        //             ) {
-        //                 // fetch user data
-        //                 try {
-        //                     const user = await this.fetchUser({
-        //                         authResult
-        //                     });
-        //                     resolve({
-        //                         user,
-        //                         authResult
-        //                     });
-        //                 } catch (e) {
-        //                     reject(e);
-        //                 }
-        //             } else {
-        //                 reject(err || new Error("Session invalid"));
-        //             }
-        //         }
-        //     );
-        // });
+        console.warn(
+            "checkSession is unnecessary with Netlify Identity Widget"
+        );
+        return {
+            user: {},
+            authResult: {}
+        };
     }
 
-    // // Parses auth result and dispatches the AUTHENTICATED event
-    // private async handleAuthResult(args: {
-    //     dispatch: any;
-    //     authResult: Auth0DecodedHash | null;
-    // }) {
-    //     const { dispatch, authResult } = args;
+    // Returns the userId from NetlifyIdentity shape of data
+    public userId(user: NetlifyIdentityWidget.User): string {
+        return user.id;
+    }
 
-    //     if (authResult && authResult.accessToken && authResult.idToken) {
-    //         const user = await this.fetchUser({
-    //             authResult
-    //         });
-
-    //         dispatch("AUTHENTICATED", {
-    //             authResult,
-    //             user
-    //         });
-
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    // // Fetches current user info
-    // private async fetchUser(args: {
-    //     authResult: Auth0DecodedHash | null;
-    // }): Promise<Auth0UserProfile> {
-    //     return new Promise((resolve, reject) => {
-    //         this.auth0?.client.userInfo(
-    //             args.authResult?.accessToken || "",
-    //             (err: Auth0Error | null, user: Auth0UserProfile) => {
-    //                 if (err) {
-    //                     reject(err);
-    //                 } else {
-    //                     resolve(user);
-    //                 }
-    //             }
-    //         );
-    //     });
-    // }
+    // Returns user roles from NetlifyIdentity shape of data
+    public userRoles(
+        user: NetlifyIdentityWidget.User,
+        customPropertyNamespace: string
+    ): string[] | null {
+        return [user.role] || null;
+    }
 }

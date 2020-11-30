@@ -5,14 +5,15 @@ import { AnyEventObject, PayloadSender } from "xstate";
 export declare type AuthOptions = {
     dispatch: (eventName: string, eventData?: any) => void;
 } & (Auth0Options | NetlifyIdentityWidget.InitOptions);
+export declare type AuthResult = ({
+    expiresIn: number;
+} & Auth0DecodedHash) | null;
+export declare type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | {}) & {
+    [key: string]: any;
+};
 export declare type AuthState = {
-    user: (Auth0UserProfile & {
-        [key: string]: any;
-    }) | {
-        sub?: string;
-        [key: string]: any;
-    };
-    authResult?: Auth0DecodedHash | null;
+    user: AuthUser;
+    authResult?: AuthResult;
     expiresAt: Date | null;
     isAuthenticating: boolean;
     errorType?: string;
@@ -29,11 +30,9 @@ export interface useAuthInterface {
         isAuthenticating: boolean;
         isAuthenticated: () => boolean;
         isAuthorized: (role: string | string[]) => boolean;
-        user: Auth0UserProfile | {
-            sub?: string;
-        };
-        userId: string | null | undefined;
-        authResult: Auth0DecodedHash | undefined | null;
+        user: AuthUser;
+        userId?: string | null;
+        authResult?: AuthResult;
         login: () => void;
         signup: () => void;
         logout: () => void;
@@ -61,4 +60,6 @@ export interface AuthProviderClass {
         user: Auth0UserProfile;
         authResult: Auth0DecodedHash;
     }>;
+    userId(user: AuthUser): string | null;
+    userRoles(user: AuthUser, customPropertyNamespace: string): string[] | null;
 }

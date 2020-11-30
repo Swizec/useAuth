@@ -10852,7 +10852,7 @@ react-side-effect@^2.1.0:
 
 react-use-auth@Swizec/useAuth#netlify-identity:
   version "0.9.0"
-  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/6bfb82851b3ddfd8db1fa515e5bd7e40b336c18a"
+  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/a981272e536aa49cf0cd5c038bb004070230bf4f"
   dependencies:
     "@xstate/react" "^1.0.3"
     date-fns "^2.16.1"

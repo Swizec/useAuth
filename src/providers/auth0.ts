@@ -5,7 +5,7 @@ import Auth0Client, {
     Auth0UserProfile,
     AuthOptions as Auth0Options
 } from "auth0-js";
-import { AuthOptions, AuthProviderClass } from "../types";
+import { AuthOptions, AuthProviderClass, AuthUser } from "../types";
 
 // Wrapper that provides a common interface for different providers
 // Modeled after Auth0 because that was first :)
@@ -36,6 +36,28 @@ export class Auth0 implements AuthProviderClass {
     // Logs user out on the underlying service
     public logout(returnTo?: string) {
         this.auth0.logout({ returnTo });
+    }
+
+    // Returns the userId from Auth0 shape of data
+    public userId(user: Auth0UserProfile): string {
+        return user.sub;
+    }
+
+    // Returns user roles from Auth0 shape of data
+    public userRoles(
+        user: AuthUser,
+        customPropertyNamespace: string
+    ): string[] | null {
+        const metadata =
+            user[
+                // make this friendlier to use if you leave a trailing slash in config
+                `${customPropertyNamespace}/user_metadata`.replace(
+                    /\/+user_metadata/,
+                    "/user_metadata"
+                )
+            ];
+
+        return metadata?.roles || null;
     }
 
     // Handles login after redirect back from service
