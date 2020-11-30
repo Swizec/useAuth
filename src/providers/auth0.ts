@@ -5,7 +5,6 @@ import Auth0Client, {
     Auth0UserProfile,
     AuthOptions
 } from "auth0-js";
-import { AnyEventObject, PayloadSender } from "xstate";
 import { AuthProviderClass } from "../types";
 
 // Wrapper that provides a common interface for different providers

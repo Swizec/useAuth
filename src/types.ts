@@ -2,8 +2,8 @@ import {
     Auth0UserProfile,
     Auth0DecodedHash,
     Auth0Error,
-    AuthOptions,
-    Auth0ParseHashError
+    Auth0ParseHashError,
+    AuthOptions as Auth0Options
 } from "auth0-js";
 import { ReactNode } from "react";
 import { AnyEventObject, PayloadSender } from "xstate";
@@ -53,7 +53,7 @@ export type AuthProviderInterface = (props: {
     auth0_domain: string;
     auth0_audience_domain?: string;
     auth0_client_id: string;
-    auth0_params?: AuthOptions;
+    auth0_params?: Auth0Options;
     customPropertyNamespace?: string;
 }) => JSX.Element;
 
