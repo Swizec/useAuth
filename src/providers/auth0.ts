@@ -10,7 +10,7 @@ import { AuthProviderClass } from "../types";
 // Wrapper that provides a common interface for different providers
 // Modeled after Auth0 because that was first :)
 export class Auth0 implements AuthProviderClass {
-    private auth0: Auth0Client.WebAuth | null;
+    private auth0: Auth0Client.WebAuth;
 
     constructor(params: AuthOptions) {
         this.auth0 = new Auth0Client.WebAuth({
@@ -20,12 +20,12 @@ export class Auth0 implements AuthProviderClass {
 
     // Opens login dialog
     public authorize() {
-        this.auth0?.authorize();
+        this.auth0.authorize();
     }
 
     // Opens signup dialog
     public signup() {
-        this.auth0?.authorize({
+        this.auth0.authorize({
             mode: "signUp",
             screen_hint: "signup"
         });
@@ -33,13 +33,13 @@ export class Auth0 implements AuthProviderClass {
 
     // Logs user out on the underlying service
     public logout(returnTo?: string) {
-        this.auth0?.logout({ returnTo });
+        this.auth0.logout({ returnTo });
     }
 
     // Handles login after redirect back from service
     public async handleLoginCallback(dispatch: any): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            this.auth0?.parseHash(
+            this.auth0.parseHash(
                 async (
                     err: Auth0ParseHashError | null,
                     authResult: Auth0DecodedHash | null
@@ -78,7 +78,7 @@ export class Auth0 implements AuthProviderClass {
         authResult: Auth0DecodedHash;
     }> {
         return new Promise((resolve, reject) => {
-            this.auth0?.checkSession(
+            this.auth0.checkSession(
                 {},
                 async (err: any, authResult: Auth0DecodedHash) => {
                     if (
@@ -136,7 +136,7 @@ export class Auth0 implements AuthProviderClass {
         authResult: Auth0DecodedHash | null;
     }): Promise<Auth0UserProfile> {
         return new Promise((resolve, reject) => {
-            this.auth0?.client.userInfo(
+            this.auth0.client.userInfo(
                 args.authResult?.accessToken || "",
                 (err: Auth0Error | null, user: Auth0UserProfile) => {
                     if (err) {

@@ -3,27 +3,26 @@ import NetlifyIdentityWidget from "netlify-identity-widget";
 
 // Wrapper for NetlifyIdentity conforming to auth provider interface
 export class NetlifyIdentity implements AuthProviderClass {
-    private netlifyIdentity: any | null;
+    private netlifyIdentity: any;
 
     constructor(params: NetlifyIdentityWidget.InitOptions) {
-        this.netlifyIdentity = NetlifyIdentityWidget.init(
-            params as NetlifyIdentityWidget.InitOptions
-        );
+        this.netlifyIdentity = NetlifyIdentityWidget;
+        this.netlifyIdentity.init(params as NetlifyIdentityWidget.InitOptions);
     }
 
     // Opens login dialog
     public authorize() {
-        this.netlifyIdentity?.open("login");
+        this.netlifyIdentity.open("login");
     }
 
     // Opens signup dialog
     public signup() {
-        this.netlifyIdentity?.open("signup");
+        this.netlifyIdentity.open("signup");
     }
 
     // Logs user out on the underlying service
     public logout(returnTo?: string) {
-        this.netlifyIdentity?.logout();
+        this.netlifyIdentity.logout();
     }
 
     // Handles login after redirect back from service
