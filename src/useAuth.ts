@@ -34,13 +34,11 @@ export const useAuth: useAuthInterface = () => {
     };
 
     const signup = () => {
-        authProvider?.authorize({ mode: "signUp", screen_hint: "signup" });
+        authProvider?.signup();
     };
 
     const logout = () => {
-        authProvider?.logout({
-            returnTo: callbackDomain
-        });
+        authProvider?.logout(callbackDomain);
         dispatch("LOGOUT");
 
         // Return to the homepage after logout.
@@ -57,7 +55,9 @@ export const useAuth: useAuthInterface = () => {
             if (typeof window !== "undefined") {
                 dispatch("LOGIN");
 
-                const loggedIn = await authProvider.handleLoginCallback();
+                const loggedIn = await authProvider.handleLoginCallback(
+                    dispatch
+                );
 
                 if (loggedIn) {
                     navigate(postLoginRoute);

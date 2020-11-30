@@ -6,7 +6,7 @@
   "author": "Swizec Teller <swizec@swizec.com>",
   "dependencies": {
     "@rebass/preset": "^4.0.0",
-    "auth0-js": "^9.13.2",
+    "auth0-js": "^9.14.0",
     "emotion-theming": "^10.0.14",
     "gatsby": "^2.17.11",
     "gatsby-image": "^2.2.31",
@@ -20,7 +20,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
-    "react-use-auth": "0.9.0",
+    "react-use-auth": "Swizec/useAuth#netlify-identity",
     "rebass": "^4.0.1"
   },
   "resolve": {

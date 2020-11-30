@@ -1,7 +1,6 @@
 import {
     Auth0UserProfile,
     Auth0DecodedHash,
-    WebAuth,
     Auth0Error,
     AuthOptions,
     Auth0ParseHashError
@@ -9,6 +8,7 @@ import {
 import { ReactNode } from "react";
 import { AnyEventObject, PayloadSender } from "xstate";
 
+// TODO: types are leaking Auth0
 export type AuthState = {
     user:
         | (Auth0UserProfile & { [key: string]: any }) // adds metadata support for Auth0 Rules
@@ -21,11 +21,12 @@ export type AuthState = {
     config: {
         navigate: Function;
         customPropertyNamespace: string;
-        authProvider?: any;
+        authProvider?: AuthProviderClass;
         callbackDomain: string;
     };
 };
 
+// TODO: types are leaking Auth0
 export interface useAuthInterface {
     (): {
         isAuthenticating: boolean;
@@ -60,10 +61,10 @@ export type AuthProviderInterface = (props: {
 export interface AuthProviderClass {
     authorize(): void;
     signup(): void;
-    logout(args: { returnTo?: string }): void;
-    handleLoginCallback(args: {
-        dispatch: PayloadSender<AnyEventObject>;
-    }): Promise<boolean>;
+    logout(returnTo?: string): void;
+    handleLoginCallback(
+        dispatch: PayloadSender<AnyEventObject>
+    ): Promise<boolean>;
     checkSession(): Promise<{
         user: Auth0UserProfile;
         authResult: Auth0DecodedHash;

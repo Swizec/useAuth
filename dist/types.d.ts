@@ -16,7 +16,7 @@ export declare type AuthState = {
     config: {
         navigate: Function;
         customPropertyNamespace: string;
-        authProvider?: any;
+        authProvider?: AuthProviderClass;
         callbackDomain: string;
     };
 };
@@ -51,12 +51,8 @@ export declare type AuthProviderInterface = (props: {
 export interface AuthProviderClass {
     authorize(): void;
     signup(): void;
-    logout(args: {
-        returnTo?: string;
-    }): void;
-    handleLoginCallback(args: {
-        dispatch: PayloadSender<AnyEventObject>;
-    }): Promise<boolean>;
+    logout(returnTo?: string): void;
+    handleLoginCallback(dispatch: PayloadSender<AnyEventObject>): Promise<boolean>;
     checkSession(): Promise<{
         user: Auth0UserProfile;
         authResult: Auth0DecodedHash;

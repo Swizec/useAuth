@@ -5,6 +5,7 @@ import Auth0Client, {
     Auth0UserProfile,
     AuthOptions
 } from "auth0-js";
+import { AnyEventObject, PayloadSender } from "xstate";
 import { AuthProviderClass } from "../types";
 
 // Wrapper that provides a common interface for different providers
@@ -32,16 +33,12 @@ export class Auth0 implements AuthProviderClass {
     }
 
     // Logs user out on the underlying service
-    public logout(args: { returnTo?: string }) {
-        this.auth0?.logout(args);
+    public logout(returnTo?: string) {
+        this.auth0?.logout({ returnTo });
     }
 
     // Handles login after redirect back from service
-    public async handleLoginCallback(args: {
-        dispatch: any;
-    }): Promise<boolean> {
-        const { dispatch } = args;
-
+    public async handleLoginCallback(dispatch: any): Promise<boolean> {
         return new Promise((resolve, reject) => {
             this.auth0?.parseHash(
                 async (

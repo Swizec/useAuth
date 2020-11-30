@@ -5,12 +5,8 @@ export declare class Auth0 implements AuthProviderClass {
     constructor(params: AuthOptions);
     authorize(): void;
     signup(): void;
-    logout(args: {
-        returnTo?: string;
-    }): void;
-    handleLoginCallback(args: {
-        dispatch: any;
-    }): Promise<boolean>;
+    logout(returnTo?: string): void;
+    handleLoginCallback(dispatch: any): Promise<boolean>;
     checkSession(): Promise<{
         user: Auth0UserProfile;
         authResult: Auth0DecodedHash;

@@ -48,7 +48,7 @@ export const authMachine = Machine<AuthState>(
                 invoke: {
                     id: "checkSession",
                     src: (context, event) =>
-                        context.config.authProvider.checkSession(),
+                        context.config.authProvider!.checkSession(),
                     onDone: {
                         target: "authenticated"
                     },
