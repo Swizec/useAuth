@@ -6,6 +6,7 @@ import Layout from "../components/layout"
 const Auth0CallbackPage = () => {
   const { handleAuthentication } = useAuth()
   useEffect(() => {
+    console.log("handle auth changed")
     handleAuthentication()
   }, [handleAuthentication])
 

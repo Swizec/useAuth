@@ -42,6 +42,7 @@ export const useAuth: useAuthInterface = () => {
 
     const handleAuthentication = useCallback(
         async ({ postLoginRoute = "/" } = {}) => {
+            console.log({ authProvider, navigate, callbackDomain });
             if (!authProvider || !navigate || !callbackDomain) {
                 console.warn("authProvider not configured yet");
                 return;
