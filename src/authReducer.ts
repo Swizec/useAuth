@@ -19,6 +19,7 @@ export const authMachine = Machine<AuthState>(
                     console.error(
                         "Please specify a navigation method that works with your router"
                     ),
+                // TODO: detect default
                 callbackDomain: "http://localhost:8000"
             }
         },

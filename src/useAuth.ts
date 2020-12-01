@@ -32,18 +32,17 @@ export const useAuth: useAuthInterface = () => {
         authProvider?.signup();
     };
 
-    const logout = () => {
-        authProvider?.logout(callbackDomain);
+    const logout = (postLogoutRoute?: string) => {
+        authProvider?.logout(`${callbackDomain}${postLogoutRoute}`);
         dispatch("LOGOUT");
 
         // Return to the homepage after logout.
-        navigate("/");
+        navigate(postLogoutRoute || "/");
     };
 
     const handleAuthentication = useCallback(
         async ({ postLoginRoute = "/" } = {}) => {
-            console.log({ authProvider, navigate, callbackDomain });
-            if (!authProvider || !navigate || !callbackDomain) {
+            if (!authProvider || !navigate) {
                 console.warn("authProvider not configured yet");
                 return;
             }
@@ -60,7 +59,7 @@ export const useAuth: useAuthInterface = () => {
                 }
             }
         },
-        [authProvider, navigate, callbackDomain]
+        [authProvider, navigate]
     );
 
     const isAuthenticated = () => {

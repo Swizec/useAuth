@@ -22,7 +22,7 @@ export declare type AuthState = {
     config: {
         navigate: Function;
         authProvider?: AuthProviderClass;
-        callbackDomain: string;
+        callbackDomain?: string;
     };
 };
 export interface useAuthInterface {

@@ -44,12 +44,11 @@ export const AuthProvider: AuthProviderInterface = ({
 
         dispatch("SET_CONFIG", {
             authProvider: auth0,
-            navigate,
-            callbackDomain
+            navigate
         });
 
         dispatch("CHECK_SESSION");
-    }, [navigate, customPropertyNamespace, callbackDomain]);
+    }, [navigate, customPropertyNamespace]);
 
     return <React.Fragment>{children}</React.Fragment>;
 };
