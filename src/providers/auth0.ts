@@ -14,6 +14,8 @@ export class Auth0 implements AuthProviderClass {
     private dispatch: (eventName: string, eventData?: any) => void;
     private customPropertyNamespace?: string;
 
+    public checkSessionOnLoad = true;
+
     constructor(params: AuthOptions) {
         this.dispatch = params.dispatch;
         this.customPropertyNamespace = params.customPropertyNamespace;

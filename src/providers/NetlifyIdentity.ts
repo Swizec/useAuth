@@ -6,6 +6,8 @@ export class NetlifyIdentity implements AuthProviderClass {
     private netlifyIdentity: any;
     private dispatch: (eventName: string, eventData?: any) => void;
 
+    public checkSessionOnLoad = false;
+
     constructor(params: AuthOptions) {
         this.netlifyIdentity = NetlifyIdentityWidget;
 

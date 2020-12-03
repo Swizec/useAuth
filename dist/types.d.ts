@@ -2,6 +2,7 @@ import { Auth0UserProfile, Auth0DecodedHash, Auth0Error, Auth0ParseHashError, Au
 import * as NetlifyIdentityWidget from "netlify-identity-widget";
 import { ReactNode } from "react";
 import { AnyEventObject, PayloadSender } from "xstate";
+import * as Providers from "./providers";
 export declare type AuthOptions = {
     dispatch: (eventName: string, eventData?: any) => void;
     customPropertyNamespace?: string;
@@ -12,6 +13,11 @@ export declare type AuthResult = ({
 export declare type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | {}) & {
     [key: string]: any;
 };
+export declare type AuthConfigInterface = (props: {
+    authProvider: typeof Providers.Auth0 | typeof Providers.NetlifyIdentity;
+    params: Omit<AuthOptions, "dispatch">;
+    navigate: Function;
+}) => null;
 export declare type AuthState = {
     user: AuthUser;
     authResult?: AuthResult;

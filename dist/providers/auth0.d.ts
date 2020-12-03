@@ -4,6 +4,7 @@ export declare class Auth0 implements AuthProviderClass {
     private auth0;
     private dispatch;
     private customPropertyNamespace?;
+    checkSessionOnLoad: boolean;
     constructor(params: AuthOptions);
     authorize(): void;
     signup(): void;

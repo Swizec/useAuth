@@ -3,6 +3,7 @@ import NetlifyIdentityWidget from "netlify-identity-widget";
 export declare class NetlifyIdentity implements AuthProviderClass {
     private netlifyIdentity;
     private dispatch;
+    checkSessionOnLoad: boolean;
     constructor(params: AuthOptions);
     authorize(): void;
     signup(): void;

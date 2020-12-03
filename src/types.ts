@@ -9,16 +9,31 @@ import * as NetlifyIdentityWidget from "netlify-identity-widget";
 import { ReactNode } from "react";
 import { AnyEventObject, PayloadSender } from "xstate";
 
+import * as Providers from "./providers";
+
+// Type representing all possible params for auth providers
 export type AuthOptions = {
     dispatch: (eventName: string, eventData?: any) => void;
     customPropertyNamespace?: string;
 } & (Auth0Options | NetlifyIdentityWidget.InitOptions);
 
+// Type for the auth result coming from your auth provider
+// Needs at least `expiresIn` for useAuth internals
 export type AuthResult = ({ expiresIn: number } & Auth0DecodedHash) | null;
 
+// Type for every possible user type for auth providers
 export type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | {}) & {
     [key: string]: any;
 };
+
+export type AuthConfigInterface = (props: {
+    // which auth provider to use
+    authProvider: typeof Providers.Auth0 | typeof Providers.NetlifyIdentity;
+    // params to instantiate auth provider
+    params: Omit<AuthOptions, "dispatch">;
+    // your navigation/routing function
+    navigate: Function;
+}) => null;
 
 // TODO: types are leaking Auth0
 export type AuthState = {
@@ -55,6 +70,7 @@ export interface useAuthInterface {
     };
 }
 
+// Deprecated <AuthProvider> type
 export type AuthProviderInterface = (props: {
     children: ReactNode;
     navigate: (path: string) => void;
