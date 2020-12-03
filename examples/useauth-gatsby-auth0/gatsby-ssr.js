@@ -12,14 +12,14 @@ import theme from "@rebass/preset"
 
 import { AuthProvider } from "react-use-auth"
 
-export const wrapRootElement = ({ element }) => (
-  <ThemeProvider theme={theme}>
-    <AuthProvider
-      navigate={navigate}
-      auth0_domain="useauth.auth0.com"
-      auth0_client_id="GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
-    >
-      {element}{" "}
-    </AuthProvider>{" "}
-  </ThemeProvider>
-)
+// export const wrapRootElement = ({ element }) => (
+//   <ThemeProvider theme={theme}>
+//     <AuthProvider
+//       navigate={navigate}
+//       auth0_domain="useauth.auth0.com"
+//       auth0_client_id="GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
+//     >
+//       {element}
+//     </AuthProvider>
+//   </ThemeProvider>
+// )

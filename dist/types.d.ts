@@ -1,22 +1,28 @@
-import { Auth0UserProfile, Auth0DecodedHash, WebAuth, Auth0Error, AuthOptions, Auth0ParseHashError } from "auth0-js";
+import { Auth0UserProfile, Auth0DecodedHash, Auth0Error, Auth0ParseHashError, AuthOptions as Auth0Options } from "auth0-js";
+import * as NetlifyIdentityWidget from "netlify-identity-widget";
 import { ReactNode } from "react";
+import { AnyEventObject, PayloadSender } from "xstate";
+export declare type AuthOptions = {
+    dispatch: (eventName: string, eventData?: any) => void;
+    customPropertyNamespace?: string;
+} & (Auth0Options | NetlifyIdentityWidget.InitOptions);
+export declare type AuthResult = ({
+    expiresIn: number;
+} & Auth0DecodedHash) | null;
+export declare type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | {}) & {
+    [key: string]: any;
+};
 export declare type AuthState = {
-    user: (Auth0UserProfile & {
-        [key: string]: any;
-    }) | {
-        sub?: string;
-        [key: string]: any;
-    };
-    authResult?: Auth0DecodedHash | null;
+    user: AuthUser;
+    authResult?: AuthResult;
     expiresAt: Date | null;
     isAuthenticating: boolean;
     errorType?: string;
     error?: Error | Auth0Error | Auth0ParseHashError;
     config: {
         navigate: Function;
-        customPropertyNamespace: string;
-        authProvider?: any;
-        callbackDomain: string;
+        authProvider?: AuthProviderClass;
+        callbackDomain?: string;
     };
 };
 export interface useAuthInterface {
@@ -24,11 +30,9 @@ export interface useAuthInterface {
         isAuthenticating: boolean;
         isAuthenticated: () => boolean;
         isAuthorized: (role: string | string[]) => boolean;
-        user: Auth0UserProfile | {
-            sub?: string;
-        };
-        userId: string | null | undefined;
-        authResult: Auth0DecodedHash | undefined | null;
+        user: AuthUser;
+        userId?: string | null;
+        authResult?: AuthResult;
         login: () => void;
         signup: () => void;
         logout: () => void;
@@ -38,22 +42,24 @@ export interface useAuthInterface {
         dispatch: (eventName: string, eventData?: any) => void;
     };
 }
-export declare type handleAuthResultInterface = (args: {
-    err?: Error | Auth0ParseHashError | null;
-    dispatch: any;
-    authProvider: WebAuth;
-    authResult: Auth0DecodedHash | null;
-}) => Promise<boolean>;
-export declare type fetchUserInterface = (args: {
-    authProvider: WebAuth;
-    authResult: Auth0DecodedHash;
-}) => Promise<Auth0UserProfile>;
 export declare type AuthProviderInterface = (props: {
     children: ReactNode;
     navigate: (path: string) => void;
     auth0_domain: string;
     auth0_audience_domain?: string;
     auth0_client_id: string;
-    auth0_params?: AuthOptions;
+    auth0_params?: Auth0Options;
     customPropertyNamespace?: string;
 }) => JSX.Element;
+export interface AuthProviderClass {
+    authorize(): void;
+    signup(): void;
+    logout(returnTo?: string): void;
+    handleLoginCallback(dispatch: PayloadSender<AnyEventObject>): Promise<boolean>;
+    checkSession(): Promise<{
+        user: Auth0UserProfile;
+        authResult: Auth0DecodedHash;
+    }>;
+    userId(user: AuthUser): string | null;
+    userRoles(user: AuthUser): string[] | null;
+}

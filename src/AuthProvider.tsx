@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import Auth0 from "auth0-js";
-import { AuthOptions } from "auth0-js";
+import { AuthOptions as Auth0Options } from "auth0-js";
 
 import { AuthProviderInterface } from "./types";
-import { handleAuthResult, useAuth } from "./useAuth";
+import { useAuth } from "./useAuth";
+import { Auth0 } from "./providers";
 
 export const AuthProvider: AuthProviderInterface = ({
     children,
@@ -21,7 +21,7 @@ export const AuthProvider: AuthProviderInterface = ({
 
     const audienceDomain = auth0_audience_domain || auth0_domain;
 
-    const params: AuthOptions = {
+    const params: Auth0Options = {
         domain: auth0_domain,
         clientID: auth0_client_id,
         redirectUri: `${callbackDomain}/auth0_callback`,
@@ -35,17 +35,20 @@ export const AuthProvider: AuthProviderInterface = ({
     // Instantiate Auth0 client
 
     useEffect(() => {
-        const auth0 = new Auth0.WebAuth({ ...params, ...auth0_params });
+        const auth0 = new Auth0({
+            dispatch,
+            customPropertyNamespace,
+            ...params,
+            ...auth0_params
+        });
 
         dispatch("SET_CONFIG", {
             authProvider: auth0,
-            navigate,
-            customPropertyNamespace,
-            callbackDomain
+            navigate
         });
 
         dispatch("CHECK_SESSION");
-    }, [navigate, customPropertyNamespace, callbackDomain]);
+    }, [navigate, customPropertyNamespace]);
 
     return <React.Fragment>{children}</React.Fragment>;
 };

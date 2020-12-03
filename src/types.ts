@@ -1,27 +1,37 @@
 import {
     Auth0UserProfile,
     Auth0DecodedHash,
-    WebAuth,
     Auth0Error,
-    AuthOptions,
-    Auth0ParseHashError
+    Auth0ParseHashError,
+    AuthOptions as Auth0Options
 } from "auth0-js";
+import * as NetlifyIdentityWidget from "netlify-identity-widget";
 import { ReactNode } from "react";
+import { AnyEventObject, PayloadSender } from "xstate";
 
+export type AuthOptions = {
+    dispatch: (eventName: string, eventData?: any) => void;
+    customPropertyNamespace?: string;
+} & (Auth0Options | NetlifyIdentityWidget.InitOptions);
+
+export type AuthResult = ({ expiresIn: number } & Auth0DecodedHash) | null;
+
+export type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | {}) & {
+    [key: string]: any;
+};
+
+// TODO: types are leaking Auth0
 export type AuthState = {
-    user:
-        | (Auth0UserProfile & { [key: string]: any }) // adds metadata support for Auth0 Rules
-        | { sub?: string; [key: string]: any };
-    authResult?: Auth0DecodedHash | null;
+    user: AuthUser;
+    authResult?: AuthResult;
     expiresAt: Date | null;
     isAuthenticating: boolean;
     errorType?: string;
     error?: Error | Auth0Error | Auth0ParseHashError;
     config: {
         navigate: Function;
-        customPropertyNamespace: string;
-        authProvider?: any;
-        callbackDomain: string;
+        authProvider?: AuthProviderClass;
+        callbackDomain?: string;
     };
 };
 
@@ -30,9 +40,9 @@ export interface useAuthInterface {
         isAuthenticating: boolean;
         isAuthenticated: () => boolean;
         isAuthorized: (role: string | string[]) => boolean;
-        user: Auth0UserProfile | { sub?: string };
-        userId: string | null | undefined;
-        authResult: Auth0DecodedHash | undefined | null;
+        user: AuthUser;
+        userId?: string | null;
+        authResult?: AuthResult;
         login: () => void;
         signup: () => void;
         logout: () => void;
@@ -45,24 +55,28 @@ export interface useAuthInterface {
     };
 }
 
-export type handleAuthResultInterface = (args: {
-    err?: Error | Auth0ParseHashError | null;
-    dispatch: any;
-    authProvider: WebAuth;
-    authResult: Auth0DecodedHash | null;
-}) => Promise<boolean>;
-
-export type fetchUserInterface = (args: {
-    authProvider: WebAuth;
-    authResult: Auth0DecodedHash;
-}) => Promise<Auth0UserProfile>;
-
 export type AuthProviderInterface = (props: {
     children: ReactNode;
     navigate: (path: string) => void;
     auth0_domain: string;
     auth0_audience_domain?: string;
     auth0_client_id: string;
-    auth0_params?: AuthOptions;
+    auth0_params?: Auth0Options;
     customPropertyNamespace?: string;
 }) => JSX.Element;
+
+// The shape of auth provider wrappers
+export interface AuthProviderClass {
+    authorize(): void;
+    signup(): void;
+    logout(returnTo?: string): void;
+    handleLoginCallback(
+        dispatch: PayloadSender<AnyEventObject>
+    ): Promise<boolean>;
+    checkSession(): Promise<{
+        user: Auth0UserProfile;
+        authResult: Auth0DecodedHash;
+    }>;
+    userId(user: AuthUser): string | null;
+    userRoles(user: AuthUser): string[] | null;
+}

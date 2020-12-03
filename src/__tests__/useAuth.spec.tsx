@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import Auth0 from "auth0-js";
+import { Auth0 } from "../providers/Auth0";
 
 import { useAuth } from "../useAuth";
 import { authService } from "../authReducer";
 
-const auth0 = new Auth0.WebAuth({
+const auth0 = new Auth0({
+    dispatch: authService.send,
     domain: "localhost",
     clientID: "12345",
     redirectUri: `localhost/auth0_callback`,
@@ -29,7 +30,6 @@ describe("useAuth", () => {
         authService.send("SET_CONFIG", {
             authProvider: auth0,
             navigate,
-            customPropertyNamespace: "localhost:8000",
             callbackDomain: "localhost:8000"
         });
     });

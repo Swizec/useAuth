@@ -2,7 +2,6 @@ import { addSeconds, differenceInSeconds, isAfter } from "date-fns";
 import { Machine, assign, interpret } from "xstate";
 import { choose } from "xstate/lib/actions";
 import { AuthState } from "./types";
-import { checkSession } from "./useAuth";
 
 export const authMachine = Machine<AuthState>(
     {
@@ -20,8 +19,8 @@ export const authMachine = Machine<AuthState>(
                     console.error(
                         "Please specify a navigation method that works with your router"
                     ),
-                callbackDomain: "http://localhost:8000",
-                customPropertyNamespace: "http://localhost:8000"
+                // TODO: detect default
+                callbackDomain: "http://localhost:8000"
             }
         },
         states: {
@@ -49,9 +48,7 @@ export const authMachine = Machine<AuthState>(
                 invoke: {
                     id: "checkSession",
                     src: (context, event) =>
-                        checkSession({
-                            authProvider: context.config.authProvider
-                        }),
+                        context.config.authProvider!.checkSession(),
                     onDone: {
                         target: "authenticated"
                     },
