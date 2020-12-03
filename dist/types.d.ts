@@ -17,6 +17,7 @@ export declare type AuthConfigInterface = (props: {
     authProvider: typeof Providers.Auth0 | typeof Providers.NetlifyIdentity;
     params: Omit<AuthOptions, "dispatch">;
     navigate: Function;
+    children: ReactNode;
 }) => null;
 export declare type AuthState = {
     user: AuthUser;

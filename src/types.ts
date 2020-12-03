@@ -33,6 +33,9 @@ export type AuthConfigInterface = (props: {
     params: Omit<AuthOptions, "dispatch">;
     // your navigation/routing function
     navigate: Function;
+
+    // optional children if you prefer to use this as a wrapper
+    children: ReactNode;
 }) => null;
 
 // TODO: types are leaking Auth0

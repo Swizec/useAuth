@@ -5,7 +5,8 @@ import { useAuth } from "./useAuth";
 export const AuthConfig: AuthConfigInterface = ({
     authProvider,
     params,
-    navigate
+    navigate,
+    children?
 }) => {
     const { dispatch } = useAuth();
 
@@ -33,5 +34,5 @@ export const AuthConfig: AuthConfigInterface = ({
         }
     }, [dispatch, authProvider, params, navigate]);
 
-    return null;
+    return <>{children}</>;
 };
