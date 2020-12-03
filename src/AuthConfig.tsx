@@ -6,7 +6,7 @@ export const AuthConfig: AuthConfigInterface = ({
     authProvider,
     params,
     navigate,
-    children?
+    children
 }) => {
     const { dispatch } = useAuth();
 

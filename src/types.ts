@@ -36,7 +36,7 @@ export type AuthConfigInterface = (props: {
 
     // optional children if you prefer to use this as a wrapper
     children: ReactNode;
-}) => null;
+}) => JSX.Element;
 
 // TODO: types are leaking Auth0
 export type AuthState = {

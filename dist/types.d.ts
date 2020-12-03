@@ -18,7 +18,7 @@ export declare type AuthConfigInterface = (props: {
     params: Omit<AuthOptions, "dispatch">;
     navigate: Function;
     children: ReactNode;
-}) => null;
+}) => JSX.Element;
 export declare type AuthState = {
     user: AuthUser;
     authResult?: AuthResult;
