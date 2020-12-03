@@ -6,7 +6,8 @@ import * as Providers from "./providers";
 export declare type AuthOptions = {
     dispatch: (eventName: string, eventData?: any) => void;
     customPropertyNamespace?: string;
-} & (Auth0Options | NetlifyIdentityWidget.InitOptions);
+} & ProviderOptions;
+export declare type ProviderOptions = Auth0Options | NetlifyIdentityWidget.InitOptions;
 export declare type AuthResult = ({
     expiresIn: number;
 } & Auth0DecodedHash) | null;
@@ -59,6 +60,7 @@ export declare type AuthProviderInterface = (props: {
     customPropertyNamespace?: string;
 }) => JSX.Element;
 export interface AuthProviderClass {
+    checkSessionOnLoad: boolean;
     authorize(): void;
     signup(): void;
     logout(returnTo?: string): void;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AuthConfigInterface } from "./types";
+import { AuthConfigInterface, ProviderOptions } from "./types";
 import { useAuth } from "./useAuth";
 
 export const AuthConfig: AuthConfigInterface = ({
@@ -19,7 +19,10 @@ export const AuthConfig: AuthConfigInterface = ({
         // instantiate auth provider on page load
         const authInstance = new authProvider({
             dispatch,
-            ...params
+            ...authProvider.addDefaultParams(
+                params as ProviderOptions,
+                callbackDomain
+            )
         });
 
         // set config in XState

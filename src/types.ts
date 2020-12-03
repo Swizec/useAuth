@@ -15,7 +15,9 @@ import * as Providers from "./providers";
 export type AuthOptions = {
     dispatch: (eventName: string, eventData?: any) => void;
     customPropertyNamespace?: string;
-} & (Auth0Options | NetlifyIdentityWidget.InitOptions);
+} & ProviderOptions;
+
+export type ProviderOptions = Auth0Options | NetlifyIdentityWidget.InitOptions;
 
 // Type for the auth result coming from your auth provider
 // Needs at least `expiresIn` for useAuth internals
@@ -86,6 +88,10 @@ export type AuthProviderInterface = (props: {
 
 // The shape of auth provider wrappers
 export interface AuthProviderClass {
+    checkSessionOnLoad: boolean;
+    // addDefaultParams: (
+    //     props: Omit<AuthOptions, "dispatch">
+    // ) => Omit<AuthOptions, "dispatch">;
     authorize(): void;
     signup(): void;
     logout(returnTo?: string): void;
