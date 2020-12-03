@@ -16,8 +16,6 @@ function AuthConfig() {
   const { dispatch } = useAuth()
 
   useEffect(() => {
-    console.log("setting config")
-
     dispatch("SET_CONFIG", {
       authProvider: new Providers.Auth0({
         dispatch,
