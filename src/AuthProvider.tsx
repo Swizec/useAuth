@@ -50,5 +50,11 @@ export const AuthProvider: AuthProviderInterface = ({
         dispatch("CHECK_SESSION");
     }, [navigate, customPropertyNamespace]);
 
+    useEffect(() => {
+        console.warn(
+            "Using the AuthProvider root component is deprecated. Migrate to AuthConfig or manual dispatching. Takes  5min."
+        );
+    }, []);
+
     return <React.Fragment>{children}</React.Fragment>;
 };
