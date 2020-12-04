@@ -43,7 +43,7 @@ export const useAuth: useAuthInterface = () => {
         dispatch("LOGOUT");
 
         // Return to the homepage after logout.
-        navigate(postLogoutRoute || "/");
+        navigate(typeof postLogoutRoute === "string" ? postLogoutRoute : "/");
     };
 
     const handleAuthentication = useCallback(
