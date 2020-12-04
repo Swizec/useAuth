@@ -33,7 +33,12 @@ export const useAuth: useAuthInterface = () => {
     };
 
     const logout = (postLogoutRoute?: string) => {
-        authProvider?.logout(`${callbackDomain}${postLogoutRoute}`);
+        if (postLogoutRoute) {
+            authProvider?.logout(`${callbackDomain}${postLogoutRoute}`);
+        } else {
+            authProvider?.logout();
+        }
+
         dispatch("LOGOUT");
 
         // Return to the homepage after logout.
