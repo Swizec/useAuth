@@ -3,8 +3,8 @@
  *
  * See: https://www.gatsbyjs.com/docs/browser-apis/
  */
-import React, { useEffect } from "react"
-import { useAuth } from "react-use-auth"
+import React from "react"
+import { AuthConfig } from "react-use-auth"
 import { Providers } from "react-use-auth"
 import { navigate } from "gatsby"
 
@@ -12,7 +12,10 @@ import { navigate } from "gatsby"
 export const wrapRootElement = ({ element }) => {
   return (
     <>
-      <AuthConfig provider={Providers.NetlifyIdentity} navigate={navigate} />
+      <AuthConfig
+        authProvider={Providers.NetlifyIdentity}
+        navigate={navigate}
+      />
       {element}
     </>
   )
