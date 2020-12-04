@@ -20,7 +20,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
-    "react-use-auth": "Swizec/useAuth#netlify-identity",
+    "react-use-auth": "Swizec/useAuth#auth-config",
     "rebass": "^4.0.1"
   },
   "resolve": {

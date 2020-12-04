@@ -5,7 +5,12 @@ import Auth0Client, {
     Auth0UserProfile,
     AuthOptions as Auth0Options
 } from "auth0-js";
-import { AuthOptions, AuthProviderClass, AuthUser } from "../types";
+import {
+    AuthOptions,
+    AuthProviderClass,
+    AuthUser,
+    ProviderOptions
+} from "../types";
 
 // Wrapper that provides a common interface for different providers
 // Modeled after Auth0 because that was first :)
@@ -14,12 +19,27 @@ export class Auth0 implements AuthProviderClass {
     private dispatch: (eventName: string, eventData?: any) => void;
     private customPropertyNamespace?: string;
 
+    public checkSessionOnLoad = true;
+
     constructor(params: AuthOptions) {
         this.dispatch = params.dispatch;
         this.customPropertyNamespace = params.customPropertyNamespace;
         this.auth0 = new Auth0Client.WebAuth({
             ...(params as Auth0Options)
         });
+    }
+
+    // Makes configuration easier by guessing default options
+    static addDefaultParams(params: ProviderOptions, callbackDomain: string) {
+        const vals = params as Auth0Options;
+
+        return {
+            redirectUri: `${callbackDomain}/auth0_callback`,
+            audience: `https://${vals.domain}/api/v2/`,
+            responseType: "token id_token",
+            scope: "openid profile email",
+            ...vals
+        };
     }
 
     // Opens login dialog

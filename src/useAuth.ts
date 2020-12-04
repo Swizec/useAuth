@@ -33,11 +33,17 @@ export const useAuth: useAuthInterface = () => {
     };
 
     const logout = (postLogoutRoute?: string) => {
-        authProvider?.logout(`${callbackDomain}${postLogoutRoute}`);
+        // React sends a click event by default, we don't care
+        if (typeof postLogoutRoute === "string") {
+            authProvider?.logout(`${callbackDomain}${postLogoutRoute}`);
+        } else {
+            authProvider?.logout();
+        }
+
         dispatch("LOGOUT");
 
         // Return to the homepage after logout.
-        navigate(postLogoutRoute || "/");
+        navigate(typeof postLogoutRoute === "string" ? postLogoutRoute : "/");
     };
 
     const handleAuthentication = useCallback(

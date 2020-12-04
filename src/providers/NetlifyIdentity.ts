@@ -1,10 +1,17 @@
-import { AuthOptions, AuthProviderClass, AuthUser } from "../types";
+import {
+    AuthOptions,
+    AuthProviderClass,
+    AuthUser,
+    ProviderOptions
+} from "../types";
 import NetlifyIdentityWidget, { User } from "netlify-identity-widget";
 
 // Wrapper for NetlifyIdentity conforming to auth provider interface
 export class NetlifyIdentity implements AuthProviderClass {
     private netlifyIdentity: any;
     private dispatch: (eventName: string, eventData?: any) => void;
+
+    public checkSessionOnLoad = false;
 
     constructor(params: AuthOptions) {
         this.netlifyIdentity = NetlifyIdentityWidget;
@@ -37,6 +44,14 @@ export class NetlifyIdentity implements AuthProviderClass {
                 });
             }
         });
+    }
+
+    static addDefaultParams(
+        params: ProviderOptions = {},
+        callbackDomain: string
+    ) {
+        const vals = params as NetlifyIdentityWidget.InitOptions;
+        return vals;
     }
 
     // Opens login dialog
