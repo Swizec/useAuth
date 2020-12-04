@@ -16,7 +16,7 @@ export declare type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | 
 };
 export declare type AuthConfigInterface = (props: {
     authProvider: typeof Providers.Auth0 | typeof Providers.NetlifyIdentity;
-    params: Omit<AuthOptions, "dispatch">;
+    params?: Omit<AuthOptions, "dispatch">;
     navigate: Function;
     children: ReactNode;
 }) => JSX.Element;

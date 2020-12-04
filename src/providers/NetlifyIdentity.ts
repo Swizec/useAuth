@@ -46,7 +46,10 @@ export class NetlifyIdentity implements AuthProviderClass {
         });
     }
 
-    static addDefaultParams(params: ProviderOptions, callbackDomain: string) {
+    static addDefaultParams(
+        params: ProviderOptions = {},
+        callbackDomain: string
+    ) {
         const vals = params as NetlifyIdentityWidget.InitOptions;
         return vals;
     }

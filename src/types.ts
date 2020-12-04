@@ -32,7 +32,7 @@ export type AuthConfigInterface = (props: {
     // which auth provider to use
     authProvider: typeof Providers.Auth0 | typeof Providers.NetlifyIdentity;
     // params to instantiate auth provider
-    params: Omit<AuthOptions, "dispatch">;
+    params?: Omit<AuthOptions, "dispatch">;
     // your navigation/routing function
     navigate: Function;
 
