@@ -41,7 +41,7 @@ describe("AuthProvider", () => {
 
         expect((savedContext as AuthState).config.authProvider).not.toBeNull();
         expect((savedContext as AuthState).config.callbackDomain).toBe(
-            "http://localhost"
+            "http://localhost:8000"
         );
     });
 });
