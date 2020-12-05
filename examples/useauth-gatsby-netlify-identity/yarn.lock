@@ -10850,9 +10850,10 @@ react-side-effect@^2.1.0:
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.0.tgz#1ce4a8b4445168c487ed24dab886421f74d380d3"
   integrity sha512-IgmcegOSi5SNX+2Snh1vqmF0Vg/CbkycU9XZbOHJlZ6kMzTmi3yc254oB1WCkgA7OQtIAoLmcSFuHTc/tlcqXg==
 
-react-use-auth@Swizec/useAuth#auth-config:
-  version "0.9.0"
-  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/5ac69e35ccecc1056f7f8eaacfa28d72a2008a9c"
+react-use-auth@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-1.0.0.tgz#2179b5455aa4407f961f275a5c546e2206a50a9d"
+  integrity sha512-HVyneFVM7enpWxbV3A4cWvZBE/n+jgpq7R1EGMtp+kCpLweK81sL3ziV+uJnmc+GfKFDmmhxpYu8lPpjoBkhPw==
   dependencies:
     "@xstate/react" "^1.0.3"
     date-fns "^2.16.1"
