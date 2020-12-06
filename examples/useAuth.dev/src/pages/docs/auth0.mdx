@@ -1,0 +1,26 @@
+### Default Auth0 params
+
+By default `useAuth`'s Auth0 client uses these params:
+
+```jsx
+const params = {
+    domain: auth0_domain,
+    clientID: auth0_client_id,
+    redirectUri: `${callback_domain}/auth0_callback`,
+    audience: `https://${auth0_domain}/api/v2/`,
+    responseType: "token id_token",
+    scope: "openid profile email"
+};
+```
+
+`domain` and `clientID` come from your props.
+
+`redirectUri` is set to use the `auth0_callbackpage` on the current domain. Auth0 redirects here after users login so you can set cookies and stuff. useAuthwill handle this for you ✌️
+
+`audience` is set to use api/v2. I know this is necessary but honestly have been copypasting it through several of my projects.
+
+`responseType` same here. I copy paste this from old projects so I figured it's a good default.
+
+`scope` you need openid for social logins and to be able to fetch user profiles after authentication. Profile and Email too. You can add more via the `auth0_params` override.
+
+PS:
