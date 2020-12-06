@@ -1,0 +1,74 @@
+# Upgrade from pre-1.0.0
+
+[`useAuth`](https://useauth.dev) is meant to be fully backwards compatible. If you have trouble, please [submit a bug](https://github.com/Swizec/useAuth/issues).
+
+You can upgrade with:
+
+```
+$ yarn add react-use-auth
+```
+
+You'll need the `auth0-js` client because it's now a peer dependency.
+
+```
+$ yarn add auth0-js
+```
+
+If you prefer npm, that works too :)
+
+## Update your auth0_callback page
+
+```javascript
+const { handleAuthentication } = useAuth();
+useEffect(() => {
+    handleAuthentication();
+}, []);
+```
+
+becomes
+
+```javascript
+const { handleAuthentication } = useAuth();
+useEffect(() => {
+    handleAuthentication();
+}, [handleAuthentication]);
+```
+
+This ensures `handleAuthentication` runs after XState is initialized. You'll run into race conditions otherwise and users might get stuck.
+
+## AuthProvider 👉 AuthConfig
+
+This step is optional, but `<AuthProvider>` is now deprecated in favor of `<AuthConfig>`.
+
+```jsx
+export const wrapRootElement = ({ element }) => (
+    <AuthProvider
+        navigate={navigate}
+        auth0_domain="useauth.auth0.com"
+        auth0_client_id="GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
+    >
+        {element}
+    </AuthProvider>
+);
+```
+
+becomes
+
+```jsx
+import { AuthConfig, Providers } from "react-use-auth";
+
+export const wrapRootElement = ({ element }) => (
+    <AuthConfig
+        navigate={navigate}
+        authProvider={Providers.Auth0}
+        params={{
+            domain: "useauth.auth0.com"
+            clientID: "GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
+        }}
+    >
+        {element}
+    </AuthConfig>
+);
+```
+
+For a full list of options go to [Use with Auth0](/docs/auth0).

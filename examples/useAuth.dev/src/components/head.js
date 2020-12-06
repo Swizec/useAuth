@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { useThemeUI } from "theme-ui";
-import pkg from "theme-ui/package.json";
+import pkg from "react-use-auth/package.json";
 
 const Head = (props) => {
     const title = [
@@ -29,7 +29,7 @@ const Head = (props) => {
                 type="image/png"
             />
             <link rel="apple-touch-icon" type="image/png" href="/icon.png" />
-            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:card" content="summary_large_image" />
             <meta
                 name="twitter:image"
                 content="https://useauth.dev/useauth-card.png"
