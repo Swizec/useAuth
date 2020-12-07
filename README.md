@@ -2,7 +2,7 @@
 <h2 align="center">the simplest way to add authentication to your React app</h2>
 <p> 
   <a href="#contributors-">
-    <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-11-orange.svg?style=round-square"/>
+    <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-19-orange.svg?style=round-square"/>
   </a>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-green.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Swizec/useAuth/blob/master/LICENSE">
