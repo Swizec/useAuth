@@ -5,6 +5,7 @@ import Auth0Client, {
     Auth0UserProfile,
     AuthOptions as Auth0Options
 } from "auth0-js";
+
 import {
     AuthOptions,
     AuthProviderClass,

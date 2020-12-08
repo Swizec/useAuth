@@ -1,10 +1,5 @@
-import {
-    AuthOptions,
-    AuthProviderClass,
-    AuthUser,
-    ProviderOptions
-} from "../types";
-import NetlifyIdentityWidget, { User } from "netlify-identity-widget";
+import { AuthOptions, AuthProviderClass, ProviderOptions } from "../types";
+import { User, InitOptions } from "netlify-identity-widget";
 
 // Wrapper for NetlifyIdentity conforming to auth provider interface
 export class NetlifyIdentity implements AuthProviderClass {
@@ -12,36 +7,39 @@ export class NetlifyIdentity implements AuthProviderClass {
     private dispatch: (eventName: string, eventData?: any) => void;
 
     constructor(params: AuthOptions) {
-        this.netlifyIdentity = NetlifyIdentityWidget;
-
-        this.netlifyIdentity.init(params as NetlifyIdentityWidget.InitOptions);
         this.dispatch = params.dispatch;
 
-        this.netlifyIdentity.on("error", (error: Error) => {
-            this.dispatch("ERROR", {
-                error,
-                errorType: "netlifyError"
+        import("netlify-identity-widget").then(({ default: widget }) => {
+            this.netlifyIdentity = widget;
+
+            this.netlifyIdentity.init(params as InitOptions);
+
+            this.netlifyIdentity.on("error", (error: Error) => {
+                this.dispatch("ERROR", {
+                    error,
+                    errorType: "netlifyError"
+                });
             });
-        });
-        this.netlifyIdentity.on("login", (user: User) => {
-            this.dispatch("AUTHENTICATED", {
-                user,
-                authResult: {
-                    expiresIn: user.token?.expires_in
-                }
-            });
-        });
-        this.netlifyIdentity.on("init", (user: User) => {
-            console.log("INIT", user);
-            if (user) {
-                this.dispatch("LOGIN");
+            this.netlifyIdentity.on("login", (user: User) => {
                 this.dispatch("AUTHENTICATED", {
                     user,
                     authResult: {
                         expiresIn: user.token?.expires_in
                     }
                 });
-            }
+            });
+            this.netlifyIdentity.on("init", (user: User) => {
+                console.log("INIT", user);
+                if (user) {
+                    this.dispatch("LOGIN");
+                    this.dispatch("AUTHENTICATED", {
+                        user,
+                        authResult: {
+                            expiresIn: user.token?.expires_in
+                        }
+                    });
+                }
+            });
         });
     }
 
@@ -49,7 +47,7 @@ export class NetlifyIdentity implements AuthProviderClass {
         params: ProviderOptions = {},
         callbackDomain: string
     ) {
-        const vals = params as NetlifyIdentityWidget.InitOptions;
+        const vals = params as InitOptions;
         return vals;
     }
 
@@ -105,12 +103,12 @@ export class NetlifyIdentity implements AuthProviderClass {
     }
 
     // Returns the userId from NetlifyIdentity shape of data
-    public userId(user: NetlifyIdentityWidget.User): string {
+    public userId(user: User): string {
         return user.id;
     }
 
     // Returns user roles from NetlifyIdentity shape of data
-    public userRoles(user: NetlifyIdentityWidget.User): string[] | null {
+    public userRoles(user: User): string[] | null {
         return [user.role] || null;
     }
 }
