@@ -1,7 +1,7 @@
 import { Auth0DecodedHash, Auth0UserProfile } from "auth0-js";
 import { AuthOptions, AuthProviderClass, AuthUser, ProviderOptions } from "../types";
 export declare class Auth0 implements AuthProviderClass {
-    private auth0;
+    private auth0?;
     private dispatch;
     private customPropertyNamespace?;
     constructor(params: AuthOptions);

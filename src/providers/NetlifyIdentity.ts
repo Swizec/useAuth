@@ -3,7 +3,7 @@ import { User, InitOptions } from "netlify-identity-widget";
 
 // Wrapper for NetlifyIdentity conforming to auth provider interface
 export class NetlifyIdentity implements AuthProviderClass {
-    private netlifyIdentity: any;
+    private netlifyIdentity?: any;
     private dispatch: (eventName: string, eventData?: any) => void;
 
     constructor(params: AuthOptions) {

@@ -1,7 +1,7 @@
 import { AuthOptions, AuthProviderClass } from "../types";
 import { User, InitOptions } from "netlify-identity-widget";
 export declare class NetlifyIdentity implements AuthProviderClass {
-    private netlifyIdentity;
+    private netlifyIdentity?;
     private dispatch;
     constructor(params: AuthOptions);
     static addDefaultParams(params: import("auth0-js").AuthOptions | InitOptions | undefined, callbackDomain: string): InitOptions;
