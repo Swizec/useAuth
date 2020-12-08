@@ -10858,6 +10858,14 @@ react-use-auth@Swizec/useAuth#fix-bugs:
     date-fns "^2.16.1"
     xstate "^4.13.0"
 
+react-use-auth@Swizec/useAuth#master:
+  version "1.0.0"
+  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/93c3ab062293f1bb495fc4bfa09ecefa6a6345d6"
+  dependencies:
+    "@xstate/react" "^1.0.3"
+    date-fns "^2.16.1"
+    xstate "^4.13.0"
+
 react@^16.12.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
