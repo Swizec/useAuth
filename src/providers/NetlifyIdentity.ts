@@ -84,14 +84,24 @@ export class NetlifyIdentity implements AuthProviderClass {
         user: any;
         authResult: any;
     }> {
-        const jwt = await this.netlifyIdentity.refresh();
+        try {
+            await this.netlifyIdentity.refresh();
+        } catch (e) {
+            throw new Error("Session invalid");
+        }
 
-        console.log(jwt);
+        const user = this.netlifyIdentity.currentUser();
 
-        return {
-            user: this.netlifyIdentity.currentUser(),
-            authResult: {}
-        };
+        if (user) {
+            return {
+                user,
+                authResult: {
+                    expiresIn: user.token?.expires_in
+                }
+            };
+        } else {
+            throw new Error("Session invalid");
+        }
     }
 
     // Returns the userId from NetlifyIdentity shape of data
