@@ -84,9 +84,12 @@ export class NetlifyIdentity implements AuthProviderClass {
         user: any;
         authResult: any;
     }> {
-        console.log("CHECK SESSION");
+        const jwt = await this.netlifyIdentity.refresh();
+
+        console.log(jwt);
+
         return {
-            user: {},
+            user: this.netlifyIdentity.currentUser(),
             authResult: {}
         };
     }
