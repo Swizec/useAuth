@@ -53,7 +53,8 @@ export const authMachine = Machine<AuthState>(
                         target: "authenticated"
                     },
                     onError: {
-                        target: "error"
+                        target: "unauthenticated",
+                        actions: ["clearUserFromContext", "clearLocalStorage"]
                     }
                 },
                 entry: ["startAuthenticating"],

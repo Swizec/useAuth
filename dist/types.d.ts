@@ -60,7 +60,6 @@ export declare type AuthProviderInterface = (props: {
     customPropertyNamespace?: string;
 }) => JSX.Element;
 export interface AuthProviderClass {
-    checkSessionOnLoad: boolean;
     authorize(): void;
     signup(): void;
     logout(returnTo?: string): void;

@@ -11,8 +11,6 @@ export class NetlifyIdentity implements AuthProviderClass {
     private netlifyIdentity: any;
     private dispatch: (eventName: string, eventData?: any) => void;
 
-    public checkSessionOnLoad = false;
-
     constructor(params: AuthOptions) {
         this.netlifyIdentity = NetlifyIdentityWidget;
 
@@ -34,6 +32,7 @@ export class NetlifyIdentity implements AuthProviderClass {
             });
         });
         this.netlifyIdentity.on("init", (user: User) => {
+            console.log("INIT", user);
             if (user) {
                 this.dispatch("LOGIN");
                 this.dispatch("AUTHENTICATED", {
@@ -85,13 +84,24 @@ export class NetlifyIdentity implements AuthProviderClass {
         user: any;
         authResult: any;
     }> {
-        console.warn(
-            "checkSession is unnecessary with Netlify Identity Widget"
-        );
-        return {
-            user: {},
-            authResult: {}
-        };
+        try {
+            await this.netlifyIdentity.refresh();
+        } catch (e) {
+            throw new Error("Session invalid");
+        }
+
+        const user = this.netlifyIdentity.currentUser();
+
+        if (user) {
+            return {
+                user,
+                authResult: {
+                    expiresIn: user.token?.expires_in
+                }
+            };
+        } else {
+            throw new Error("Session invalid");
+        }
     }
 
     // Returns the userId from NetlifyIdentity shape of data
