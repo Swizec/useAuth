@@ -88,7 +88,6 @@ export type AuthProviderInterface = (props: {
 
 // The shape of auth provider wrappers
 export interface AuthProviderClass {
-    checkSessionOnLoad: boolean;
     // addDefaultParams: (
     //     props: Omit<AuthOptions, "dispatch">
     // ) => Omit<AuthOptions, "dispatch">;

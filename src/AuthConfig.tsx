@@ -32,9 +32,7 @@ export const AuthConfig: AuthConfigInterface = ({
             callbackDomain
         });
 
-        if (authInstance.checkSessionOnLoad) {
-            dispatch("CHECK_SESSION");
-        }
+        dispatch("CHECK_SESSION");
     }, [dispatch, authProvider, params, navigate]);
 
     return <>{children}</>;
