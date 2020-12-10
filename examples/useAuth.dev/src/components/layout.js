@@ -13,6 +13,7 @@ import NavLink from "./nav-link";
 import Pagination from "./pagination";
 import SkipLink from "./skip-link";
 import EricButton from "./button";
+import { IoIosLock } from "react-icons/io";
 
 const modes = ["default", "deep", "light"];
 
@@ -117,6 +118,15 @@ export default (props) => {
                                     fontFamily: "Asap, sans-serif"
                                 }}
                             >
+                                <IoIosLock
+                                    sx={{
+                                        size: 38.2,
+                                        fill: "primary",
+                                        display: "inline-block",
+                                        marginBottom: "-5px",
+                                        marginLeft: "-8px"
+                                    }}
+                                />
                                 useAuth
                             </Link>
                         </Flex>
