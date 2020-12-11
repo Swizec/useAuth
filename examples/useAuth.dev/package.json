@@ -33,6 +33,7 @@
         "gatsby-plugin-sharp": "^2.10.1",
         "gatsby-plugin-simple-analytics": "^1.0.3",
         "gatsby-plugin-theme-ui": "^0.4.0-rc.1",
+        "gatsby-remark-copy-linked-files": "^2.6.0",
         "gatsby-remark-images": "^3.7.1",
         "gatsby-source-filesystem": "^2.3.16",
         "netlify-identity-widget": "^1.9.1",

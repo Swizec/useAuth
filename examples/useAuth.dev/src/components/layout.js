@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Box, Flex, Button } from "@theme-ui/components";
+import { Box, Flex, Button, Link as TLink } from "@theme-ui/components";
 import { AccordionNav } from "@theme-ui/sidenav";
 import { Link } from "gatsby";
 import { useRef, useState } from "react";
@@ -210,6 +210,19 @@ export default (props) => {
                     </div>
                 </Box>
             </Flex>
+            <Box
+                sx={{
+                    position: "fixed",
+                    bottom: "0px",
+                    bg: "accent",
+                    p: 2,
+                    borderTopLeftRadius: 3,
+                    borderTopRightRadius: 3
+                }}
+            >
+                Created with ❤️ by{" "}
+                <TLink href="https://swizec.com">Swizec</TLink> et al
+            </Box>
         </Styled.root>
     );
 };
