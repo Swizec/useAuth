@@ -1,6 +1,6 @@
 {
     "name": "react-use-auth",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "The simplest way to add authentication to your React app. Supports various providers.",
     "source": "src/index.ts",
     "main": "dist/index.js",
