@@ -100,7 +100,7 @@ Any way of creating React pages should work, here's the code I use for Gatsby:
 import * as React from "react"
 import { useAuth } from "react-use-auth"
 
-const Auth0CallbackPage = () = {
+const Auth0CallbackPage = () => {
     const { handleAuthentication } = useAuth()
     React.useEffect(() => {
         handleAuthentication()
