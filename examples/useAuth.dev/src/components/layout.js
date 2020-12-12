@@ -112,7 +112,7 @@ export default (props) => {
                                 to="/"
                                 sx={{
                                     variant: "text.logo",
-                                    fontSize: "2.2rem",
+                                    fontSize: ["1.6rem", "2.2rem", "2.2rem"],
                                     fontWeight: "bold",
                                     letterSpacing: "-3px",
                                     fontFamily: "Asap, sans-serif"
@@ -120,10 +120,10 @@ export default (props) => {
                             >
                                 <IoIosLock
                                     sx={{
-                                        size: 38.2,
+                                        size: [18, 38, 38],
                                         fill: "primary",
                                         display: "inline-block",
-                                        marginBottom: "-5px",
+                                        marginBottom: [0, "-5px", "-5px"],
                                         marginLeft: "-8px"
                                     }}
                                 />
@@ -217,7 +217,8 @@ export default (props) => {
                     bg: "accent",
                     p: 2,
                     borderTopLeftRadius: 3,
-                    borderTopRightRadius: 3
+                    borderTopRightRadius: 3,
+                    width: ["100%", 255, 255]
                 }}
             >
                 Created with ❤️ by{" "}
