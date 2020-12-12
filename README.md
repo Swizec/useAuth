@@ -63,7 +63,7 @@ export const wrapRootElement = ({ element }) => (
             navigate={navigate}
             authProvider={Providers.Auth0}
             params={{
-                domain: "useauth.auth0.com"
+                domain: "useauth.auth0.com",
                 clientID: "GjWNFNOHqlino7lQNjBwEywalaYtbIzh"
             }}
         />
