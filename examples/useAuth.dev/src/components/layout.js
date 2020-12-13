@@ -218,11 +218,21 @@ export default (props) => {
                     p: 2,
                     borderTopLeftRadius: 3,
                     borderTopRightRadius: 3,
-                    width: ["100%", 255, 255]
+                    width: ["100%", 255, 255],
+                    color: "white"
                 }}
             >
                 Created with ❤️ by{" "}
-                <TLink href="https://swizec.com">Swizec</TLink> et al
+                <TLink
+                    href="https://swizec.com"
+                    sx={{
+                        color: "white !important",
+                        textDecoration: "underline !important"
+                    }}
+                >
+                    Swizec
+                </TLink>{" "}
+                et. al.
             </Box>
         </Styled.root>
     );
