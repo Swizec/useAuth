@@ -1,4 +1,4 @@
 export { AuthProvider } from "./AuthProvider";
 export { AuthConfig } from "./AuthConfig";
 export { useAuth } from "./useAuth";
-// export * as Providers from './providers'
+export * as Providers from './providers'
