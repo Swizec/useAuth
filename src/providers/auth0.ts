@@ -24,9 +24,9 @@ export class Auth0 implements AuthProviderClass {
         this.dispatch = params.dispatch;
         this.customPropertyNamespace = params.customPropertyNamespace;
 
-        import("auth0-js").then(({ default: client }) => {
+        import("auth0-js").then(({ WebAuth }) => {
             // @ts-ignore I think TS is wrong here :P
-            this.auth0 = new client({
+            this.auth0 = new WebAuth({
                 ...(params as Auth0Options)
             });
         });
