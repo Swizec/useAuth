@@ -10038,7 +10038,7 @@ react-side-effect@^1.1.0:
 
 react-use-auth@Swizec/useAuth.git#fix-providers:
   version "1.0.0"
-  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/df626daca676fef713eb527d4419dff310994611"
+  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/3542d3db4e2147c46967f8de060b25bb8888438b"
   dependencies:
     "@xstate/react" "^1.0.3"
     date-fns "^2.16.1"

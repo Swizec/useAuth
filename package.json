@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "description": "The simplest way to add authentication to your React app. Supports various providers.",
     "source": [
-        "src/providers/providers.ts",
+        "src/providers/auth0.ts",
+        "src/providers/NetlifyIdentity.ts",
         "src/index.ts"
     ],
     "main": "dist/react-use-auth.js",
