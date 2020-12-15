@@ -1,16 +1,24 @@
 <h1 align="center">useAuth</h1>
-<h2 align="center">the simplest way to add authentication to your React app</h2>
+<h2 align="center">the quickest way to add authentication to your React app</h2>
 <p> 
   <a href="#contributors-">
-    <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-19-orange.svg?style=round-square"/>
+    <img alt="All Contributors" src="https://img.shields.io/badge/all_contributors-20-orange.svg?style=round-square"/>
   </a>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-green.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-2.0.0-green.svg?cacheSeconds=2592000" />
   <a href="https://github.com/Swizec/useAuth/blob/master/LICENSE">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
   </a>
 </p>
 
-![](https://s3.amazonaws.com/techletter.app/screenshot-1565368397655.png)
+<div align="center">
+<img src="https://useauth.dev/useauth-card.png" alt="useAuth.dev" title="useAuth.dev" />
+</div>
+
+---
+
+For detailed docs and guides visit [useAuth.dev](https://useauth.dev)
+
+---
 
 ## Getting Started
 
@@ -55,13 +63,14 @@ With Gatsby, add it to `gatsby-browser.js`. With NextJS, `_app.js` is best. You 
 import * as React from "react";
 import { navigate } from "gatsby";
 
-import { AuthConfig, Providers } from "react-use-auth";
+import { AuthConfig } from "react-use-auth";
+import { Auth0 } from "react-use-auth/auth0";
 
 export const wrapRootElement = ({ element }) => (
     <>
         <AuthConfig
             navigate={navigate}
-            authProvider={Providers.Auth0}
+            authProvider={Auth0}
             params={{
                 domain: "useauth.auth0.com",
                 clientID: "GjWNFNOHqlino7lQNjBwEywalaYtbIzh"
