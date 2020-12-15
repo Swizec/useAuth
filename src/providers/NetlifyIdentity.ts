@@ -1,10 +1,5 @@
-import {
-    AuthOptions,
-    AuthProviderClass,
-    AuthUser,
-    ProviderOptions
-} from "../types";
-import NetlifyIdentityWidget, { User } from "netlify-identity-widget";
+import { AuthOptions, AuthProviderClass, ProviderOptions } from "../types";
+import NetlifyWidget, { User, InitOptions } from "netlify-identity-widget";
 
 // Wrapper for NetlifyIdentity conforming to auth provider interface
 export class NetlifyIdentity implements AuthProviderClass {
@@ -12,10 +7,11 @@ export class NetlifyIdentity implements AuthProviderClass {
     private dispatch: (eventName: string, eventData?: any) => void;
 
     constructor(params: AuthOptions) {
-        this.netlifyIdentity = NetlifyIdentityWidget;
-
-        this.netlifyIdentity.init(params as NetlifyIdentityWidget.InitOptions);
         this.dispatch = params.dispatch;
+
+        this.netlifyIdentity = NetlifyWidget;
+
+        this.netlifyIdentity.init(params as InitOptions);
 
         this.netlifyIdentity.on("error", (error: Error) => {
             this.dispatch("ERROR", {
@@ -49,7 +45,7 @@ export class NetlifyIdentity implements AuthProviderClass {
         params: ProviderOptions = {},
         callbackDomain: string
     ) {
-        const vals = params as NetlifyIdentityWidget.InitOptions;
+        const vals = params as InitOptions;
         return vals;
     }
 
@@ -105,12 +101,12 @@ export class NetlifyIdentity implements AuthProviderClass {
     }
 
     // Returns the userId from NetlifyIdentity shape of data
-    public userId(user: NetlifyIdentityWidget.User): string {
+    public userId(user: User): string {
         return user.id;
     }
 
     // Returns user roles from NetlifyIdentity shape of data
-    public userRoles(user: NetlifyIdentityWidget.User): string[] | null {
+    public userRoles(user: User): string[] | null {
         return user.app_metadata.roles;
     }
 }

@@ -41,13 +41,14 @@ With Gatsby, add it to `gatsby-browser.js`. With NextJS, `_app.js` is best. You 
 import * as React from "react";
 import { navigate } from "gatsby";
 
-import { AuthConfig, Providers } from "react-use-auth";
+import { AuthConfig } from "react-use-auth";
+import { Auth0 } from "react-use-auth/auth0"
 
 export const wrapRootElement = ({ element }) => (
     <>
         <AuthConfig
             navigate={navigate}
-            authProvider={Providers.Auth0}
+            authProvider={Auth0}
             params={{
                 domain: "useauth.auth0.com"
                 clientID: "GjWNFNOHqlino7lQNjBwEywalaYtbIzh"

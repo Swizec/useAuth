@@ -5,7 +5,7 @@
  */
 import React from "react"
 import { AuthConfig } from "react-use-auth"
-import { Providers } from "react-use-auth"
+import { NetlifyIdentity } from "react-use-auth/netlify-identity"
 import { navigate } from "gatsby"
 
 // You can delete this file if you're not using it
@@ -13,7 +13,7 @@ export const wrapRootElement = ({ element }) => {
   return (
     <>
       <AuthConfig
-        authProvider={Providers.NetlifyIdentity}
+        authProvider={NetlifyIdentity}
         navigate={navigate}
       />
       {element}

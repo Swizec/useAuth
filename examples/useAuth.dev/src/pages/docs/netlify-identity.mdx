@@ -33,15 +33,13 @@ Netlify Identity is meant to be zero-config, but you need to configure `useAuth`
 ```jsx
 // gatsby-browser.js
 
-import { AuthConfig, Providers } from "react-use-auth";
+import { AuthConfig } from "react-use-auth";
+import { NetlifyIdentity } from "react-use-auth/netlify-identity";
 import { navigate } from "gatsby";
 
 export const wrapPageElement = ({ element }) => (
     <>
-        <AuthConfig
-            authProvider={Providers.NetlifyIdentity}
-            navigate={navigate}
-        />
+        <AuthConfig authProvider={NetlifyIdentity} navigate={navigate} />
         {element}
     </>
 );
@@ -52,7 +50,8 @@ export const wrapPageElement = ({ element }) => (
 ```jsx
 // pages/_app.js
 
-import { AuthConfig, Providers } from "react-use-auth";
+import { AuthConfig } from "react-use-auth";
+import { NetlifyIdentity } from "react-use-auth/netlify-identity";
 import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
@@ -61,7 +60,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
             <AuthConfig
-                authProvider={Providers.NetlifyIdentity}
+                authProvider={NetlifyIdentity}
                 navigate={(url) => router.push(url)}
             />
             <Component {...pageProps} />
@@ -89,5 +88,3 @@ const Login = () => {
 Users get a widget like this:
 
 ![Netlify Identity login widget](./images/netlify-identity-widget.png)
-
-## Using roles with Netlify Identity

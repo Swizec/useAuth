@@ -3,7 +3,7 @@ import { AuthOptions as Auth0Options } from "auth0-js";
 
 import { AuthProviderInterface } from "./types";
 import { useAuth } from "./useAuth";
-import { Auth0 } from "./providers";
+// import { Auth0 } from "./providers/auth0";
 
 export const AuthProvider: AuthProviderInterface = ({
     children,
@@ -35,24 +35,27 @@ export const AuthProvider: AuthProviderInterface = ({
     // Instantiate Auth0 client
 
     useEffect(() => {
-        const auth0 = new Auth0({
-            dispatch,
-            customPropertyNamespace,
-            ...params,
-            ...auth0_params
-        });
+        // @ts-ignore this is gonna work
+        import("react-use-auth/auth0").then(({ Auth0 }) => {
+            const auth0 = new Auth0({
+                dispatch,
+                customPropertyNamespace,
+                ...params,
+                ...auth0_params
+            });
 
-        dispatch("SET_CONFIG", {
-            authProvider: auth0,
-            navigate
-        });
+            dispatch("SET_CONFIG", {
+                authProvider: auth0,
+                navigate
+            });
 
-        dispatch("CHECK_SESSION");
+            dispatch("CHECK_SESSION");
+        });
     }, [navigate, customPropertyNamespace]);
 
     useEffect(() => {
         console.warn(
-            "Using the AuthProvider root component is deprecated. Migrate to AuthConfig or manual dispatching. Takes  5min."
+            "Using the AuthProvider root component is deprecated. Migrate to AuthConfig or manual dispatching. Takes 5min. 👉 https://useauth.dev/docs/upgrading"
         );
     }, []);
 

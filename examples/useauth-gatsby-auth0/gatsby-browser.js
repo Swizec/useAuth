@@ -10,12 +10,13 @@ import { navigate } from "gatsby"
 import { ThemeProvider } from "emotion-theming"
 import theme from "@rebass/preset"
 
-import { Providers, AuthConfig } from "react-use-auth"
+import { AuthConfig } from "react-use-auth"
+import { Auth0 } from "react-use-auth/auth0"
 
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider theme={theme}>
     <AuthConfig
-      authProvider={Providers.Auth0}
+      authProvider={Auth0}
       navigate={navigate}
       params={{
         domain: "useauth.auth0.com",

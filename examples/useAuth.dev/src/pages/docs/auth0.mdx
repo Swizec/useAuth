@@ -64,13 +64,14 @@ You can configure `useAuth` itself and the underlying Auth0 client in one go. Co
 ```jsx
 // gatsby-browser.js
 
-import { AuthConfig, Providers } from "react-use-auth";
+import { AuthConfig } from "react-use-auth";
+import { Auth0 } from "react-use-auth/auth0";
 import { navigate } from "gatsby";
 
 export const wrapPageElement = ({ element }) => (
     <>
         <AuthConfig
-            authProvider={Providers.NetlifyIdentity}
+            authProvider={Auth0}
             navigate={navigate}
             params={{
                 domain: "useauth.auth0.com"
@@ -87,7 +88,8 @@ export const wrapPageElement = ({ element }) => (
 ```jsx
 // pages/_app.js
 
-import { AuthConfig, Providers } from "react-use-auth";
+import { AuthConfig } from "react-use-auth";
+import { Auth0 } from "react-use-auth/auth0";
 import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
@@ -96,7 +98,7 @@ function MyApp({ Component, pageProps }) {
     return (
         <>
             <AuthConfig
-                authProvider={Providers.NetlifyIdentity}
+                authProvider={Auth0}
                 navigate={(url) => router.push(url)}
                 params={{
                     domain: "useauth.auth0.com"

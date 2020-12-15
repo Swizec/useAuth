@@ -1,9 +1,10 @@
-import Auth0Client, {
+import {
     Auth0DecodedHash,
     Auth0Error,
     Auth0ParseHashError,
     Auth0UserProfile,
-    AuthOptions as Auth0Options
+    AuthOptions as Auth0Options,
+    WebAuth
 } from "auth0-js";
 import {
     AuthOptions,
@@ -15,14 +16,15 @@ import {
 // Wrapper that provides a common interface for different providers
 // Modeled after Auth0 because that was first :)
 export class Auth0 implements AuthProviderClass {
-    private auth0: Auth0Client.WebAuth;
+    private auth0: WebAuth;
     private dispatch: (eventName: string, eventData?: any) => void;
     private customPropertyNamespace?: string;
 
     constructor(params: AuthOptions) {
         this.dispatch = params.dispatch;
         this.customPropertyNamespace = params.customPropertyNamespace;
-        this.auth0 = new Auth0Client.WebAuth({
+
+        this.auth0 = new WebAuth({
             ...(params as Auth0Options)
         });
     }
