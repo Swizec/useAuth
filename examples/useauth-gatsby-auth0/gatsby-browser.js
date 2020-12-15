@@ -11,7 +11,7 @@ import { ThemeProvider } from "emotion-theming"
 import theme from "@rebass/preset"
 
 import { AuthConfig } from "react-use-auth"
-import { Auth0 } from "react-use-auth/providers"
+import { Auth0 } from "react-use-auth/auth-providers"
 
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider theme={theme}>
