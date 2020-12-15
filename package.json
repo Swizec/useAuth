@@ -1,17 +1,21 @@
 {
     "name": "react-use-auth",
-    "version": "0.9.0",
-    "description": "The simplest way to add authentication to your React app. Handles everything for you. Users, login forms, redirects, sharing state between components. Everything",
-    "source": "src/index.ts",
-    "main": "dist/index.js",
-    "module": "dist/index.module.js",
-    "unpkg": "dist/index.umd.js",
+    "version": "2.0.0",
+    "description": "The simplest way to add authentication to your React app. Supports various providers.",
+    "source": [
+        "src/providers/auth0.ts",
+        "src/providers/NetlifyIdentity.ts",
+        "src/index.ts"
+    ],
+    "main": "dist/react-use-auth.js",
+    "modern": "dist/react-use-auth.modern.js",
+    "module": "dist/react-use-auth.esm.js",
     "repository": "git@github.com:Swizec/useAuth.git",
     "author": "Swizec Teller <swizec@swizec.com>",
     "license": "MIT",
     "private": false,
     "scripts": {
-        "build": "microbundle --jsx React.createElement",
+        "build": "microbundle --jsx React.createElement && npm run",
         "dev": "microbundle watch --jsx React.createElement",
         "test": "jest",
         "install-peers": "install-peers"

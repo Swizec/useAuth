@@ -7311,9 +7311,9 @@ inherits@2.0.3:
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
 ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
-  integrity sha512-RZY5huIKCMRWDUqZlEi72f/lmXKMvuszcMBduliQ3nnWbx9X/ZBQO7DijMEYS9EhHBb2qacRUMtC7svLwe0lcw==
+  version "1.3.7"
+  resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.7.tgz#a09363e1911972ea16d7a8851005d84cf09a9a84"
+  integrity sha512-iKpRpXP+CrP2jyrxvg1kMUpXDyRUFDWurxbnVT1vQPx+Wz9uCYsMIqYuSBLV+PAaZG/d7kRLKRFc9oDMsH+mFQ==
 
 inline-style-parser@0.1.1:
   version "0.1.1"
@@ -10850,9 +10850,9 @@ react-side-effect@^2.1.0:
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.0.tgz#1ce4a8b4445168c487ed24dab886421f74d380d3"
   integrity sha512-IgmcegOSi5SNX+2Snh1vqmF0Vg/CbkycU9XZbOHJlZ6kMzTmi3yc254oB1WCkgA7OQtIAoLmcSFuHTc/tlcqXg==
 
-react-use-auth@Swizec/useAuth#auth-config:
-  version "0.9.0"
-  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/5ac69e35ccecc1056f7f8eaacfa28d72a2008a9c"
+react-use-auth@Swizec/useAuth.git#fix-providers:
+  version "1.0.2"
+  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/5388ca70fdf1c0073975baa1fc7475abc2b3ba3d"
   dependencies:
     "@xstate/react" "^1.0.3"
     date-fns "^2.16.1"

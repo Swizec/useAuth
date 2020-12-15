@@ -1,0 +1,153 @@
+# Getting Started
+
+[`useAuth`](https://useauth.dev) is designed to be quick to setup. You'll need an account with Auth0 or Netlify Identity and the appropriate access keys.
+
+## 1. Install the hook
+
+```
+$ yarn add react-use-auth
+```
+
+Downloads from npm, adds to your package.json, etc. You can use npm as well.
+
+## 2. Install your auth client
+
+[`useAuth`](https://useauth.dev) does not install its own authentication clients. Instead they're marked as peer dependencies.
+
+Install `auth0-js` or `netlify-identity-widget` depending on what you'd like to use. More coming soon :)
+
+```
+$ yarn add auth0-js
+```
+
+or
+
+```
+$ yarn add netlify-identity-widget
+```
+
+You'll see warnings about missing peer dependencies for the client you aren't using. That's okay.
+
+## 3. Configure with AuthConfig
+
+[`useAuth`](https://useauth.dev) uses an `<AuthConfig>` component to configure your authentication client. We use XState behind the scenes to manage authentication state for you.
+
+Ensure `AuthConfig` renders on every page.
+
+With Gatsby, add it to `gatsby-browser.js`. With NextJS, `_app.js` is best. You don't _need_ to wrap your component tree, but you can if you prefer. We make sure useAuth doesn't break server-side rendering. ✌️
+
+```jsx
+// gatsby-browser.js
+import * as React from "react";
+import { navigate } from "gatsby";
+
+import { AuthConfig } from "react-use-auth";
+import { Auth0 } from "react-use-auth/auth0"
+
+export const wrapRootElement = ({ element }) => (
+    <>
+        <AuthConfig
+            navigate={navigate}
+            authProvider={Auth0}
+            params={{
+                domain: "useauth.auth0.com"
+                clientID: "GjWNFNOHqlino7lQNjBwEywalaYtbIzh"
+            }}
+        />
+        {element}
+    </>
+);
+```
+
+`<AuthConfig>` initializes the global XState state machine, sets up an Auth0 client, and validates user sessions on every load. You now have easy access to authentication in your whole app :)
+
+The config options are:
+
+1. `navigate` – your navigation function, used for redirects. Tested with Gatsby, NextJS, and React Router. Anything should work.
+
+2. `authProvider` – the useAuth interface to your authentication provider.
+
+3. `params` – parameters for your authentication provider
+
+[`useAuth`](https://useauth.dev) client wrappers provide smart defaults.
+
+More detail on using custom configuration for each client in [Use with Auth0](/docs/auth0), and [Use with Netlify Identity](/docs/netlify-identity). To learn about how this works, go to [Create an auth provider](/docs/auth-providers)
+
+PS: feel free to use my Auth0 domain and clientID to see if [`useAuth`](https://useauth.dev) is a good fit for you. That's why they're visible in the code snippet 😊
+
+## 4. Create the callback page
+
+Auth0 and most other authentication providers use OAuth. That requires redirecting your user to their login form. After login, the provider redirects users back to your app.
+
+You can skip this step with Netlify Identity. It uses an in-page popup.
+
+Any way of creating React pages should work, here's the code I use for Gatsby:
+
+```jsx
+import * as React from "react"
+import { useAuth } from "react-use-auth"
+
+const Auth0CallbackPage = () = {
+    // this is the important part
+    const { handleAuthentication } = useAuth()
+    React.useEffect(() => {
+        handleAuthentication()
+    }, [handleAuthentication])
+    // 👆
+
+    return (
+        <h1>
+            This is the auth callback page,
+            you should be redirected immediately!
+        </h1>
+    )
+}
+
+export default Auth0CallbackPage
+```
+
+The goal is to load a page, briefly show some text, and run the `handleAuthentication` method from [`useAuth`](https://useauth.dev) on page load.
+
+That method will create a cookie in local storage with your user's information and redirect back to homepage. You can pass a `postLoginRoute` param to redirect to a different page.
+
+Make sure you add `<domain>/auth0_callback` as a valid callback URL in your Auth0 config.
+
+## 5. Enjoy useAuth
+
+You're ready to use [`useAuth`](https://useauth.dev) for authentication in your React app. 🤘
+
+Here's a login button for example:
+
+```jsx
+const Login = () => {
+    const { isAuthenticated, login, logout } = useAuth();
+
+    if (isAuthenticated()) {
+        return <button onClick={logout}>Logout</button>;
+    } else {
+        return <button onClick={login}>Login</button>;
+    }
+};
+```
+
+`isAuthenticated` is a method that checks if the user's cookie is still valid.
+
+`login` and `logout` trigger their respective actions.
+
+You can even say hello to your users:
+
+```jsx
+// src/pages/index.js
+
+const IndexPage = () => {
+  const { isAuthenticated, user } = useAuth()
+
+  return (
+    <Layout>
+      <SEO title="Home" />
+      <h1>Hi {isAuthenticated() ? user.name : "people"}</h1>
+  )
+}
+```
+
+Check `isAuthenticated` then use the `user` object. ✌️

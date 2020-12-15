@@ -37,7 +37,7 @@ export type AuthConfigInterface = (props: {
     navigate: Function;
 
     // optional children if you prefer to use this as a wrapper
-    children: ReactNode;
+    children?: ReactNode;
 }) => JSX.Element;
 
 // TODO: types are leaking Auth0
@@ -88,7 +88,6 @@ export type AuthProviderInterface = (props: {
 
 // The shape of auth provider wrappers
 export interface AuthProviderClass {
-    checkSessionOnLoad: boolean;
     // addDefaultParams: (
     //     props: Omit<AuthOptions, "dispatch">
     // ) => Omit<AuthOptions, "dispatch">;

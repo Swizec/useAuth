@@ -18,7 +18,7 @@ export declare type AuthConfigInterface = (props: {
     authProvider: typeof Providers.Auth0 | typeof Providers.NetlifyIdentity;
     params?: Omit<AuthOptions, "dispatch">;
     navigate: Function;
-    children: ReactNode;
+    children?: ReactNode;
 }) => JSX.Element;
 export declare type AuthState = {
     user: AuthUser;
@@ -60,7 +60,6 @@ export declare type AuthProviderInterface = (props: {
     customPropertyNamespace?: string;
 }) => JSX.Element;
 export interface AuthProviderClass {
-    checkSessionOnLoad: boolean;
     authorize(): void;
     signup(): void;
     logout(returnTo?: string): void;

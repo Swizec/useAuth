@@ -1,23 +1,17 @@
-import {
-    AuthOptions,
-    AuthProviderClass,
-    AuthUser,
-    ProviderOptions
-} from "../types";
-import NetlifyIdentityWidget, { User } from "netlify-identity-widget";
+import { AuthOptions, AuthProviderClass, ProviderOptions } from "../types";
+import NetlifyWidget, { User, InitOptions } from "netlify-identity-widget";
 
 // Wrapper for NetlifyIdentity conforming to auth provider interface
 export class NetlifyIdentity implements AuthProviderClass {
     private netlifyIdentity: any;
     private dispatch: (eventName: string, eventData?: any) => void;
 
-    public checkSessionOnLoad = false;
-
     constructor(params: AuthOptions) {
-        this.netlifyIdentity = NetlifyIdentityWidget;
-
-        this.netlifyIdentity.init(params as NetlifyIdentityWidget.InitOptions);
         this.dispatch = params.dispatch;
+
+        this.netlifyIdentity = NetlifyWidget;
+
+        this.netlifyIdentity.init(params as InitOptions);
 
         this.netlifyIdentity.on("error", (error: Error) => {
             this.dispatch("ERROR", {
@@ -34,6 +28,7 @@ export class NetlifyIdentity implements AuthProviderClass {
             });
         });
         this.netlifyIdentity.on("init", (user: User) => {
+            console.log("INIT", user);
             if (user) {
                 this.dispatch("LOGIN");
                 this.dispatch("AUTHENTICATED", {
@@ -50,7 +45,7 @@ export class NetlifyIdentity implements AuthProviderClass {
         params: ProviderOptions = {},
         callbackDomain: string
     ) {
-        const vals = params as NetlifyIdentityWidget.InitOptions;
+        const vals = params as InitOptions;
         return vals;
     }
 
@@ -85,22 +80,33 @@ export class NetlifyIdentity implements AuthProviderClass {
         user: any;
         authResult: any;
     }> {
-        console.warn(
-            "checkSession is unnecessary with Netlify Identity Widget"
-        );
-        return {
-            user: {},
-            authResult: {}
-        };
+        try {
+            await this.netlifyIdentity.refresh();
+        } catch (e) {
+            throw new Error("Session invalid");
+        }
+
+        const user = this.netlifyIdentity.currentUser();
+
+        if (user) {
+            return {
+                user,
+                authResult: {
+                    expiresIn: user.token?.expires_in
+                }
+            };
+        } else {
+            throw new Error("Session invalid");
+        }
     }
 
     // Returns the userId from NetlifyIdentity shape of data
-    public userId(user: NetlifyIdentityWidget.User): string {
+    public userId(user: User): string {
         return user.id;
     }
 
     // Returns user roles from NetlifyIdentity shape of data
-    public userRoles(user: NetlifyIdentityWidget.User): string[] | null {
-        return [user.role] || null;
+    public userRoles(user: User): string[] | null {
+        return user.app_metadata.roles;
     }
 }

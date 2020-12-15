@@ -1,11 +1,10 @@
 import { AuthOptions, AuthProviderClass } from "../types";
-import NetlifyIdentityWidget from "netlify-identity-widget";
+import NetlifyWidget, { User } from "netlify-identity-widget";
 export declare class NetlifyIdentity implements AuthProviderClass {
     private netlifyIdentity;
     private dispatch;
-    checkSessionOnLoad: boolean;
     constructor(params: AuthOptions);
-    static addDefaultParams(params: import("auth0-js").AuthOptions | NetlifyIdentityWidget.InitOptions | undefined, callbackDomain: string): NetlifyIdentityWidget.InitOptions;
+    static addDefaultParams(params: import("auth0-js").AuthOptions | NetlifyWidget.InitOptions | undefined, callbackDomain: string): NetlifyWidget.InitOptions;
     authorize(): void;
     signup(): void;
     logout(returnTo?: string): void;
@@ -14,6 +13,6 @@ export declare class NetlifyIdentity implements AuthProviderClass {
         user: any;
         authResult: any;
     }>;
-    userId(user: NetlifyIdentityWidget.User): string;
-    userRoles(user: NetlifyIdentityWidget.User): string[] | null;
+    userId(user: User): string;
+    userRoles(user: User): string[] | null;
 }

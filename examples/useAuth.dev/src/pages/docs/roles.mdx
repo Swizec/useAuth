@@ -1,0 +1,52 @@
+# Role/scope-based permissions
+
+[`useAuth`](https://useauth.dev) comes with built-in support for authorization.
+
+Authorization is handy when you have different types of authenticated users. Admins are a common example. Or trial and paid users.
+
+Debate rages whether role-based or scope-based permissions are The One True Scalable Way. `useAuth` doesn't care. There is no technical difference between roles and scopes, they're both a string you attach to the user 🙃
+
+## 1. Attach roles or scopes to users
+
+Roles and scopes are part of user data. They come from your auth provider. Every provider handles it differently.
+
+-   [Add roles or scopes with Auth0](/docs/roles-auth0)
+-   [Add roles with Netlify Identity](/docs/roles-netlify-identity)
+
+## 2. Check user permissions
+
+`useAuth`'s abstraction layer handles reading the correct properties for you.
+
+To check for a single role or scope, use the `isAuthorized` method with a string.
+
+```jsx
+function AuthorizedComponent() {
+    const { isAuthorized } = useAuth();
+
+    // verify user is an admin
+    if (isAuthorized("admin")) {
+        return <AdminUI />;
+    } else {
+        return null;
+    }
+}
+```
+
+`isAuthorized` verifies that the user is authenticated and that their role or scope meta data contains the `"admin"` string.
+
+To check for multiple roles, you can pass an array.
+
+```jsx
+function AuthorizedComponent() {
+    const { isAuthorized } = useAuth();
+
+    // verify user has at least 1 of these scopes
+    if (isAuthorized(["moderate", "admin"])) {
+        return <ModeratorUI />;
+    } else {
+        return null;
+    }
+}
+```
+
+`isAuthorized` checks for _some_ roles or scopes matching your user. If you need to check for _every_ role, run `isAuthorized` multiple times. The OR case seemed more common when designing this API :)

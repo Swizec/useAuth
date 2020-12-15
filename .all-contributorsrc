@@ -180,6 +180,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "aisflat439",
+      "name": "Devin Fitzsimons",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/3719502?v=4",
+      "profile": "http://fitzsimons.dev",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
