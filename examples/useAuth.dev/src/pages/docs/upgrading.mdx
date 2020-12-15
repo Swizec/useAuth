@@ -55,12 +55,13 @@ export const wrapRootElement = ({ element }) => (
 becomes
 
 ```jsx
-import { AuthConfig, Providers } from "react-use-auth";
+import { AuthConfig } from "react-use-auth";
+import { Auth0 } from "react-use-auth/auth0";
 
 export const wrapRootElement = ({ element }) => (
     <AuthConfig
         navigate={navigate}
-        authProvider={Providers.Auth0}
+        authProvider={Auth0}
         params={{
             domain: "useauth.auth0.com"
             clientID: "GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
