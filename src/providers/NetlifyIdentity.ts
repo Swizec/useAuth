@@ -1,45 +1,43 @@
 import { AuthOptions, AuthProviderClass, ProviderOptions } from "../types";
-import { User, InitOptions } from "netlify-identity-widget";
+import NetlifyWidget, { User, InitOptions } from "netlify-identity-widget";
 
 // Wrapper for NetlifyIdentity conforming to auth provider interface
 export class NetlifyIdentity implements AuthProviderClass {
-    private netlifyIdentity?: any;
+    private netlifyIdentity: any;
     private dispatch: (eventName: string, eventData?: any) => void;
 
     constructor(params: AuthOptions) {
         this.dispatch = params.dispatch;
 
-        import("netlify-identity-widget").then(({ default: widget }) => {
-            this.netlifyIdentity = widget;
+        this.netlifyIdentity = NetlifyWidget;
 
-            this.netlifyIdentity.init(params as InitOptions);
+        this.netlifyIdentity.init(params as InitOptions);
 
-            this.netlifyIdentity.on("error", (error: Error) => {
-                this.dispatch("ERROR", {
-                    error,
-                    errorType: "netlifyError"
-                });
+        this.netlifyIdentity.on("error", (error: Error) => {
+            this.dispatch("ERROR", {
+                error,
+                errorType: "netlifyError"
             });
-            this.netlifyIdentity.on("login", (user: User) => {
+        });
+        this.netlifyIdentity.on("login", (user: User) => {
+            this.dispatch("AUTHENTICATED", {
+                user,
+                authResult: {
+                    expiresIn: user.token?.expires_in
+                }
+            });
+        });
+        this.netlifyIdentity.on("init", (user: User) => {
+            console.log("INIT", user);
+            if (user) {
+                this.dispatch("LOGIN");
                 this.dispatch("AUTHENTICATED", {
                     user,
                     authResult: {
                         expiresIn: user.token?.expires_in
                     }
                 });
-            });
-            this.netlifyIdentity.on("init", (user: User) => {
-                console.log("INIT", user);
-                if (user) {
-                    this.dispatch("LOGIN");
-                    this.dispatch("AUTHENTICATED", {
-                        user,
-                        authResult: {
-                            expiresIn: user.token?.expires_in
-                        }
-                    });
-                }
-            });
+            }
         });
     }
 
