@@ -2,3 +2,4 @@ node_modules
 .rts2_cache*
 dist/__tests__
 .cache
+examples/**/public

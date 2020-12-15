@@ -11931,7 +11931,7 @@ react-spring@^8.0.27:
 
 react-use-auth@Swizec/useAuth.git#fix-providers:
   version "1.0.0"
-  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/ef06b45794c98b8d57eb7c79e14e418bad482ed7"
+  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/a8ad7206dff36abae9bfbe64c1c4401be3efd349"
   dependencies:
     "@xstate/react" "^1.0.3"
     date-fns "^2.16.1"
