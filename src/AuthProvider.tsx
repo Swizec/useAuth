@@ -34,27 +34,29 @@ export const AuthProvider: AuthProviderInterface = ({
 
     // Instantiate Auth0 client
 
-    // useEffect(() => {
-    //     const auth0 = new Auth0({
-    //         dispatch,
-    //         customPropertyNamespace,
-    //         ...params,
-    //         ...auth0_params
-    //     });
+    useEffect(() => {
+        import("./providers/auth0").then(({ Auth0 }) => {
+            const auth0 = new Auth0({
+                dispatch,
+                customPropertyNamespace,
+                ...params,
+                ...auth0_params
+            });
 
-    //     dispatch("SET_CONFIG", {
-    //         authProvider: auth0,
-    //         navigate
-    //     });
+            dispatch("SET_CONFIG", {
+                authProvider: auth0,
+                navigate
+            });
 
-    //     dispatch("CHECK_SESSION");
-    // }, [navigate, customPropertyNamespace]);
+            dispatch("CHECK_SESSION");
+        });
+    }, [navigate, customPropertyNamespace]);
 
-    // useEffect(() => {
-    //     console.warn(
-    //         "Using the AuthProvider root component is deprecated. Migrate to AuthConfig or manual dispatching. Takes  5min."
-    //     );
-    // }, []);
+    useEffect(() => {
+        console.warn(
+            "Using the AuthProvider root component is deprecated. Migrate to AuthConfig or manual dispatching. Takes 5min. 👉 https://useauth.dev/docs/upgrading"
+        );
+    }, []);
 
     return <React.Fragment>{children}</React.Fragment>;
 };
