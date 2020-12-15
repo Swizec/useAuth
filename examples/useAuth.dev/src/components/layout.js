@@ -141,8 +141,6 @@ export default (props) => {
                             </NavLink>
                             <EricButton
                                 sx={{
-                                    mr: 2,
-                                    cursor: "pointer",
                                     variant: "styles.navlink"
                                 }}
                                 onClick={cycleMode}

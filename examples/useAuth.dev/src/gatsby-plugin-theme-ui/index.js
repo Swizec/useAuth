@@ -394,7 +394,7 @@ export default {
         },
         navlink: {
             fontSize: 1,
-            bg: "muted",
+            bg: "transparent",
             border: 0,
             appearance: "none",
             display: "inline-block",
@@ -403,6 +403,8 @@ export default {
             color: "inherit",
             textDecoration: "none",
             outline: "none",
+            mr: 2,
+            cursor: "pointer",
             "&:hover": {
                 color: "primary",
                 bg: "highlight"
