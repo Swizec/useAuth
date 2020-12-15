@@ -10850,24 +10850,9 @@ react-side-effect@^2.1.0:
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.0.tgz#1ce4a8b4445168c487ed24dab886421f74d380d3"
   integrity sha512-IgmcegOSi5SNX+2Snh1vqmF0Vg/CbkycU9XZbOHJlZ6kMzTmi3yc254oB1WCkgA7OQtIAoLmcSFuHTc/tlcqXg==
 
-<<<<<<< HEAD
-react-use-auth@Swizec/useAuth#fix-providers:
-  version "1.0.0"
-  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/21d274be1e4893c269beb93adc8872d030c23010"
-  dependencies:
-    "@xstate/react" "^1.0.3"
-    date-fns "^2.16.1"
-    xstate "^4.13.0"
-
-react-use-auth@Swizec/useAuth#master:
-  version "1.0.0"
-  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/93c3ab062293f1bb495fc4bfa09ecefa6a6345d6"
-=======
-react-use-auth@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-1.0.1.tgz#d3d1f1510dc2a8cf3552875e50fe3c5f1c04b494"
-  integrity sha512-lTrzPhogqUbPa1oNZl9oPGm9m5FXjBDEICwvvZtH/ickMFLrMbDYmVXmY/JsJHDsbKBE2YPagSj5fX7oL9zWoQ==
->>>>>>> master
+react-use-auth@Swizec/useAuth.git#fix-providers:
+  version "1.0.2"
+  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/5388ca70fdf1c0073975baa1fc7475abc2b3ba3d"
   dependencies:
     "@xstate/react" "^1.0.3"
     date-fns "^2.16.1"
