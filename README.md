@@ -11,14 +11,8 @@
 </p>
 
 <div align="center">
-<img src="https://useauth.dev/useauth-card.png" alt="useAuth.dev" title="useAuth.dev" />
+<a href="https://useAuth.dev"><img src="https://useauth.dev/useauth-card.png" alt="useAuth.dev" title="useAuth.dev" /></a>
 </div>
-
----
-
-For detailed docs and guides visit [useAuth.dev](https://useauth.dev)
-
----
 
 ## Getting Started
 
