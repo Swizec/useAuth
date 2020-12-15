@@ -10,6 +10,7 @@
     "@emotion/styled": "^10.0.27",
     "@mdx-js/mdx": "^1.5.8",
     "@mdx-js/react": "^1.5.8",
+    "auth0-js": "^9.14.0",
     "emotion-theming": "^10.0.27",
     "focus-visible": "^5.1.0",
     "gatsby": "^2.20.12",
@@ -32,7 +33,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
-    "react-use-auth": "0.7.5",
+    "react-use-auth": "Swizec/useAuth.git#fix-providers",
     "typeface-asap": "^1.1.3",
     "typeface-roboto": "^0.0.75"
   },

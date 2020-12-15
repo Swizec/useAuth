@@ -35,7 +35,8 @@ export const AuthProvider: AuthProviderInterface = ({
     // Instantiate Auth0 client
 
     useEffect(() => {
-        import("./providers/auth0").then(({ Auth0 }) => {
+        // @ts-ignore this is gonna work
+        import("react-use-auth/auth0").then(({ Auth0 }) => {
             const auth0 = new Auth0({
                 dispatch,
                 customPropertyNamespace,
