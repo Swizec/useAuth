@@ -18,7 +18,11 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
+<<<<<<< HEAD
     "react-use-auth": "Swizec/useAuth#fix-providers"
+=======
+    "react-use-auth": "^1.0.1"
+>>>>>>> master
   },
   "devDependencies": {
     "prettier": "2.1.2"

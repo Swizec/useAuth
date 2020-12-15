@@ -1,3 +1,119 @@
 # Create an auth provider
 
-docs coming soon
+[`useAuth`](https://useauth.dev) aims to support many authentication providers. We've designed an abstraction layer that hopefully makes this achievable.
+
+As of v1.0.0 there's built-in support for [Netlify Identity](https://docs.netlify.com/visitor-access/identity/) and [Auth0](https://auth0.com/). Consider this a proof-of-concept that the abstraction layer works :)
+
+You can create a provider to contribute to `useAuth`'s codebase, or to make it work with your existing authentication infrastructure. It should be possible to make work with traditional cookie/session based authentication. 🤞
+
+_If you're fond of your auth service, **please contribute**. It would mean the world to me_ ❤️
+
+## What is an auth provider
+
+An auth provider is a service that authenticates users. Like Auth0, Netlify Identity, AWS Cognito, Firebase Auth, and others.
+
+`useAuth` uses auth wrappers to interact with these services in a uniform way. Each wrapper is a class of this type:
+
+```typescript
+// The shape of auth provider wrappers
+export interface AuthProviderClass {
+    // addDefaultParams: (
+    //     props: Omit<AuthOptions, "dispatch">
+    // ) => Omit<AuthOptions, "dispatch">;
+    authorize(): void;
+    signup(): void;
+    logout(returnTo?: string): void;
+    handleLoginCallback(
+        dispatch: PayloadSender<AnyEventObject>
+    ): Promise<boolean>;
+    checkSession(): Promise<{
+        user: Auth0UserProfile;
+        authResult: Auth0DecodedHash;
+    }>;
+    userId(user: AuthUser): string | null;
+    userRoles(user: AuthUser): string[] | null;
+}
+```
+
+To maintain interoperability, `useAuth` avoids interacting with services directly. If it can't fit in those methods, open a bug :)
+
+## Abstract implementation
+
+You can use this as a starting point for your auth provider wrapper.
+
+```typescript
+// Auth Wrapper for Auth0
+export class Auth0 implements AuthProviderClass {
+    private auth0: Auth0Client.WebAuth;
+    private dispatch: (eventName: string, eventData?: any) => void;
+    // Auth0 specific, used for roles
+    private customPropertyNamespace?: string;
+
+    // Initialize the client and save any custom config
+    constructor(params: AuthOptions) {
+        // You will almost always need access to dispatch
+        this.dispatch = params.dispatch;
+        // Auth0 specific, used for roles
+        this.customPropertyNamespace = params.customPropertyNamespace;
+
+        // Init your client
+        this.auth0 = new Auth0Client.WebAuth({
+            ...(params as Auth0Options)
+        });
+    }
+
+    // Makes configuration easier by guessing default options
+    static addDefaultParams(params: ProviderOptions, callbackDomain: string) {
+        const vals = params as Auth0Options;
+
+        return {
+            redirectUri: `${callbackDomain}/auth0_callback`,
+            audience: `https://${vals.domain}/api/v2/`,
+            responseType: "token id_token",
+            scope: "openid profile email",
+            ...vals
+        };
+    }
+
+    public authorize() {
+        // Open login dialog
+    }
+
+    public signup() {
+        // Open signup dialog
+    }
+
+    public logout(returnTo?: string) {
+        // Logs user out of the underlying service
+    }
+
+    public userId(user: Auth0UserProfile): string {
+        // Return the userId from Auth0 shape of data
+    }
+
+    public userRoles(user: AuthUser): string[] | null {
+        // Return user roles from Auth0 shape of data
+    }
+
+    public async handleLoginCallback(): Promise<boolean> {
+        // Handle login data after redirect back from service
+        // Dispatch ERROR on error
+        // Dispatch AUTHENTICATED on success
+        // include the user object and authResult with at least an expiresIn value
+    }
+
+    public async checkSession(): Promise<{
+        user: Auth0UserProfile;
+        authResult: Auth0DecodedHash;
+    }> {
+        // verify session is still valid
+        // return fresh user info
+    }
+}
+```
+
+## Examples
+
+You can see the current list of [implemented auth providers on GitHub](https://github.com/Swizec/useAuth/tree/master/src/providers)
+
+Use them to guide your implementation :)

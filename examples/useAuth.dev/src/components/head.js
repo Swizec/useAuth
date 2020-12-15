@@ -25,7 +25,7 @@ const Head = (props) => {
             <link
                 rel="icon"
                 media="(prefers-color-scheme:dark)"
-                href="/icon-dark.png"
+                href="/icon.png"
                 type="image/png"
             />
             <link rel="apple-touch-icon" type="image/png" href="/icon.png" />

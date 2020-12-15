@@ -87,10 +87,12 @@ import * as React from "react"
 import { useAuth } from "react-use-auth"
 
 const Auth0CallbackPage = () = {
+    // this is the important part
     const { handleAuthentication } = useAuth()
     React.useEffect(() => {
         handleAuthentication()
     }, [handleAuthentication])
+    // 👆
 
     return (
         <h1>
@@ -120,9 +122,9 @@ const Login = () => {
     const { isAuthenticated, login, logout } = useAuth();
 
     if (isAuthenticated()) {
-        return <Button onClick={logout}>Logout</Button>;
+        return <button onClick={logout}>Logout</button>;
     } else {
-        return <Button onClick={login}>Login</Button>;
+        return <button onClick={login}>Login</button>;
     }
 };
 ```

@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Box, Flex, Button } from "@theme-ui/components";
+import { Box, Flex, Button, Link as TLink } from "@theme-ui/components";
 import { AccordionNav } from "@theme-ui/sidenav";
 import { Link } from "gatsby";
 import { useRef, useState } from "react";
@@ -13,6 +13,7 @@ import NavLink from "./nav-link";
 import Pagination from "./pagination";
 import SkipLink from "./skip-link";
 import EricButton from "./button";
+import { IoIosLock } from "react-icons/io";
 
 const modes = ["default", "deep", "light"];
 
@@ -111,12 +112,21 @@ export default (props) => {
                                 to="/"
                                 sx={{
                                     variant: "text.logo",
-                                    fontSize: "2.2rem",
+                                    fontSize: ["1.6rem", "2.2rem", "2.2rem"],
                                     fontWeight: "bold",
                                     letterSpacing: "-3px",
                                     fontFamily: "Asap, sans-serif"
                                 }}
                             >
+                                <IoIosLock
+                                    sx={{
+                                        size: [18, 38, 38],
+                                        fill: "primary",
+                                        display: "inline-block",
+                                        marginBottom: [0, "-5px", "-5px"],
+                                        marginLeft: "-8px"
+                                    }}
+                                />
                                 useAuth
                             </Link>
                         </Flex>
@@ -200,6 +210,30 @@ export default (props) => {
                     </div>
                 </Box>
             </Flex>
+            <Box
+                sx={{
+                    position: "fixed",
+                    bottom: "0px",
+                    bg: "accent",
+                    p: 2,
+                    borderTopLeftRadius: 3,
+                    borderTopRightRadius: 3,
+                    width: ["100%", 255, 255],
+                    color: "white"
+                }}
+            >
+                Created with ❤️ by{" "}
+                <TLink
+                    href="https://swizec.com"
+                    sx={{
+                        color: "white !important",
+                        textDecoration: "underline !important"
+                    }}
+                >
+                    Swizec
+                </TLink>{" "}
+                et. al.
+            </Box>
         </Styled.root>
     );
 };
