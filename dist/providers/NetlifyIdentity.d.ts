@@ -1,10 +1,10 @@
 import { AuthOptions, AuthProviderClass } from "../types";
-import { User, InitOptions } from "netlify-identity-widget";
+import NetlifyWidget, { User } from "netlify-identity-widget";
 export declare class NetlifyIdentity implements AuthProviderClass {
-    private netlifyIdentity?;
+    private netlifyIdentity;
     private dispatch;
     constructor(params: AuthOptions);
-    static addDefaultParams(params: import("auth0-js").AuthOptions | InitOptions | undefined, callbackDomain: string): InitOptions;
+    static addDefaultParams(params: import("auth0-js").AuthOptions | NetlifyWidget.InitOptions | undefined, callbackDomain: string): NetlifyWidget.InitOptions;
     authorize(): void;
     signup(): void;
     logout(returnTo?: string): void;

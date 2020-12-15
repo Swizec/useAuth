@@ -1,7 +1,7 @@
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import { Providers } from "../index";
+import { NetlifyIdentity } from "../providers/NetlifyIdentity";
 import { AuthConfig } from "../AuthConfig";
 import { authService } from "../authReducer";
 import { AuthState } from "../types";
@@ -26,7 +26,7 @@ describe("AuthConfig", () => {
             render(
                 <AuthConfig
                     navigate={navigate}
-                    authProvider={Providers.NetlifyIdentity}
+                    authProvider={NetlifyIdentity}
                 />,
                 container
             );
@@ -36,10 +36,7 @@ describe("AuthConfig", () => {
     it("renders with children", () => {
         act(() => {
             render(
-                <AuthConfig
-                    navigate={navigate}
-                    authProvider={Providers.NetlifyIdentity}
-                >
+                <AuthConfig navigate={navigate} authProvider={NetlifyIdentity}>
                     <p>hai there</p>
                 </AuthConfig>,
                 container
@@ -59,14 +56,14 @@ describe("AuthConfig", () => {
             render(
                 <AuthConfig
                     navigate={navigate}
-                    authProvider={Providers.NetlifyIdentity}
+                    authProvider={NetlifyIdentity}
                 />,
                 container
             );
         });
 
         expect((savedContext as AuthState).config.authProvider).toBeInstanceOf(
-            Providers.NetlifyIdentity
+            NetlifyIdentity
         );
         expect((savedContext as AuthState).config.callbackDomain).toBe(
             "http://localhost"
