@@ -1,7 +1,7 @@
 {
     "name": "react-use-auth",
     "version": "2.0.2",
-    "description": "The simplest way to add authentication to your React app. Supports various providers.",
+    "description": "Add authentication to your app in 5 minutes. Supports various auth providers.",
     "source": [
         "src/providers/auth0.ts",
         "src/providers/NetlifyIdentity.ts",
