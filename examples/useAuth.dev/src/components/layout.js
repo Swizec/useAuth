@@ -214,7 +214,7 @@ export default (props) => {
                     bottom: "0px",
                     bg: "accent",
                     p: 2,
-                    mb: 3,
+                    mb: 1,
                     borderTopLeftRadius: 3,
                     borderTopRightRadius: 3,
                     width: ["100%", 255, 255],
