@@ -234,6 +234,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/traverspinkerton"><img src="https://avatars3.githubusercontent.com/u/6158476?v=4" width="100px;" alt=""/><br /><sub><b>Travers Pinkerton</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=traverspinkerton" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/erichodges"><img src="https://avatars2.githubusercontent.com/u/14981329?v=4" width="100px;" alt=""/><br /><sub><b>Eric Hodges</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=erichodges" title="Code">💻</a></td>
     <td align="center"><a href="http://fitzsimons.dev"><img src="https://avatars0.githubusercontent.com/u/3719502?v=4" width="100px;" alt=""/><br /><sub><b>Devin Fitzsimons</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=aisflat439" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/jasonLaster"><img src="https://avatars1.githubusercontent.com/u/254562?v=4" width="100px;" alt=""/><br /><sub><b>Jason Laster</b></sub></a><br /><a href="https://github.com/Swizec/useAuth/commits?author=jasonLaster" title="Documentation">📖</a></td>
   </tr>
 </table>
 
