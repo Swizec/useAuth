@@ -394,6 +394,7 @@ export default {
         },
         navlink: {
             fontSize: 1,
+            fontFamily: "inherit",
             bg: "transparent",
             border: 0,
             appearance: "none",
@@ -413,6 +414,9 @@ export default {
                 color: "primary",
                 bg: "highlight"
             }
+        },
+        demoButton: {
+            fontFamily: "inherit"
         }
     },
     prism
