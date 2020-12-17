@@ -189,6 +189,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "jasonLaster",
+      "name": "Jason Laster",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/254562?v=4",
+      "profile": "https://github.com/jasonLaster",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
