@@ -1,8 +1,12 @@
 # Upgrade from pre-1.0.0
 
-[`useAuth`](https://useauth.dev) is meant to be fully backwards compatible. If you have trouble, please [submit a bug](https://github.com/Swizec/useAuth/issues).
+We tried to keep [`useAuth`](https://useauth.dev) backwards compatible and ran into [fundamental issues with module imports](https://github.com/Swizec/useAuth/issues/129).
 
-You can upgrade with:
+**Upgrading takes 5min or less!** You can keep your existing config and most of the code! 2 small changes is all it takes.
+
+## 1. Install packages
+
+Start by installing the latest package:
 
 ```
 $ yarn add react-use-auth
@@ -16,7 +20,7 @@ $ yarn add auth0-js
 
 If you prefer npm, that works too :)
 
-## Update your auth0_callback page
+## 2. Update your auth0_callback page
 
 ```javascript
 const { handleAuthentication } = useAuth();
@@ -36,9 +40,9 @@ useEffect(() => {
 
 This ensures `handleAuthentication` runs after XState is initialized. You'll run into race conditions otherwise and users might get stuck.
 
-## AuthProvider 👉 AuthConfig
+## 3. AuthProvider 👉 AuthConfig
 
-This step is optional, but `<AuthProvider>` is now deprecated in favor of `<AuthConfig>`.
+`<AuthProvider>` is now deprecated in favor of `<AuthConfig>`. Using auth provider will print an error and authentication won't work. But we made sure your site doesn't otherwise break :)
 
 ```jsx
 export const wrapRootElement = ({ element }) => (
@@ -63,7 +67,7 @@ export const wrapRootElement = ({ element }) => (
         navigate={navigate}
         authProvider={Auth0}
         params={{
-            domain: "useauth.auth0.com"
+            domain: "useauth.auth0.com",
             clientID: "GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
         }}
     >
