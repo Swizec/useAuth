@@ -1,25 +1,23 @@
-import React from "react";
-import App from "next/app";
-import { AuthProvider } from "react-use-auth";
+
+import { AuthConfig } from "react-use-auth";
+import { Auth0 } from "react-use-auth/auth0";
 import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter();
-
     return (
-        <AuthProvider
-            navigate={router.push}
-            auth0_domain="useauth.auth0.com"
-            auth0_client_id="GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
-        >
+        <>
+            <AuthConfig
+                authProvider={Auth0}
+                navigate={(url) => router.push(url)}
+                params={{
+                    domain: "webreplay.us.auth0.com",
+                    clientID: "E1B33wDDkz0J4mUC2WAVA2552Fj91uux"
+                }}
+            />
             <Component {...pageProps} />
-        </AuthProvider>
+        </>
     );
 }
 
-// extend App component and return our function so we can use useRouter :P
-export default class _App extends App {
-    render() {
-        return <MyApp {...this.props} />;
-    }
-}
+export default MyApp
