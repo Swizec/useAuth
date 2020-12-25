@@ -32,7 +32,6 @@ export class NetlifyIdentity implements AuthProviderClass {
             });
         });
         this.netlifyIdentity.on("init", (user: User) => {
-            console.log("INIT", user);
             if (user) {
                 this.dispatch("LOGIN");
                 this.dispatch("AUTHENTICATED", {
