@@ -1,4 +1,3 @@
-
 import { AuthConfig } from "react-use-auth";
 import { Auth0 } from "react-use-auth/auth0";
 import { useRouter } from "next/router";
@@ -9,15 +8,17 @@ function MyApp({ Component, pageProps }) {
         <>
             <AuthConfig
                 authProvider={Auth0}
-                navigate={(url) => router.push(url)}
+                navigate={url => router.push(url)}
                 params={{
-                    domain: "webreplay.us.auth0.com",
-                    clientID: "E1B33wDDkz0J4mUC2WAVA2552Fj91uux"
+                    auth0_domain: "useauth.auth0.com",
+                    auth0_client_id: "GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
+               
                 }}
             />
             <Component {...pageProps} />
         </>
     );
 }
+
 
 export default MyApp
