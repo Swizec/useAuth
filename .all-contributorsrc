@@ -197,6 +197,15 @@
       "profile": "https://github.com/jasonLaster",
       "contributions": [
         "doc",
+        "bug"
+      ]
+    },
+    {
+      "login": "patrick91",
+      "name": "Patrick Arminio",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/667029?v=4",
+      "profile": "https://patrick.wtf",
+      "contributions": [
         "code"
       ]
     }

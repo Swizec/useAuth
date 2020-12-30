@@ -2,7 +2,7 @@
 import { Link } from "gatsby";
 import { FaArrowRight } from "react-icons/fa";
 import { IoIosLock } from "react-icons/io";
-import { Box, Button, Container, jsx } from "theme-ui";
+import { Box, Button, Container, jsx, Embed } from "theme-ui";
 
 const Intro = () => {
     return (
@@ -55,6 +55,10 @@ const Intro = () => {
                         <FaArrowRight sx={{ marginBottom: "-2px" }} />
                     </Button>
                 </Link>
+
+                <Box sx={{ ml: -70, mr: -70, mt: 5, mb: "-100%" }}>
+                    <Embed src="https://www.youtube.com/embed/eL-aSzd2jdo" />
+                </Box>
             </Box>
         </Container>
     );

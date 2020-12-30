@@ -35,8 +35,23 @@ const Head = (props) => {
                 content="https://useauth.dev/useauth-card.png"
             />
             <meta name="twitter:title" content={title} />
-            <meta name="twitter:description" content={pkg.description} />
+            <meta
+                name="twitter:description"
+                content="Add authentication to your React app in 5 minutes. Supports various auth providers."
+            />
             <meta name="theme-color" content={theme.colors.background} />
+
+            <meta property="og:url" content="https://useauth.dev" />
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content="useAuth" />
+            <meta
+                property="og:description"
+                content="Add authentication to your React app in 5 minutes. Supports various auth providers."
+            />
+            <meta
+                property="og:image"
+                content="https://useauth.dev/useauth-card.png"
+            />
         </Helmet>
     );
 };
