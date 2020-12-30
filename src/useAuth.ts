@@ -61,7 +61,6 @@ export const useAuth: useAuthInterface = () => {
                 );
 
                 if (loggedIn) {
-                    debugger;
                     navigate(postLoginRoute);
                 }
             }

@@ -12,6 +12,7 @@ function MyApp({ Component, pageProps }) {
                 params={{
                     auth0_domain: "useauth.auth0.com",
                     auth0_client_id: "GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh"
+               
                 }}
             />
             <Component {...pageProps} />
@@ -19,4 +20,5 @@ function MyApp({ Component, pageProps }) {
     );
 }
 
-export default MyApp;
+
+export default MyApp

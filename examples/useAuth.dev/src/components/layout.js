@@ -41,7 +41,7 @@ const DemoButton = () => {
     if (isAuthenticated()) {
         return (
             <Button
-                sx={{ minWidth: 150, cursor: "pointer" }}
+                sx={{ minWidth: [50, 100, 150], cursor: "pointer", mr: 2 }}
                 variant="secondary"
                 onClick={logout}
             >
@@ -51,7 +51,13 @@ const DemoButton = () => {
     } else {
         return (
             <Button
-                sx={{ minWidth: 100, cursor: "pointer" }}
+                sx={{
+                    minWidth: [50, 100, 100],
+                    cursor: "pointer",
+                    mr: 2,
+                    fontSize: 1,
+                    p: [1, 2, 2]
+                }}
                 variant="secondary"
                 onClick={login}
             >
@@ -135,14 +141,12 @@ export default (props) => {
                             <DemoButton />
                             <NavLink
                                 href="https://github.com/Swizec/useAuth"
-                                sx={{ mr: 2 }}
+                                sx={{ mr: 2, pt: 9 }}
                             >
                                 GitHub
                             </NavLink>
                             <EricButton
                                 sx={{
-                                    mr: 2,
-                                    cursor: "pointer",
                                     variant: "styles.navlink"
                                 }}
                                 onClick={cycleMode}
@@ -216,6 +220,7 @@ export default (props) => {
                     bottom: "0px",
                     bg: "accent",
                     p: 2,
+                    mb: 1,
                     borderTopLeftRadius: 3,
                     borderTopRightRadius: 3,
                     width: ["100%", 255, 255],
