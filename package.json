@@ -10,6 +10,7 @@
     "main": "dist/react-use-auth.js",
     "modern": "dist/react-use-auth.modern.js",
     "module": "dist/react-use-auth.esm.js",
+    "types": "dist/index.d.ts",
     "repository": "git@github.com:Swizec/useAuth.git",
     "author": "Swizec Teller <swizec@swizec.com>",
     "license": "MIT",
