@@ -16,7 +16,7 @@
     "license": "MIT",
     "private": false,
     "scripts": {
-        "build": "microbundle --jsx React.createElement && npm run",
+        "build": "microbundle --jsx React.createElement",
         "dev": "microbundle watch --jsx React.createElement",
         "test": "jest",
         "install-peers": "install-peers"
@@ -46,7 +46,7 @@
         "fetch-mock": "^9.3.0",
         "install-peers-cli": "^2.2.0",
         "jest": "^25.1.0",
-        "microbundle": "^0.12.4",
+        "microbundle": "^0.13.0",
         "prettier": "^1.18.2",
         "react": "^17.0.0",
         "react-test-renderer": "^17.0.1",
