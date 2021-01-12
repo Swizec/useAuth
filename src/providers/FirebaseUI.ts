@@ -5,10 +5,12 @@ import {
     AuthUser,
     ProviderOptions
 } from "src/types";
+import { auth as FirebaseAuthUI } from "firebaseui";
+import firebase from "firebase";
 
 // Auth Wrapper for Auth0
 export class FirebaseUI implements AuthProviderClass {
-    private client: any;
+    private ui: any;
     private dispatch: (eventName: string, eventData?: any) => void;
     // Auth0 specific, used for roles
     private customPropertyNamespace?: string;
@@ -16,26 +18,24 @@ export class FirebaseUI implements AuthProviderClass {
     constructor(params: AuthOptions) {
         // You will almost always need access to dispatch
         this.dispatch = params.dispatch;
-        // Auth0 specific, used for roles
-        this.customPropertyNamespace = params.customPropertyNamespace;
+
         // Init your client
-        // this.auth0 = new Auth0Client.WebAuth({
-        //     ...(params as Auth0Options)
-        // });
+        this.ui = new FirebaseAuthUI.AuthUI(firebase.auth());
     }
+
     // Makes configuration easier by guessing default options
     static addDefaultParams(params: ProviderOptions, callbackDomain: string) {
         // const vals = params as Auth0Options;
         return {
-            // redirectUri: `${callbackDomain}/auth0_callback`,
-            // audience: `https://${vals.domain}/api/v2/`,
-            // responseType: "token id_token",
-            // scope: "openid profile email",
-            // ...vals
+            signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID]
         };
     }
+
     public authorize() {
         // Open login dialog
+        this.ui.start("#firebaseui-auth-container", {
+            signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID]
+        });
     }
     public signup() {
         // Open signup dialog

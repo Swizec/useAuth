@@ -55,6 +55,7 @@
     },
     "peerDependencies": {
         "auth0-js": "^9.14.0",
+        "firebase": "^8.2.2",
         "firebaseui": "^4.7.1",
         "netlify-identity-widget": "^1.9.1",
         "react": "^17.0.0",
