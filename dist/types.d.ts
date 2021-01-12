@@ -65,7 +65,7 @@ export interface AuthProviderClass {
     logout(returnTo?: string): void;
     handleLoginCallback(dispatch: PayloadSender<AnyEventObject>): Promise<boolean>;
     checkSession(): Promise<{
-        user: Auth0UserProfile;
+        user: AuthUser;
         authResult: Auth0DecodedHash;
     }>;
     userId(user: AuthUser): string | null;

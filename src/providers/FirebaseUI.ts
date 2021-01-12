@@ -1,4 +1,4 @@
-import { Auth0DecodedHash } from "auth0-js";
+import { Auth0DecodedHash, Auth0UserProfile } from "auth0-js";
 import {
     AuthOptions,
     AuthProviderClass,
@@ -58,15 +58,16 @@ export class FirebaseUI implements AuthProviderClass {
         // include the user object and authResult with at least an expiresIn value
         return false;
     }
+
     public async checkSession(): Promise<{
         user: AuthUser;
-        authResult: any;
+        authResult: Auth0DecodedHash;
     }> {
         // verify session is still valid
         // return fresh user info
         return {
             user: {},
-            authResult: null
+            authResult: {}
         };
     }
 }

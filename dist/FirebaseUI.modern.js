@@ -1,0 +1,2 @@
+import{auth as t}from"firebaseui";import r from"firebase";class i{constructor(i){this.dispatch=i.dispatch,this.ui=new t.AuthUI(r.auth())}static addDefaultParams(t,i){return{signInOptions:[r.auth.EmailAuthProvider.PROVIDER_ID]}}authorize(){this.ui.start("#firebaseui-auth-container",{signInOptions:[r.auth.EmailAuthProvider.PROVIDER_ID]})}signup(){}logout(t){}userId(t){return""}userRoles(t){return[]}async handleLoginCallback(){return!1}async checkSession(){return{user:{},authResult:{}}}}export{i as FirebaseUI};
+//# sourceMappingURL=FirebaseUI.modern.js.map
