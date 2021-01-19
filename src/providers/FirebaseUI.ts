@@ -67,17 +67,20 @@ export class FirebaseUI implements AuthProviderClass {
         this.ui.start("#firebaseui-auth-container", {
             signInOptions: this.signInOptions,
             signInFlow: "popup",
-            signInSuccessWithAuthResult: function(
-                authResult: any,
-                redirectUrl: string
-            ) {
-                console.log({ authResult, redirectUrl });
+            callbacks: {
+                signInSuccessWithAuthResult: (
+                    authResult: any,
+                    redirectUrl: string
+                ) => {
+                    console.log({ authResult, redirectUrl });
 
-                this.dispatch("AUTHENTICATED", {
-                    user: this.firebase.auth().currentUser,
-                    authResult
-                });
-                return true;
+                    this.dispatch("AUTHENTICATED", {
+                        user: this.firebase.auth().currentUser,
+                        authResult
+                    });
+
+                    return false;
+                }
             }
         });
     }
@@ -92,7 +95,7 @@ export class FirebaseUI implements AuthProviderClass {
 
     public userId(user: any): string {
         // Return the userId from Auth0 shape of data
-        return this.firebase.auth().currentUser.uid;
+        return this.firebase.auth().currentUser?.uid;
     }
 
     public userRoles(user: AuthUser): string[] | null {
