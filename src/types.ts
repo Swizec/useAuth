@@ -8,6 +8,7 @@ import {
 import * as NetlifyIdentityWidget from "netlify-identity-widget";
 import { ReactNode } from "react";
 import { AnyEventObject, PayloadSender } from "xstate";
+import { FirebaseOptions } from "./providers/FirebaseUI";
 
 import * as Providers from "./providers";
 
@@ -17,7 +18,10 @@ export type AuthOptions = {
     customPropertyNamespace?: string;
 } & ProviderOptions;
 
-export type ProviderOptions = Auth0Options | NetlifyIdentityWidget.InitOptions;
+export type ProviderOptions =
+    | Auth0Options
+    | NetlifyIdentityWidget.InitOptions
+    | FirebaseOptions;
 
 // Type for the auth result coming from your auth provider
 // Needs at least `expiresIn` for useAuth internals
@@ -30,7 +34,10 @@ export type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | {}) & {
 
 export type AuthConfigInterface = (props: {
     // which auth provider to use
-    authProvider: typeof Providers.Auth0 | typeof Providers.NetlifyIdentity;
+    authProvider:
+        | typeof Providers.Auth0
+        | typeof Providers.NetlifyIdentity
+        | typeof Providers.FirebaseUI;
     // params to instantiate auth provider
     params?: Omit<AuthOptions, "dispatch">;
     // your navigation/routing function

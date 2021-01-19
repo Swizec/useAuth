@@ -11,17 +11,18 @@ import { ThemeProvider } from "emotion-theming"
 import theme from "@rebass/preset"
 
 import { AuthConfig } from "react-use-auth"
-import { Auth0 } from "react-use-auth/auth0"
+import { FirebaseUI } from "react-use-auth/dist/FirebaseUI"
 
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider theme={theme}>
     <AuthConfig
-      authProvider={Auth0}
+      authProvider={FirebaseUI}
       navigate={navigate}
-      params={{
-        domain: "useauth.auth0.com",
-        clientID: "GjWNFNOHq1ino7lQNJBwEywa1aYtbIzh",
-      }}
+      params={
+        {
+          /* ... */
+        }
+      }
     />
     {element}
   </ThemeProvider>

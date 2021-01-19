@@ -10590,9 +10590,10 @@ react-side-effect@^1.1.0:
   dependencies:
     shallowequal "^1.0.1"
 
-react-use-auth@Swizec/useAuth.git#fix-providers:
-  version "1.0.0"
-  resolved "https://codeload.github.com/Swizec/useAuth/tar.gz/a8ad7206dff36abae9bfbe64c1c4401be3efd349"
+react-use-auth@2.1.0-1:
+  version "2.1.0-1"
+  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-2.1.0-1.tgz#2a2edb38b8a0be3ffccfe94d996a4ec932023770"
+  integrity sha512-K50YNFC34UQrHOAWoBfRCah1Md7tnvptwhLALV3PnwM4RhvqiI5/ulm6094v+8i9eQ799PNOKlokm/WEMI0K6g==
   dependencies:
     "@xstate/react" "^1.0.3"
     date-fns "^2.16.1"

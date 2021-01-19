@@ -1,6 +1,6 @@
 {
     "name": "react-use-auth",
-    "version": "2.1.0-0",
+    "version": "2.1.0-2",
     "description": "Add authentication to your app in 5 minutes. Supports various auth providers.",
     "source": [
         "src/providers/auth0.ts",
@@ -26,7 +26,8 @@
         "src",
         "dist",
         "auth0.js",
-        "netlify-identity.js"
+        "netlify-identity.js",
+        "firebase-ui.js"
     ],
     "dependencies": {
         "@xstate/react": "^1.0.3",
