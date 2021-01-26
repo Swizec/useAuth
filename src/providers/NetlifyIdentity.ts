@@ -100,7 +100,7 @@ export class NetlifyIdentity implements AuthProviderClass {
     }
 
     // Returns the userId from NetlifyIdentity shape of data
-    public userId(user: User): string {
+    public userId(user: User): string | undefined {
         return user.id;
     }
 

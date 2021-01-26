@@ -18,11 +18,16 @@ export const wrapRootElement = ({ element }) => (
     <AuthConfig
       authProvider={FirebaseUI}
       navigate={navigate}
-      params={
-        {
-          /* ... */
-        }
-      }
+      params={{
+        firebaseConfig: {
+          apiKey: "AIzaSyCdtQ6V3qDxpgDO-usa3zWvBhIJKpAd4mM",
+          authDomain: "useauth-demo.firebaseapp.com",
+          projectId: "useauth-demo",
+          storageBucket: "useauth-demo.appspot.com",
+          messagingSenderId: "520315046120",
+          appId: "1:520315046120:web:4384141e88f49e638c215d",
+        },
+      }}
     />
     {element}
   </ThemeProvider>

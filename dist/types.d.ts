@@ -2,7 +2,7 @@ import { Auth0UserProfile, Auth0DecodedHash, Auth0Error, Auth0ParseHashError, Au
 import * as NetlifyIdentityWidget from "netlify-identity-widget";
 import { ReactNode } from "react";
 import { AnyEventObject, PayloadSender } from "xstate";
-import { FirebaseOptions } from "./providers/FirebaseUI";
+import { FirebaseOptions, FirebaseUser } from "./providers/FirebaseUI";
 import * as Providers from "./providers";
 export declare type AuthOptions = {
     dispatch: (eventName: string, eventData?: any) => void;
@@ -12,7 +12,7 @@ export declare type ProviderOptions = Auth0Options | NetlifyIdentityWidget.InitO
 export declare type AuthResult = ({
     expiresIn: number;
 } & Auth0DecodedHash) | null;
-export declare type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | {}) & {
+export declare type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | FirebaseUser | {}) & {
     [key: string]: any;
 };
 export declare type AuthConfigInterface = (props: {
@@ -69,6 +69,6 @@ export interface AuthProviderClass {
         user: AuthUser;
         authResult: Auth0DecodedHash;
     }>;
-    userId(user: AuthUser): string | null;
+    userId(user: AuthUser): string | null | undefined;
     userRoles(user: AuthUser): string[] | null;
 }

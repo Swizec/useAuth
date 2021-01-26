@@ -61,7 +61,7 @@ export class Auth0 implements AuthProviderClass {
     }
 
     // Returns the userId from Auth0 shape of data
-    public userId(user: Auth0UserProfile): string {
+    public userId(user: Auth0UserProfile): string | undefined {
         return user.sub;
     }
 

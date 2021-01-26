@@ -10590,10 +10590,10 @@ react-side-effect@^1.1.0:
   dependencies:
     shallowequal "^1.0.1"
 
-react-use-auth@2.1.0-9:
-  version "2.1.0-9"
-  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-2.1.0-9.tgz#43b9a1937e875948e79a65e036326dea0c8fc007"
-  integrity sha512-CK9fFQ89A3ngzMpA4uLDpkNwJDMpoZilBvhvNBiTHP2H+RY6a304hx0F8bYHDlQIhr1aaT06aVslU1GyqANCaQ==
+react-use-auth@2.1.0-10:
+  version "2.1.0-10"
+  resolved "https://registry.yarnpkg.com/react-use-auth/-/react-use-auth-2.1.0-10.tgz#ce222bd22118e65f06f6ae90134e0056c95f6526"
+  integrity sha512-7SGe49/nYeNvT5OpsjR8qNDYkhW6hJnusPRJZAehradWDCRHl5szL/bGI3Uv7PIr2Y/3tBZNaIH4Gk0MrWysLw==
   dependencies:
     "@xstate/react" "^1.0.3"
     date-fns "^2.16.1"

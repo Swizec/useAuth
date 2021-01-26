@@ -113,6 +113,6 @@ export interface AuthProviderClass {
         user: AuthUser;
         authResult: Auth0DecodedHash;
     }>;
-    userId(user: AuthUser): string | null;
+    userId(user: AuthUser): string | null | undefined;
     userRoles(user: AuthUser): string[] | null;
 }

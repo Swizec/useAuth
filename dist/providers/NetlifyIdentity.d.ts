@@ -13,6 +13,6 @@ export declare class NetlifyIdentity implements AuthProviderClass {
         user: any;
         authResult: any;
     }>;
-    userId(user: User): string;
+    userId(user: User): string | undefined;
     userRoles(user: User): string[] | null;
 }
