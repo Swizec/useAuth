@@ -8,7 +8,7 @@ import {
 import * as NetlifyIdentityWidget from "netlify-identity-widget";
 import { ReactNode } from "react";
 import { AnyEventObject, PayloadSender } from "xstate";
-import { FirebaseOptions } from "./providers/FirebaseUI";
+import { FirebaseOptions, FirebaseUser } from "./providers/FirebaseUI";
 
 import * as Providers from "./providers";
 
@@ -28,7 +28,12 @@ export type ProviderOptions =
 export type AuthResult = ({ expiresIn: number } & Auth0DecodedHash) | null;
 
 // Type for every possible user type for auth providers
-export type AuthUser = (Auth0UserProfile | NetlifyIdentityWidget.User | {}) & {
+export type AuthUser = (
+    | Auth0UserProfile
+    | NetlifyIdentityWidget.User
+    | FirebaseUser
+    | {}
+) & {
     [key: string]: any;
 };
 

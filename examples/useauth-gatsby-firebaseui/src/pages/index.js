@@ -34,7 +34,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="Home" />
-      <h1>Hi {isAuthenticated() ? user.name : "people"}</h1>
+      <h1>Hi {isAuthenticated() ? user.displayName : "people"}</h1>
       <p>Welcome to your new Gatsby site.</p>
       <p>Now go build something great.</p>
       <div id="firebaseui-auth-container"></div>

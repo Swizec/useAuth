@@ -13,6 +13,8 @@ export type FirebaseOptions = {
     signInOptions?: string[];
 };
 
+export type FirebaseUser = Firebase.User;
+
 // Auth Wrapper for Auth0
 export class FirebaseUI implements AuthProviderClass {
     private ui: any;
@@ -48,7 +50,15 @@ export class FirebaseUI implements AuthProviderClass {
     }
 
     private onAuthStateChanged(user: Firebase.User) {
-        console.log("HAI", user);
+        if (user) {
+            this.dispatch("AUTHENTICATED", {
+                user: this.firebase.auth().currentUser,
+                authResult: {
+                    // needed for useAuth to work
+                    expiresIn: 3600
+                }
+            });
+        }
     }
 
     // Makes configuration easier by guessing default options
@@ -68,15 +78,14 @@ export class FirebaseUI implements AuthProviderClass {
             signInOptions: this.signInOptions,
             signInFlow: "popup",
             callbacks: {
-                signInSuccessWithAuthResult: (
-                    authResult: any,
-                    redirectUrl: string
-                ) => {
-                    console.log({ authResult, redirectUrl });
-
+                signInSuccessWithAuthResult: (authResult: any) => {
                     this.dispatch("AUTHENTICATED", {
                         user: this.firebase.auth().currentUser,
-                        authResult
+                        authResult: {
+                            ...authResult,
+                            // needed for useAuth itself to work
+                            expiresIn: 3600
+                        }
                     });
 
                     return false;
@@ -91,10 +100,10 @@ export class FirebaseUI implements AuthProviderClass {
 
     public logout(returnTo?: string) {
         // Logs user out of the underlying service
+        this.firebase.auth().signOut();
     }
 
     public userId(user: any): string {
-        // Return the userId from Auth0 shape of data
         return this.firebase.auth().currentUser?.uid;
     }
 
@@ -117,9 +126,21 @@ export class FirebaseUI implements AuthProviderClass {
     }> {
         // verify session is still valid
         // return fresh user info
-        return {
-            user: {},
-            authResult: {}
-        };
+        const user = this.firebase.auth().currentUser;
+
+        if (user) {
+            // throws if user no longer valid
+            await user.reload();
+
+            return {
+                user,
+                authResult: {
+                    // needed for useAuth to work
+                    expiresIn: 3600
+                }
+            };
+        } else {
+            throw new Error("Session invalid");
+        }
     }
 }
