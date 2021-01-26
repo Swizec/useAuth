@@ -1,6 +1,6 @@
 {
     "name": "react-use-auth",
-    "version": "2.1.0-10",
+    "version": "2.1.0-14",
     "description": "Add authentication to your app in 5 minutes. Supports various auth providers.",
     "source": [
         "src/providers/auth0.ts",

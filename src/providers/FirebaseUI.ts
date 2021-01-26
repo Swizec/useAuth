@@ -53,11 +53,14 @@ export class FirebaseUI implements AuthProviderClass {
         this.ui = new FirebaseAuthUI.AuthUI(this.firebase.auth());
 
         // Auth state observer
-        this.firebase.auth().onAuthStateChanged(this.onAuthStateChanged);
+        this.firebase
+            .auth()
+            .onAuthStateChanged(this.onAuthStateChanged.bind(this));
     }
 
     private onAuthStateChanged(user: Firebase.User | null) {
         if (user) {
+            this.dispatch("LOGIN");
             this.dispatch("AUTHENTICATED", {
                 user: this.firebase.auth().currentUser,
                 authResult: {

@@ -68,7 +68,13 @@ function SEO({ description, lang, meta, title }) {
           content: metaDescription,
         },
       ].concat(meta)}
-    />
+    >
+      <link
+        type="text/css"
+        rel="stylesheet"
+        href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css"
+      />
+    </Helmet>
   )
 }
 
