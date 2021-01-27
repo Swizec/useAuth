@@ -39,7 +39,7 @@ export declare class Auth0 implements AuthProviderClass {
     authorize(): void;
     signup(): void;
     logout(returnTo?: string): void;
-    userId(user: Auth0UserProfile): string;
+    userId(user: Auth0UserProfile): string | undefined;
     userRoles(user: AuthUser): string[] | null;
     handleLoginCallback(): Promise<boolean>;
     checkSession(): Promise<{

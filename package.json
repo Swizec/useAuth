@@ -1,10 +1,11 @@
 {
     "name": "react-use-auth",
-    "version": "2.0.4",
+    "version": "2.1.0-14",
     "description": "Add authentication to your app in 5 minutes. Supports various auth providers.",
     "source": [
         "src/providers/auth0.ts",
         "src/providers/NetlifyIdentity.ts",
+        "src/providers/FirebaseUI.ts",
         "src/index.ts"
     ],
     "main": "dist/react-use-auth.js",
@@ -25,7 +26,8 @@
         "src",
         "dist",
         "auth0.js",
-        "netlify-identity.js"
+        "netlify-identity.js",
+        "firebase-ui.js"
     ],
     "dependencies": {
         "@xstate/react": "^1.0.3",
@@ -54,6 +56,8 @@
     },
     "peerDependencies": {
         "auth0-js": "^9.14.0",
+        "firebase": "^8.2.2",
+        "firebaseui": "^4.7.1",
         "netlify-identity-widget": "^1.9.1",
         "react": "^17.0.0",
         "react-dom": "^17.0.1"
