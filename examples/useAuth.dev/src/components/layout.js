@@ -41,7 +41,14 @@ const DemoButton = () => {
     if (isAuthenticated()) {
         return (
             <Button
-                sx={{ minWidth: [50, 100, 150], cursor: "pointer", mr: 2 }}
+                sx={{
+                    variant: "styles.demoButton",
+                    minWidth: [50, 100, 150],
+                    cursor: "pointer",
+                    mr: 2,
+                    fontSize: 1,
+                    fontWeight: "bold"
+                }}
                 variant="secondary"
                 onClick={logout}
             >
@@ -52,6 +59,7 @@ const DemoButton = () => {
         return (
             <Button
                 sx={{
+                    variant: "styles.demoButton",
                     minWidth: [50, 100, 100],
                     cursor: "pointer",
                     mr: 2,
