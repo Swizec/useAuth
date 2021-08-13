@@ -9,7 +9,7 @@
     },
     "dependencies": {
         "auth0-js": "^9.13.2",
-        "next": "10.0.3",
+        "next": "11.1.0",
         "react": "16.10.2",
         "react-dom": "16.10.2",
         "react-use-auth": "2.0.2",
