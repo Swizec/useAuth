@@ -18,7 +18,7 @@
     "gatsby-plugin-chakra-ui": "^0.1.4",
     "gatsby-plugin-emotion": "^4.3.3",
     "gatsby-plugin-manifest": "^2.3.3",
-    "gatsby-plugin-mdx": "^1.1.9",
+    "gatsby-plugin-mdx": "^2.14.1",
     "gatsby-plugin-offline": "^3.1.2",
     "gatsby-plugin-preload-fonts": "^1.2.9",
     "gatsby-plugin-react-helmet": "^3.2.1",
