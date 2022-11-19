@@ -9,7 +9,7 @@
         "react": "^16.9.0",
         "react-dom": "^16.9.0",
         "react-router-dom": "^5.0.1",
-        "react-scripts": "3.1.0",
+        "react-scripts": "5.0.1",
         "react-use-auth": "^0.5.1",
         "rebass": "^4.0.2"
     },
